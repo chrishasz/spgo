@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "outDir": "out",
+        "sourceMap": true,
+        "removeComments": false,
+        "lib": [
+            "es6"
+        ],
+        "allowJs": true,
+        "noUnusedParameters": false,
+        "noUnusedLocals": false,
+        "forceConsistentCasingInFileNames": false
+    },
+    "include": [
+        "src/**/*",
+        "test/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

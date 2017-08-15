@@ -1,0 +1,87 @@
+{
+    "name": "spgo",
+    "displayName": "SPGo",
+    "description": "SharePoint web development tools for Visual Studio Code. Author code locally with the power of Visual Studio Code and automatically deploy to SharePoint",
+    "version": "0.8.0",
+    "publisher": "SiteGo",
+    "icon": "assets/icon.png",
+    "galleryBanner": {
+        "color": "#007891",
+        "theme": "dark"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/ReadySiteGo/SPGo/blob/master/README.md",
+    "bugs": {
+        "url": "https://github.com/ReadySiteGo/SPGo/issues",
+        "email": "vscode@sitego.co"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/ReadySiteGo/SPGo.git"
+    },
+    "engines": {
+        "vscode": "^1.13.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "workspaceContains:SPGo.json",
+        "onCommand:spgo.configureWorkspace"
+    ],
+    "main": "./out/src/extension",
+    "contributes": {
+        "commands": [{ 
+            "command": "spgo.configureWorkspace",
+            "title": "SPGo: Configure Workspace",
+            "description": "Create the base configuration for the local SharePoint workspace"
+        },
+        {
+            "command": "spgo.publish",
+            "title": "SPGo: Publish the current file",
+            "description": "Publish the current file to the server."
+        },
+        {
+            "command": "spgo.resetCredentials",
+            "title": "SPGo: Reset Credentials",
+            "description": "Reset the current user's SharePoint credentials."
+        },
+        {
+            "command": "spgo.retrieveFolder",
+            "title": "SPGo: Retrieve Folder",
+            "description": "Download the contents of a SharePoint folder (and subfolders) to your local workspace."
+        },
+        {
+            "command": "spgo.synchronizeFiles",
+            "title": "SPGo: Synchronize Files",
+            "description": "Synchronize your local environment from the latest on the server."
+        }],
+        "keybindings": [
+        {
+            "key": "alt+cmd+p",
+            "command": "ForceCode.apexTest",
+            "when": "editorFocus",
+            "win": "alt+shift+p"
+        }]
+    },
+    "scripts": {
+        "vscode:prepublish": "tsc -p ./",
+        "compile": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "typescript": "^2.0.3",
+        "vscode": "^1.0.0",
+        "mocha": "^2.3.3",
+        "@types/node": "^6.0.40",
+        "@types/mocha": "^2.2.32"
+    },
+    "dependencies": {
+        "fs-extra" : "^3.0.1",
+        "path" : "^0.12.7",
+        "spsave" : "^3.0.2",
+        "sppull" : "^2.1.0",
+        "url" : "^0.11.0"
+    }
+}
