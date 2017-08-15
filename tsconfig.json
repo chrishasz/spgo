@@ -10,8 +10,7 @@
         ],
         "allowJs": true,
         "noUnusedParameters": false,
-        "noUnusedLocals": false,
-        "forceConsistentCasingInFileNames": false
+        "noImplicitAny": false
     },
     "include": [
         "src/**/*",
@@ -21,3 +20,6 @@
         "node_modules"
     ]
 }
+
+
+

@@ -1,20 +1,31 @@
 {
+    "preview": true,
+    "author": {
+        "email": "chris@sitego.co",
+        "name": "Chris Hasz",
+        "url": "https://www.sitego.co"
+    },
     "name": "spgo",
     "displayName": "SPGo",
-    "description": "SharePoint web development tools for Visual Studio Code. Author code locally with the power of Visual Studio Code and automatically deploy to SharePoint",
-    "version": "0.8.0",
+    "description": "SharePoint web development tools for Visual Studio Code.",
+    "keywords": [
+        "SharePoint",
+        "SharePoint Online",
+        "Office 365"
+    ],
+    "version": "0.8.1",
     "publisher": "SiteGo",
-    "icon": "assets/icon.png",
+    "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
         "color": "#007891",
         "theme": "dark"
     },
-    "license": "MIT",
     "homepage": "https://github.com/ReadySiteGo/SPGo/blob/master/README.md",
     "bugs": {
         "url": "https://github.com/ReadySiteGo/SPGo/issues",
         "email": "vscode@sitego.co"
     },
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "https://github.com/ReadySiteGo/SPGo.git"

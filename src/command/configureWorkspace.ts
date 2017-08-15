@@ -57,10 +57,7 @@ export default function configureWorkspace() {
     }
 
     function finished(config) {
-        const defaultOptions: {} = {
-            browser: 'Google Chrome Canary',
-            pollTimeout: 1200,
-        };
+        const defaultOptions: {} = {};
         fs.outputFile(vscode.workspace.rootPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
         return config;
     }
