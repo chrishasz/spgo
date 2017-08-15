@@ -1,0 +1,8 @@
+#Source Control
+.vscode
+.vscodeignore
+
+#VS Code folders
+out
+node_modules
+*.vsix
