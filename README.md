@@ -24,7 +24,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session.
 
 ## Configuration
-To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p`(Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Configuration files will be stored in the root of your project folder in a file called `spgo.json`.
+To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Configuration files will be stored in the root of your project folder in a file called `spgo.json`.
 Upon successful configuration, you should see a file similar to below:
 
 ```json
@@ -56,6 +56,7 @@ SPGo will automatically launch when you run the Configure Workspace command `>SP
 
 ## Roadmap
 * [MVP] - Synchronize local workspace with remote SharePoint site. Workspace download currently works - upload coming soon(TM)
+* [MVP] - Master Page code syntax highlighting
 * [1.1] - Remote File Compare. Merge updates from the server with your local source
 
 
@@ -67,9 +68,9 @@ This project is offered under the MIT open source license. Collaboration, contri
 
 ## Thank You
 I want to thank the following developers for inspiration and source packages:
-* [https://github.com/celador](John Nelson): ForceCode author - example of a great VSCode IDE extension
-* [https://github.com/s-KaiNet](Sergey Sergeev) : sp-request, spsave author
-* [https://github.com/koltyakov](Andrew Koltyakov) : sppull author
+* [John Nelson](https://github.com/celador): ForceCode author - example of a great VSCode IDE extension
+* [Sergey Sergeev](https://github.com/s-KaiNet) : sp-request, spsave author
+* [Andrew Koltyakov](https://github.com/koltyakov) : sppull author
 
 ## More about SiteGo
 SiteGo is a SharePoint collaboration platform that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).

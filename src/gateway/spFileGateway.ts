@@ -1,4 +1,3 @@
-'use strict'
 var sppull = require("sppull").sppull;
 import {spsave} from 'spsave';
 import * as path from 'path';
