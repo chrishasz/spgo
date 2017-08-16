@@ -1,7 +1,7 @@
 # SPGo for Visual Studio Code
 
 ## Overview
-SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Build SharePoint sites and customizations source-control first with all of the the power of a top-tier IDE. Produce cleaner code, deliver faster.
+SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
 * Publish files on save
 * Pull down remote folders to your local workspace
 * No more editors messing with your markup 
@@ -10,6 +10,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 ## Features
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
+* Check out files from SharePoint
 * Publish files to SharePoint
     * save|publish|check-in automatically on Save
     * force publish using command `>SPGo: Publish File`
@@ -23,24 +24,25 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 ## Security
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session.
 
-## Configuration
-To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Configuration files will be stored in the root of your project folder in a file called `spgo.json`.
-Upon successful configuration, you should see a file similar to below:
+## Configuration and Getting Started
+To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to your SharePoint site upon save.
+
+If configuration was successful, you should see a file similar to below:
 
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\OneDrive\\Projects\\MyProject",
+    "workspaceRoot": "c:\\Users\\chris\\Projects\\MyProject",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/project",
     "publishingScope": "Major",
 } 
 ```
 
-Additionally you can specify an array of remote folders, which SPGo will recursively downloaded to your local workspace when you issue the Synchronize Files command `SPGo: Synchronize Files`. Note: This WILL overwrite all local files.
+Additionally you can specify an array of remote folders in a node called `remoteFolders`, which SPGo will recursively downloaded to your local workspace when you issue the Synchronize Files command `SPGo: Synchronize Files`. Note: This WILL overwrite all local files.
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\OneDrive\\Projects\\MyProject",
+    "workspaceRoot": "c:\\Users\\chris\\Projects\\MyProject",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/project",
     "publishingScope": "Major",
     "remoteFolders": [
