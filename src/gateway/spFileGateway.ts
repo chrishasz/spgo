@@ -3,7 +3,7 @@ import * as path from 'path';
 import * as _ from 'lodash' 
 import * as vscode from 'vscode';
 import * as Logger from './../util/logger';
-import * as UrlFormatter from './../util/urlFormatter';
+import * as UrlHelper from './../util/UrlHelper';
 import * as sprequest from 'sp-request';
 
 import {IError} from './../spgo';
@@ -11,44 +11,49 @@ import {spsave} from 'spsave';
 import Constants from './../constants';
 import Uri from 'vscode-uri'
 
-export function downloadFiles(remoteFolder) : void{
-    let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+export function downloadFiles(remoteFolder) : Promise<any>{
+    return new Promise(function (resolve, reject) {
+        let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
 
-    //format the remote folder to /<folder structure>/  
-    remoteFolder = UrlFormatter.formatFolder(remoteFolder);
-    
-    var context = {
-        siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
-        creds : {
-            username: vscode.window.spgo.credential.username,
-            password: vscode.window.spgo.credential.password
-        }
-    };
+        //format the remote folder to /<folder structure>/  
+        remoteFolder = UrlHelper.formatFolder(remoteFolder);
+        
+        var context = {
+            siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
+            creds : {
+                username: vscode.window.spgo.credential.username,
+                password: vscode.window.spgo.credential.password
+            }
+        };
 
-    var options = {
-        spBaseFolder : sharePointSiteUrl.path,
-        spRootFolder: remoteFolder,
-        dlRootFolder: vscode.window.spgo.config.workspaceRoot
-    };
-    
-    sppull(context, options)
-        .then(function(downloadResults) {
-            Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
-        })
-        .catch(function(err){
-            //TODO: this is sorta hacky- Detect if this error was due to credentials
-            if(err.message.indexOf('wst:FailedAuthentication') > 0){
-                vscode.window.spgo.credential = null;
-                let error : IError ={
-                    message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
-                };
-                Logger.outputError(error, vscode.window.spgo.outputChannel);
-            }
-            //otherwise something else happened.
-            else{
-                Logger.outputError(err, vscode.window.spgo.outputChannel);
-            }
-        });
+        var options = {
+            spBaseFolder : sharePointSiteUrl.path,
+            spRootFolder: remoteFolder,
+            dlRootFolder: vscode.window.spgo.config.workspaceRoot
+        };
+        
+        sppull(context, options)
+            .then(function(downloadResults) {
+                Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
+                resolve();
+            })
+            .catch(function(err){
+                //TODO: this is sorta hacky- Detect if this error was due to credentials - FATAL ERROR
+                if(err.message.indexOf('wst:FailedAuthentication') > 0){
+                    vscode.window.spgo.credential = null;
+                    let error : IError ={
+                        message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
+                    };
+                    Logger.outputError(error, vscode.window.spgo.outputChannel);
+                    reject();
+                }
+                //otherwise something else happened. - NON FATAL
+                else{
+                    Logger.outputError(err, vscode.window.spgo.outputChannel);
+                    resolve();
+                }
+            });
+    });
 }
 
 export function checkoutFile(textDocument: vscode.TextDocument) : Promise<vscode.TextDocument> {
@@ -87,8 +92,12 @@ export function checkoutFile(textDocument: vscode.TextDocument) : Promise<vscode
     });
 }
 
-export function publishFile (textDocument: vscode.TextDocument) : void {
+export function publishMajorFileVersion (textDocument: vscode.TextDocument) : void {
     uploadToServer(textDocument, Constants.PUBLISHING_MAJOR);
+}
+
+export function publishMinorFileVersion (textDocument: vscode.TextDocument) : void {
+    uploadToServer(textDocument, Constants.PUBLISHING_MINOR);
 }
 
 export function uploadToServer(textDocument: vscode.TextDocument, publishingScope? : string) : void {
@@ -108,7 +117,7 @@ export function uploadToServer(textDocument: vscode.TextDocument, publishingScop
 
         var fileOptions = {
             folder: remoteFolder,
-            fileName: remoteFileName, //'file.txt',
+            fileName: remoteFileName,
             fileContent: textDocument.getText()
         };
 
