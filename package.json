@@ -11,9 +11,10 @@
     "keywords": [
         "SharePoint",
         "SharePoint Online",
-        "Office 365"
+        "Office 365",
+        "o365"
     ],
-    "version": "0.8.1",
+    "version": "0.9.0",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -53,6 +54,11 @@
             "description": "Publish the current file to the server."
         },
         {
+            "command": "spgo.checkOutFile",
+            "title": "SPGo: Check out the current file",
+            "description": "Check out the current file from the server."
+        },
+        {
             "command": "spgo.resetCredentials",
             "title": "SPGo: Reset Credentials",
             "description": "Reset the current user's SharePoint credentials."
@@ -69,11 +75,28 @@
         }],
         "keybindings": [
         {
-            "key": "alt+cmd+p",
-            "command": "ForceCode.apexTest",
+            "key": "alt+shift+p",
+            "command": "spgo.publish",
             "when": "editorFocus",
             "win": "alt+shift+p"
-        }]
+        },
+        {
+            "key": "alt+shift+c",
+            "command": "spgo.checkOutFile",
+            "when": "editorFocus",
+            "win": "alt+shift+c"
+        }],
+        "languages":[
+            {
+                "id": "html",
+                "aliases": [
+                    "Masterpage"
+                ],
+                "extensions": [
+                    ".master"
+                ]
+            }
+        ]
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
@@ -89,10 +112,12 @@
         "@types/mocha": "^2.2.32"
     },
     "dependencies": {
+        "colors" : "^1.1.2",
         "fs-extra" : "^3.0.1",
         "path" : "^0.12.7",
         "spsave" : "^3.0.2",
         "sppull" : "^2.1.0",
-        "url" : "^0.11.0"
+        "sp-request" : "^2.1.0",
+        "vscode-uri" : "^1.0.1"
     }
 }

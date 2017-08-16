@@ -27,7 +27,7 @@ export default function verifyCredentials(appManager : IAppManager, payload? : a
 		return new Promise(function (resolve, reject) {
 			let options: vscode.InputBoxOptions = {
 				ignoreFocusOut: true,
-				placeHolder: 'user@domain.com',
+				placeHolder: 'user@domain.com [or domain\\user]',
 				value: appManager.credential.username || '',
 				prompt: 'Please enter your SharePoint username',
 			};

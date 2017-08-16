@@ -9,7 +9,9 @@ import initializeConfiguration from './dao/configurationDao';
 import resetCredentials from './command/resetCredentials';
 import synchronizeFiles from './command/synchronizeFiles';
 import retrieveFolder from './command/retrieveFolder';
+import checkOutFile from './command/checkOutFile';
 import publishFile from './command/publishFile';
+import saveFile from './command/saveFile';
 import Constants from './constants';
 
 export function activate(context: vscode.ExtensionContext): any {
@@ -26,12 +28,23 @@ export function activate(context: vscode.ExtensionContext): any {
         configureWorkspace();
     }));
 
+    //Check out the current file.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: vscode.Uri) => {
+        if (selectedResource && selectedResource.path) {
+            vscode.workspace.openTextDocument(selectedResource)
+                .then(doc => checkOutFile(doc, context));
+        } else {
+            checkOutFile(vscode.window.activeTextEditor.document, context);
+        }
+    }));
+
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publish', (selectedResource?: vscode.Uri) => {
-        if (selectedResource.path) {
+        if (selectedResource && selectedResource.path) {
             vscode.workspace.openTextDocument(selectedResource)
                 .then(doc => publishFile(doc, context));
-        } else {
+        } 
+        else {
             publishFile(vscode.window.activeTextEditor.document, context);
         }
     }));
@@ -56,7 +69,7 @@ export function activate(context: vscode.ExtensionContext): any {
         if (vscode.window.spgo.config) {
             //is the file in the source folder? Save to the server.
             if(textDocument.fileName.indexOf(vscode.window.spgo.config.workspaceRoot) == 0 ){
-                publishFile(textDocument, context);
+                saveFile(textDocument, context);
             }
             //is this an update to the config? Reload the config.
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
