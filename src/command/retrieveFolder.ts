@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as Logger from './../util/logger';
-import * as UrlFormatter from './../util/urlFormatter';
 import * as SpFileGateway from './../gateway/spFileGateway';
 
 import Uri from 'vscode-uri'
@@ -28,7 +27,7 @@ export default function retrieveFolder() : Promise<any> {
                 prompt: 'Enter a site relative path to the folder or file you would like to download. WARNING: This will overwrite all local files!!',
             };
             vscode.window.showInputBox(options).then(result => {
-                SpFileGateway.downloadFiles(result);
+                SpFileGateway.downloadFiles(result)
             });
         }
         else{

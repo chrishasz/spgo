@@ -11,9 +11,13 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
 * Check out files from SharePoint
+    * Check out current file using command `>SPGo: Check Out the current File`
+    * Check out current file with the hotkey combo: `Alt+Shift+c`
 * Publish files to SharePoint
-    * save|publish|check-in automatically on Save
-    * force publish using command `>SPGo: Publish File`
+    * Save|publish|check-in automatically on Save
+    * force publish using command `>SPGo: Publish the current File`
+    * Publish a Major version with the hotkey combo: `Alt+Shift+P`
+    * Publish a Minor version with the hotkey combo: `Alt+P`
 * Retrieve the contents of a specified folder from SharePoint
     * Enter a site-relative folder into the dialog to automatically download the contents
 * Retrieve the contents of multiple folders from SharePoint (Synchronize)

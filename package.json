@@ -14,7 +14,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "0.9.0",
+    "version": "0.9.1",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -49,8 +49,13 @@
             "description": "Create the base configuration for the local SharePoint workspace"
         },
         {
-            "command": "spgo.publish",
-            "title": "SPGo: Publish the current file",
+            "command": "spgo.publishMajor",
+            "title": "SPGo: Publish a major version of the current file",
+            "description": "Publish the current file to the server."
+        },
+        {
+            "command": "spgo.publishMinor",
+            "title": "SPGo: Publish a minor version of the current file",
             "description": "Publish the current file to the server."
         },
         {
@@ -76,9 +81,15 @@
         "keybindings": [
         {
             "key": "alt+shift+p",
-            "command": "spgo.publish",
+            "command": "spgo.publishMajor",
             "when": "editorFocus",
             "win": "alt+shift+p"
+        },
+        {
+            "key": "alt+p",
+            "command": "spgo.publishMinor",
+            "when": "editorFocus",
+            "win": "alt+p"
         },
         {
             "key": "alt+shift+c",

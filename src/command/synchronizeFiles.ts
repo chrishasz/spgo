@@ -1,7 +1,6 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
 import * as Logger from './../util/logger';
-import * as UrlFormatter from './../util/urlFormatter';
 import * as SpFileGateway from './../gateway/spFileGateway';
 
 import Uri from 'vscode-uri'
@@ -12,22 +11,28 @@ import Constants from './../constants';
 var sppull = require("sppull").sppull;
 
 export default function synchronizeFiles() : Promise<any> {
-    if( (vscode.window.spgo.config.publishingScope === Constants.PUBLISHING_MAJOR || vscode.window.spgo.config.publishingScope === Constants.PUBLISHING_MINOR)){
         
-        Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
+    Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
 
-        return verifyCredentials(vscode.window.spgo)
-            .then(downloadFiles)
-            .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel));
-    }
+    return verifyCredentials(vscode.window.spgo)
+        .then(downloadFiles)
+        .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel));
 
+    
     function downloadFiles() {
         if(vscode.window.spgo.credential.username && vscode.window.spgo.credential.password){
+            
+            let downloads : Promise<any>[] = [];//new Promise<any>[]();
 
             if(vscode.window.spgo.config.remoteFolders){
                 for (let folder of vscode.window.spgo.config.remoteFolders) {
-                    SpFileGateway.downloadFiles(folder);
+                    downloads.push(SpFileGateway.downloadFiles(folder));
                 }
+                Promise.all(downloads)
+                    .then(function(){
+                        Logger.outputMessage(`file synchronization complete.`, vscode.window.spgo.outputChannel);
+                    })
+                    .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel));
             }
             else{
                 let error : IError ={

@@ -39,13 +39,24 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Publish the current file to the server.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.publish', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
             vscode.workspace.openTextDocument(selectedResource)
-                .then(doc => publishFile(doc, context));
+                .then(doc => publishFile(doc, context, Constants.PUBLISHING_MAJOR));
         } 
         else {
-            publishFile(vscode.window.activeTextEditor.document, context);
+            publishFile(vscode.window.activeTextEditor.document, context, Constants.PUBLISHING_MAJOR);
+        }
+    }));
+
+    //Publish the current file to the server.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: vscode.Uri) => {
+        if (selectedResource && selectedResource.path) {
+            vscode.workspace.openTextDocument(selectedResource)
+                .then(doc => publishFile(doc, context, Constants.PUBLISHING_MINOR));
+        } 
+        else {
+            publishFile(vscode.window.activeTextEditor.document, context, Constants.PUBLISHING_MINOR);
         }
     }));
 
