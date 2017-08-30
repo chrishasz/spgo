@@ -19,7 +19,7 @@ export class AppManager implements IAppManager {
 
         //initialize Configuration file
         initializeConfiguration(this).then(config => {
-            this.statusBarItem.text = 'SPGo is Active';
+            this.statusBarItem.text = 'SPGo enabled';
         }).catch(err => {
             this.statusBarItem.text = 'SPGo: Missing Configuration';
         });

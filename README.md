@@ -11,44 +11,46 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
 * Check out files from SharePoint
-    * Check out current file using command `>SPGo: Check Out the current File`
+    * Check out current file using command `>SPGo: Check Out the current file`
     * Check out current file with the hotkey combo: `Alt+Shift+c`
 * Publish files to SharePoint
     * Save|publish|check-in automatically on Save
-    * force publish using command `>SPGo: Publish the current File`
-    * Publish a Major version with the hotkey combo: `Alt+Shift+P`
-    * Publish a Minor version with the hotkey combo: `Alt+P`
+    * Force publish using command `>SPGo: Publish the current file`
+    * Publish a major version with the hotkey combo: `Alt+Shift+p`
+    * Publish a minor version with the hotkey combo: `Alt+p`
+    * Discard checkout using command `SPGo: Discard check out`
 * Retrieve the contents of a specified folder from SharePoint
     * Enter a site-relative folder into the dialog to automatically download the contents
 * Retrieve the contents of multiple folders from SharePoint (Synchronize)
     * Specify an array of site-relative folders in the `remoteFolders` configuration node
-    * Download all subfolders automatically by using command `>SPGo: Configure Workspace`
+    * Download all subfolders automatically by using command `>SPGo: Populate workspace`
 
 
 ## Security
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session.
 
 ## Configuration and Getting Started
-To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to your SharePoint site upon save.
+To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
 
+## SPGo.json Configuration Files
 If configuration was successful, you should see a file similar to below:
 
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\Projects\\MyProject",
-    "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/project",
-    "publishingScope": "Major",
+    "workspaceRoot": "c:\\Users\\chris\\Code\\MyProject",
+    "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
+    "publishingScope": "SaveOnly",
 } 
 ```
 
-Additionally you can specify an array of remote folders in a node called `remoteFolders`, which SPGo will recursively downloaded to your local workspace when you issue the Synchronize Files command `SPGo: Synchronize Files`. Note: This WILL overwrite all local files.
+Additionally you can specify an array of remote folders in a node called `remoteFolders`, which SPGo will recursively downloaded to your local workspace when you issue the Synchronize Files command `SPGo: Populate Workspace`. Note: This WILL overwrite all local files.
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\Projects\\MyProject",
-    "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/project",
-    "publishingScope": "Major",
+    "workspaceRoot": "c:\\Users\\chris\\Code\\MyProject",
+    "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
+    "publishingScope": "SaveOnly",
     "remoteFolders": [
         "/SiteAssets/MyProject/",
         "/_catalogs/wp/",
@@ -58,11 +60,10 @@ Additionally you can specify an array of remote folders in a node called `remote
 ```
 
 ## Use
-SPGo will automatically launch when you run the Configure Workspace command `>SPGo: Configure Workspace` or any time the SPGO Configuration file `spgo.json` is detected in the root of the current workspace.
+SPGo will automatically launch when you run the Configure Workspace command `>SPGo: Configure workspace` or any time the SPGO Configuration file `spgo.json` is detected in the root of the current workspace.
 
 ## Roadmap
-* [MVP] - Synchronize local workspace with remote SharePoint site. Workspace download currently works - upload coming soon(TM)
-* [MVP] - Master Page code syntax highlighting
+* [MVP] - Code cleanup, technical debt
 * [1.1] - Remote File Compare. Merge updates from the server with your local source
 
 

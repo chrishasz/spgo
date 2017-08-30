@@ -1,13 +1,14 @@
 'use strict';
 import * as vscode from 'vscode';
-//import * as spgoData from './spgo';
 import { AppManager } from './appManager';
 import * as logger from './util/logger';
 import * as path from 'path';
 import configureWorkspace from './command/configureWorkspace';
 import initializeConfiguration from './dao/configurationDao';
+import discardCheckOut from './command/discardCheckOut';
 import resetCredentials from './command/resetCredentials';
-import synchronizeFiles from './command/synchronizeFiles';
+import populateWorkspace from './command/populateWorkspace';
+import publishWorkspace from './command/publishWorkspace';
 import retrieveFolder from './command/retrieveFolder';
 import checkOutFile from './command/checkOutFile';
 import publishFile from './command/publishFile';
@@ -22,12 +23,6 @@ export function activate(context: vscode.ExtensionContext): any {
     // Extension activated.
     logger.outputMessage('SPGo enabled.', vscode.window.spgo.outputChannel);
 
-    //Create the base configuration for this SharePoint workspace
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
-        // run config
-        configureWorkspace();
-    }));
-
     //Check out the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
@@ -36,6 +31,32 @@ export function activate(context: vscode.ExtensionContext): any {
         } else {
             checkOutFile(vscode.window.activeTextEditor.document, context);
         }
+    }));
+    
+    //Create the base configuration for this SharePoint workspace
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
+        // run config
+        configureWorkspace();
+    }));
+
+    //Create the base configuration for this SharePoint workspace
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: vscode.Uri) => {
+        if (selectedResource && selectedResource.path) {
+            vscode.workspace.openTextDocument(selectedResource)
+                .then(doc => discardCheckOut(doc, context));
+        } else {
+            discardCheckOut(vscode.window.activeTextEditor.document, context);
+        }
+    }));
+
+    //Synchronize your local environment from the latest on the server
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.populateWorkspace', () => {
+        populateWorkspace();
+    }));
+
+    //Synchronize your local environment from the latest on the server
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishWorkspace', () => {
+        publishWorkspace();
     }));
 
     //Publish the current file to the server.
@@ -68,11 +89,6 @@ export function activate(context: vscode.ExtensionContext): any {
     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.retrieveFolder', () => {
         retrieveFolder();
-    }));
-
-    //Synchronize your local environment from the latest on the server
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.synchronizeFiles', () => {
-        synchronizeFiles();
     }));
 
     // autoPublish Feature

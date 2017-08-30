@@ -14,7 +14,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "0.9.1",
+    "version": "0.10.0",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -43,10 +43,31 @@
     ],
     "main": "./out/src/extension",
     "contributes": {
-        "commands": [{ 
+        "commands": [
+        {
+            "command": "spgo.checkOutFile",
+            "title": "SPGo: Check out the current file",
+            "description": "Check out the current file from the server."
+        },
+        { 
             "command": "spgo.configureWorkspace",
-            "title": "SPGo: Configure Workspace",
+            "title": "SPGo: Configure workspace",
             "description": "Create the base configuration for the local SharePoint workspace"
+        },
+        { 
+            "command": "spgo.discardCheckOut",
+            "title": "SPGo: Discard check out",
+            "description": "Discard the current file check-out and revert server file to the previous version"
+        },
+        {
+            "command": "spgo.populateWorkspace",
+            "title": "SPGo: Populate local workspace",
+            "description": "Populate your local workspace from the latest on the server."
+        },
+        {
+            "command": "spgo.publishWorkspace",
+            "title": "SPGo: Publish local workspace",
+            "description": "Publish your local workspace to the server."
         },
         {
             "command": "spgo.publishMajor",
@@ -59,26 +80,22 @@
             "description": "Publish the current file to the server."
         },
         {
-            "command": "spgo.checkOutFile",
-            "title": "SPGo: Check out the current file",
-            "description": "Check out the current file from the server."
-        },
-        {
             "command": "spgo.resetCredentials",
-            "title": "SPGo: Reset Credentials",
+            "title": "SPGo: Reset credentials",
             "description": "Reset the current user's SharePoint credentials."
         },
         {
             "command": "spgo.retrieveFolder",
-            "title": "SPGo: Retrieve Folder",
+            "title": "SPGo: Retrieve folder",
             "description": "Download the contents of a SharePoint folder (and subfolders) to your local workspace."
-        },
-        {
-            "command": "spgo.synchronizeFiles",
-            "title": "SPGo: Synchronize Files",
-            "description": "Synchronize your local environment from the latest on the server."
         }],
-        "keybindings": [
+        "keybindings": [  
+        {
+            "key": "alt+shift+c",
+            "command": "spgo.checkOutFile",
+            "when": "editorFocus",
+            "win": "alt+shift+c"
+        },
         {
             "key": "alt+shift+p",
             "command": "spgo.publishMajor",
@@ -90,12 +107,6 @@
             "command": "spgo.publishMinor",
             "when": "editorFocus",
             "win": "alt+p"
-        },
-        {
-            "key": "alt+shift+c",
-            "command": "spgo.checkOutFile",
-            "when": "editorFocus",
-            "win": "alt+shift+c"
         }],
         "languages":[
             {

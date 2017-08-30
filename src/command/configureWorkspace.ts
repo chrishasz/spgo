@@ -49,6 +49,10 @@ export default function configureWorkspace() {
             ignoreFocusOut: true
         };
         let options: vscode.QuickPickItem[] = [{
+                description: 'Save the file to the server, but do not publish. You must manually publish via the VSCode menu or hotkey (alt+shift+p)',
+                label: 'Save and keep editing',
+                detail: Constants.PUBLISHING_SAVEONLY
+            },{
                 description: 'Automatically publish files on save',
                 label: 'Create a major Version (Publish)',
                 detail: Constants.PUBLISHING_MAJOR
