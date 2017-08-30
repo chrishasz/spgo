@@ -10,6 +10,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Auto-diff files on save conflict
 - Report information about file on open (Checked out, current version, etc.)
 
+## 0.10.0 - 2017-09-29
+### Added
+- [Command] Publish local workspace - publishes all local files to SharePoint.
+- [Command] SPGo: Discard check out - Discard the current file check-out and revert server file to the previous version.
+- Added some shine to this thing! - Progress spinner rendered to window frame during server activity.
+### Changed
+- renamed "Synchronize files" to Populate local workspace
+### Fixed
+- Readme.md typos (I need type checking assistance for capital letters!)
+
 ## 0.9.1 - 2017-09-16
 ### Added
 - Publish Minor version of a file via menu or hotkey
@@ -39,4 +49,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Project:
 - Initial project documentation (Changelog.md, Readme.md, LICENCE.txt)
 
-[Unreleased]: 
+## [Unreleased]: 

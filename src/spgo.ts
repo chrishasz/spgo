@@ -6,7 +6,7 @@ declare module 'vscode' {
     }
 }
 
-export interface IAppManager{ 
+export interface IAppManager{  
     credential? : ICredential;
     config? : IConfig;
     outputChannel: vscode.OutputChannel;
@@ -16,6 +16,15 @@ export interface IAppManager{
 export interface ICredential{
     username? : string;
     password? : string;
+}
+
+interface ICommandBase {
+
+}
+
+export interface ICommand{
+    new() : ICommandBase;
+    activate(...parameters) : void;
 }
 
 export interface IConfig{
