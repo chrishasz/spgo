@@ -1,17 +1,16 @@
+'use strict';
 var sppull = require("sppull").sppull;
 import * as path from 'path';
 import * as _ from 'lodash' 
 import * as vscode from 'vscode';
 import * as sprequest from 'sp-request';
-import * as Logger from './../util/logger';
-import * as FileHelper from './../util/fileHelper';
 
 import Uri from 'vscode-uri'
-import {IError} from './../spgo';
 import {spsave} from 'spsave';
+import {IError} from './../spgo';
+import {Logger} from '../util/logger';
 import Constants from './../constants';
 import {UrlHelper} from './../util/UrlHelper';
-import {showStatusBarProgress} from './../util/uiHelper';
 
 export function downloadFiles(remoteFolder) : Promise<any>{
     return new Promise(function (resolve, reject) {
@@ -29,9 +28,9 @@ export function downloadFiles(remoteFolder) : Promise<any>{
         };
 
         var options = {
-            spBaseFolder : sharePointSiteUrl.path,
-            spRootFolder: remoteFolder,
-            dlRootFolder: vscode.window.spgo.config.workspaceRoot
+            spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
+            spRootFolder : remoteFolder,
+            dlRootFolder: vscode.window.spgo.config.workspaceRoot // + remoteFolder
         };
         
         sppull(context, options)
@@ -60,7 +59,6 @@ export function downloadFiles(remoteFolder) : Promise<any>{
 
 export function checkoutFile(textDocument: vscode.TextDocument) : Promise<any>{
     return new Promise(function (resolve, reject) {
-        let fileName : string = FileHelper.getFileName(textDocument.fileName);
 
         let spr = sprequest.create({ 
             username: vscode.window.spgo.credential.username,
@@ -78,7 +76,7 @@ export function checkoutFile(textDocument: vscode.TextDocument) : Promise<any>{
                     }
                 });
             })
-            .then(response => {
+            .then(function(){ //response => {
                 Logger.outputMessage(`file ${textDocument.fileName} successfully checked out from server.`, vscode.window.spgo.outputChannel);
                 resolve(textDocument);
             }, err => {
@@ -91,7 +89,6 @@ export function checkoutFile(textDocument: vscode.TextDocument) : Promise<any>{
 export function undoFileCheckout(textDocument: vscode.TextDocument) : Promise<vscode.TextDocument> {
     return new Promise(function (resolve, reject) {
 
-        let fileName : string = FileHelper.getFileName(textDocument.fileName);
         let spr = sprequest.create({ 
             username: vscode.window.spgo.credential.username,
             password: vscode.window.spgo.credential.password
@@ -108,7 +105,7 @@ export function undoFileCheckout(textDocument: vscode.TextDocument) : Promise<vs
                     }
                 });
             })
-            .then(response => {
+            .then(function(){ //response => {
                 Logger.outputMessage(`Discard check-out successful for file ${textDocument.fileName}.`, vscode.window.spgo.outputChannel);
                 resolve(textDocument);
             }, err => {

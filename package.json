@@ -14,7 +14,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "0.10.0",
+    "version": "0.10.1",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -44,71 +44,73 @@
     "main": "./out/src/extension",
     "contributes": {
         "commands": [
-        {
-            "command": "spgo.checkOutFile",
-            "title": "SPGo: Check out the current file",
-            "description": "Check out the current file from the server."
-        },
-        { 
-            "command": "spgo.configureWorkspace",
-            "title": "SPGo: Configure workspace",
-            "description": "Create the base configuration for the local SharePoint workspace"
-        },
-        { 
-            "command": "spgo.discardCheckOut",
-            "title": "SPGo: Discard check out",
-            "description": "Discard the current file check-out and revert server file to the previous version"
-        },
-        {
-            "command": "spgo.populateWorkspace",
-            "title": "SPGo: Populate local workspace",
-            "description": "Populate your local workspace from the latest on the server."
-        },
-        {
-            "command": "spgo.publishWorkspace",
-            "title": "SPGo: Publish local workspace",
-            "description": "Publish your local workspace to the server."
-        },
-        {
-            "command": "spgo.publishMajor",
-            "title": "SPGo: Publish a major version of the current file",
-            "description": "Publish the current file to the server."
-        },
-        {
-            "command": "spgo.publishMinor",
-            "title": "SPGo: Publish a minor version of the current file",
-            "description": "Publish the current file to the server."
-        },
-        {
-            "command": "spgo.resetCredentials",
-            "title": "SPGo: Reset credentials",
-            "description": "Reset the current user's SharePoint credentials."
-        },
-        {
-            "command": "spgo.retrieveFolder",
-            "title": "SPGo: Retrieve folder",
-            "description": "Download the contents of a SharePoint folder (and subfolders) to your local workspace."
-        }],
-        "keybindings": [  
-        {
-            "key": "alt+shift+c",
-            "command": "spgo.checkOutFile",
-            "when": "editorFocus",
-            "win": "alt+shift+c"
-        },
-        {
-            "key": "alt+shift+p",
-            "command": "spgo.publishMajor",
-            "when": "editorFocus",
-            "win": "alt+shift+p"
-        },
-        {
-            "key": "alt+p",
-            "command": "spgo.publishMinor",
-            "when": "editorFocus",
-            "win": "alt+p"
-        }],
-        "languages":[
+            {
+                "command": "spgo.checkOutFile",
+                "title": "SPGo: Check out the current file",
+                "description": "Check out the current file from the server."
+            },
+            {
+                "command": "spgo.configureWorkspace",
+                "title": "SPGo: Configure workspace",
+                "description": "Create the base configuration for the local SharePoint workspace"
+            },
+            {
+                "command": "spgo.discardCheckOut",
+                "title": "SPGo: Discard check out",
+                "description": "Discard the current file check-out and revert server file to the previous version"
+            },
+            {
+                "command": "spgo.populateWorkspace",
+                "title": "SPGo: Populate local workspace",
+                "description": "Populate your local workspace from the latest on the server."
+            },
+            {
+                "command": "spgo.publishWorkspace",
+                "title": "SPGo: Publish local workspace",
+                "description": "Publish your local workspace to the server."
+            },
+            {
+                "command": "spgo.publishMajor",
+                "title": "SPGo: Publish a major version of the current file",
+                "description": "Publish the current file to the server."
+            },
+            {
+                "command": "spgo.publishMinor",
+                "title": "SPGo: Publish a minor version of the current file",
+                "description": "Publish the current file to the server."
+            },
+            {
+                "command": "spgo.resetCredentials",
+                "title": "SPGo: Reset credentials",
+                "description": "Reset the current user's SharePoint credentials."
+            },
+            {
+                "command": "spgo.retrieveFolder",
+                "title": "SPGo: Retrieve folder",
+                "description": "Download the contents of a SharePoint folder (and subfolders) to your local workspace."
+            }
+        ],
+        "keybindings": [
+            {
+                "key": "alt+shift+c",
+                "command": "spgo.checkOutFile",
+                "when": "editorFocus",
+                "win": "alt+shift+c"
+            },
+            {
+                "key": "alt+shift+p",
+                "command": "spgo.publishMajor",
+                "when": "editorFocus",
+                "win": "alt+shift+p"
+            },
+            {
+                "key": "alt+p",
+                "command": "spgo.publishMinor",
+                "when": "editorFocus",
+                "win": "alt+p"
+            }
+        ],
+        "languages": [
             {
                 "id": "html",
                 "aliases": [
@@ -118,7 +120,27 @@
                     ".master"
                 ]
             }
-        ]
+        ],
+        "menus": {
+            "explorer/context": [
+                {
+                    "command": "spgo.publishMajor",
+                    "group": "spgo@0"
+                },
+                {
+                    "command": "spgo.publishMinor",
+                    "group": "spgo@1"
+                },
+                {
+                    "command": "spgo.checkOutFile",
+                    "group": "spgo@2"
+                },
+                {
+                    "command": "spgo.discardCheckOut",
+                    "group": "spgo@3"
+                }
+            ]
+        }
     },
     "scripts": {
         "vscode:prepublish": "tsc -p ./",
@@ -134,12 +156,13 @@
         "@types/mocha": "^2.2.32"
     },
     "dependencies": {
-        "colors" : "^1.1.2",
-        "fs-extra" : "^3.0.1",
-        "path" : "^0.12.7",
-        "spsave" : "^3.0.2",
-        "sppull" : "^2.1.0",
-        "sp-request" : "^2.1.0",
-        "vscode-uri" : "^1.0.1"
+        "colors": "^1.1.2",
+        "fs-extra": "^3.0.1",
+        "lodash": "^4.17.4",
+        "path": "^0.12.7",
+        "spsave": "^3.0.2",
+        "sppull": "^2.1.0",
+        "sp-request": "^2.1.0",
+        "vscode-uri": "^1.0.1"
     }
 }

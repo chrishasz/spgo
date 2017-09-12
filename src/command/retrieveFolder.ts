@@ -1,19 +1,16 @@
+'use strict';
 import * as vscode from 'vscode';
-import * as path from 'path';
-import * as Logger from './../util/logger';
 import * as SpFileGateway from './../gateway/spFileGateway';
 
-import Uri from 'vscode-uri'
-import {IError} from './../spgo';
-import Constants from './../constants';
-import {showStatusBarProgress} from './../util/uiHelper';
-import verifyCredentials from './../service/authenticationservice';
+import {Logger} from '../util/logger';
+import {UiHelper} from './../util/uiHelper';
+import {AuthenticationService} from './../service/authenticationservice';
 
 export default function retrieveFolder() : Thenable<any> {
     Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);
 
-    return showStatusBarProgress('Downloading files',
-        verifyCredentials(vscode.window.spgo)
+    return UiHelper.showStatusBarProgress('Downloading files',
+        AuthenticationService.verifyCredentials(vscode.window.spgo)
             .then(downloadFiles)
             .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
     );
@@ -30,7 +27,10 @@ export default function retrieveFolder() : Thenable<any> {
                 SpFileGateway.downloadFiles(result)
                     .then(function() {
                         resolve();
-                    })
+                    }).catch(err => {
+                        Logger.outputError(err);
+                        reject();
+                    });
             });
         });
     }

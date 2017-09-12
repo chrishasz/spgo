@@ -1,9 +1,11 @@
+'use strict';
 import * as vscode from 'vscode';
 import {Credential} from './model/credential';
 import {IAppManager} from './spgo';
 import {IConfig} from './spgo';
 import {ICredential} from './spgo';
 import constants from './constants';
+import {Logger} from './util/logger';
 import initializeConfiguration from './dao/configurationDao';
 
 export class AppManager implements IAppManager {
@@ -18,10 +20,11 @@ export class AppManager implements IAppManager {
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
 
         //initialize Configuration file
-        initializeConfiguration(this).then(config => {
+        initializeConfiguration(this).then(()=> {//config => {
             this.statusBarItem.text = 'SPGo enabled';
         }).catch(err => {
-            this.statusBarItem.text = 'SPGo: Missing Configuration';
+            Logger.showError('SPGo: Missing Configuration');
+            Logger.outputError(err);
         });
         this.statusBarItem.show();
     }

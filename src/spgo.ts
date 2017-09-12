@@ -1,3 +1,4 @@
+'use strict';
 import * as vscode from 'vscode';
 
 declare module 'vscode' {
@@ -18,23 +19,13 @@ export interface ICredential{
     password? : string;
 }
 
-interface ICommandBase {
-
-}
-
-export interface ICommand{
-    new() : ICommandBase;
-    activate(...parameters) : void;
-}
 
 export interface IConfig{
     remoteFolders? : string[];
     publishingScope? : string;
-    browser? : string;
-    pollTimeout? : number;
     sharePointSiteUrl? : string;
-    sourceDirectory? : string;      //The relative directory structure underneath the VSCode local workspace root directory
-    workspaceRoot? : string;        //The full path to the local workspace root (VS Workspace root + sourceDirectory)
+    sourceDirectory? : string;      // The relative directory structure underneath the VSCode local workspace root directory
+    workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root + sourceDirectory)
 }
 
 export interface IError {

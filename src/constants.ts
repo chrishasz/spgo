@@ -1,3 +1,5 @@
+'use strict';
+
 const constants = {
     CONFIG_FILE_NAME : 'SPGo.json',
     OUTPUT_CHANNEL_NAME: 'SPGo',

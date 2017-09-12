@@ -1,9 +1,9 @@
+'use strict';
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
-import * as Logger from './../util/logger';
+import {Logger} from '../util/logger';
 
-import Uri from 'vscode-uri'
 import Constants from './../constants';
 import initializeConfiguration from './../dao/configurationDao';
 
@@ -78,7 +78,13 @@ export default function configureWorkspace() {
 
     function finished(config) {
         const defaultOptions: {} = {};
+        // prevent the sourceDirectory property from being written to disk
+        // this is an internal property only
+        delete config.workspaceRoot;
         fs.outputFile(vscode.workspace.rootPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
+        
+		config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${config.sourceDirectory}`;
+        
         return config;
     }
 }
