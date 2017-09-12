@@ -9,8 +9,8 @@
             "es6"
         ],
         "allowJs": true,
-        "noUnusedParameters": false,
-        "noImplicitThis": true
+        "noUnusedParameters": true,
+        "noUnusedLocals": true
     },
     "include": [
         "src/**/*",

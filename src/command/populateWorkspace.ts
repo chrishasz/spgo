@@ -1,20 +1,18 @@
+'use strict';
 import * as vscode from 'vscode';
-import * as path from 'path';
-import * as Logger from './../util/logger';
 import * as SpFileGateway from './../gateway/spFileGateway';
 
-import Uri from 'vscode-uri'
 import {IError} from './../spgo';
-import Constants from './../constants';
-import {showStatusBarProgress} from './../util/uiHelper';
-import verifyCredentials from './../service/authenticationservice';
+import {Logger} from '../util/logger';
+import {UiHelper} from './../util/uiHelper';
+import {AuthenticationService} from './../service/authenticationservice';
 
 export default function populateWorkspace() : Thenable<any> {
         
     Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
 
-    return showStatusBarProgress('Populating workspace',
-        verifyCredentials(vscode.window.spgo)
+    return UiHelper.showStatusBarProgress('Populating workspace',
+        AuthenticationService.verifyCredentials(vscode.window.spgo)
             .then(downloadFiles)
             .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
     );
@@ -38,7 +36,7 @@ export default function populateWorkspace() : Thenable<any> {
                 let error : IError ={
                     message : '"remoteFolders":[string] property not configured in workspace configuration file.'
                 };
-                Logger.outputError(error, vscode.window.spgo.outputChannel);
+                Logger.showError(error.message, error);
                 reject();
             }
         });

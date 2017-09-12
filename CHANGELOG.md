@@ -6,9 +6,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- Checkout|checkin|publish actions to file context menu
 - Auto-diff files on save conflict
 - Report information about file on open (Checked out, current version, etc.)
+## Fixed
+- Better bad credential management. Was bad, now better.
+
+## 0.10.1 - 2017-09-
+### Added
+- File Management (Publish, Check out, Undo check out) added as context menu items to
+- Logged Messages, Warnings, and Errors are now color coded for better readability.
+### Changed
+- Lots of code cleanup.
+### Fixed
+- [Our first Open Issue on Github!](https://github.com/readysitego/spgo/issues/7) - Consequently our first resolved issue on Github. SPGo will now properly retrieve files from the root Site Collection of a SharePoint Web Application.
+- Entering incorrect credentials will no longer cause the progress spinner to spin endlessly, robbing it of its one joy in life.
 
 ## 0.10.0 - 2017-09-29
 ### Added

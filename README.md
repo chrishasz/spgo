@@ -1,5 +1,11 @@
 # SPGo for Visual Studio Code
 
+##Feedback!
+We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u)!
+
+## Experimental
+We are looking to better integrate with SharePoint via context menu commands - e.g. Check in/Check out from the source treeview control, set as default Master, Update from server. the UX isn't great, as the menus are pretty static. Would love to hear feedback on it.
+
 ## Overview
 SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
 * Publish files on save
@@ -38,7 +44,6 @@ If configuration was successful, you should see a file similar to below:
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\Code\\MyProject",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",
 } 
@@ -48,7 +53,6 @@ Additionally you can specify an array of remote folders in a node called `remote
 ```json
 {
     "sourceDirectory": "src",
-    "workspaceRoot": "c:\\Users\\chris\\Code\\MyProject",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",
     "remoteFolders": [
