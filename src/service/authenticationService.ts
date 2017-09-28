@@ -68,11 +68,18 @@ export class AuthenticationService{
 		// Test the new credential set to make sure it is valid
 		function verify(appManager){
 			return new Promise(function(resolve, reject) {
-				
-				let spr = sprequest.create({ 
-					username: appManager.credential.username,
-					password: appManager.credential.password
-				});
+				let credentials = {
+					password: appManager.credential.password,
+					username: appManager.credential.username
+				};
+
+				let parts = appManager.credential.username.split('\\');
+				if (parts.length > 1) {
+					credentials['domain'] = parts[0];
+					credentials['username'] = parts[1];
+				}
+			
+				let spr = sprequest.create(credentials);
 
 				spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
 					.then(function(){ //response => {
