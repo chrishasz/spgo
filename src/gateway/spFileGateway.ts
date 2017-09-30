@@ -3,7 +3,6 @@ var sppull = require("sppull").sppull;
 import * as path from 'path';
 import * as _ from 'lodash' 
 import * as vscode from 'vscode';
-import * as sprequest from 'sp-request';
 
 import Uri from 'vscode-uri'
 import {spsave} from 'spsave';
@@ -11,6 +10,7 @@ import {IError} from './../spgo';
 import {Logger} from '../util/logger';
 import Constants from './../constants';
 import {UrlHelper} from './../util/UrlHelper';
+import {RequestHelper} from './../util/requestHelper'
 
 export function downloadFiles(remoteFolder) : Promise<any>{
     return new Promise(function (resolve, reject) {
@@ -21,16 +21,13 @@ export function downloadFiles(remoteFolder) : Promise<any>{
         
         var context = {
             siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
-            creds : {
-                username: vscode.window.spgo.credential.username,
-                password: vscode.window.spgo.credential.password
-            }
+            creds : RequestHelper.createCredentials(vscode.window.spgo)
         };
 
         var options = {
             spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
             spRootFolder : remoteFolder,
-            dlRootFolder: vscode.window.spgo.config.workspaceRoot // + remoteFolder
+            dlRootFolder: vscode.window.spgo.config.workspaceRoot
         };
         
         sppull(context, options)
@@ -60,10 +57,7 @@ export function downloadFiles(remoteFolder) : Promise<any>{
 export function checkoutFile(textDocument: vscode.TextDocument) : Promise<any>{
     return new Promise(function (resolve, reject) {
 
-        let spr = sprequest.create({ 
-            username: vscode.window.spgo.credential.username,
-            password: vscode.window.spgo.credential.password
-        });
+        let spr = RequestHelper.createRequest(vscode.window.spgo);
 
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
         
@@ -89,10 +83,7 @@ export function checkoutFile(textDocument: vscode.TextDocument) : Promise<any>{
 export function undoFileCheckout(textDocument: vscode.TextDocument) : Promise<vscode.TextDocument> {
     return new Promise(function (resolve, reject) {
 
-        let spr = sprequest.create({ 
-            username: vscode.window.spgo.credential.username,
-            password: vscode.window.spgo.credential.password
-        });
+        let spr = RequestHelper.createRequest(vscode.window.spgo);
         
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
 
@@ -133,10 +124,7 @@ export function uploadFileToServer(textDocument: vscode.TextDocument, publishing
 
             var coreOptions = buildCoreUploadOptions(publishingScope);
             
-            var creds = {
-                username: vscode.window.spgo.credential.username,
-                password: vscode.window.spgo.credential.password
-            };
+            var credentials = RequestHelper.createCredentials(vscode.window.spgo);
 
             var fileOptions = {
                 folder: remoteFolder,
@@ -145,7 +133,7 @@ export function uploadFileToServer(textDocument: vscode.TextDocument, publishing
             };
 
 
-            spsave(coreOptions, creds, fileOptions)
+            spsave(coreOptions, credentials, fileOptions)
                 .then(function(){
                     Logger.outputMessage(`file ${textDocument.fileName} successfully saved to server.`, vscode.window.spgo.outputChannel);
                     resolve(textDocument);
@@ -187,10 +175,7 @@ export function uploadWorkspaceToServer(publishingScope? : string) : Promise<vsc
 
             var coreOptions = buildCoreUploadOptions(publishingScope);
             
-            var creds = {
-                username: vscode.window.spgo.credential.username,
-                password: vscode.window.spgo.credential.password
-            };
+            var credentials = RequestHelper.createCredentials(vscode.window.spgo);
 
             var fileOptions = {
                 glob : localFilePath + '/**/*.*',
@@ -198,7 +183,7 @@ export function uploadWorkspaceToServer(publishingScope? : string) : Promise<vsc
                 folder: '/'
             };
 
-            spsave(coreOptions, creds, fileOptions)
+            spsave(coreOptions, credentials, fileOptions)
                 .then(function(){
                     Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel);
                     resolve();

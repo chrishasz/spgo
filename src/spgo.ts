@@ -16,6 +16,7 @@ export interface IAppManager{
 
 export interface ICredential{
     username? : string;
+    domain? : string;
     password? : string;
 }
 
