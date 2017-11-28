@@ -1,15 +1,16 @@
 'use strict';
 import * as vscode from 'vscode';
-import * as SpFileGateway from './../gateway/spFileGateway';
 
 import {IError} from './../spgo';
 import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
+import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
 export default function populateWorkspace() : Thenable<any> {
         
     Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
+    let fileService : SPFileService = new SPFileService();
 
     return UiHelper.showStatusBarProgress('Populating workspace',
         AuthenticationService.verifyCredentials(vscode.window.spgo)
@@ -24,7 +25,7 @@ export default function populateWorkspace() : Thenable<any> {
 
             if(vscode.window.spgo.config.remoteFolders){
                 for (let folder of vscode.window.spgo.config.remoteFolders) {
-                    downloads.push(SpFileGateway.downloadFiles(folder));
+                    downloads.push(fileService.downloadFiles(folder));
                 }
                 Promise.all(downloads)
                     .then(function(){

@@ -23,23 +23,19 @@ export class RequestHelper {
         return credentials;
     }
 
-    static createRequest(appManager : IAppManager) : spRequest.ISPRequest {
+    static createHeaders(appManager : IAppManager, digest : string) : any { 
+        if(appManager.credential.username.split('\\').length > 1){
+            return {
+                'X-RequestDigest': digest,
+                "X-FORMS_BASED_AUTH_ACCEPTED": "f" 
+            }
+        }   
+        return {
+            'X-RequestDigest': digest
+        }
+    }
 
-        // let credentials = {
-        //     password: appManager.credential.password,
-        //     username: appManager.credential.username,
-        //     domain: null
-        // };
-
-        // let parts = appManager.credential.username.split('\\');
-        // if (parts.length > 1) {
-        //     credentials.domain = parts[0];
-        //     credentials.username = parts[1];
-        // }
-        // else{
-        //     appManager.credential.username
-        // }
-    
+    static createRequest(appManager : IAppManager) : spRequest.ISPRequest {    
         return spRequest.create(this.createCredentials(appManager));
     }
 

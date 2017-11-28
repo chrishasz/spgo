@@ -10,7 +10,8 @@
         ],
         "allowJs": true,
         "noUnusedParameters": true,
-        "noUnusedLocals": true
+        "noUnusedLocals": true,
+        "noImplicitThis": true
     },
     "include": [
         "src/**/*",

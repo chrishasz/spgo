@@ -27,13 +27,19 @@ export class Logger {
     static outputMessage(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
         outputChannel.appendLine(message);
-        console.log(message);
-    };
+    }
+
+    // static outputMessage(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
+    //     if(error && error.message){
+    //         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
+    //         outputChannel.appendLine(error.message);
+    //     }
+    // };
 
     static outputWarning(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
         outputChannel.appendLine(Colors.yellow(message));
-    };
+    }
     
     static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
         if(error && error.message){
@@ -42,6 +48,10 @@ export class Logger {
             outputChannel.appendLine(Colors.red(error.message));
             outputChannel.appendLine(Colors.red('===============================================================================\n'));
         }
-    };
+    }
+
+    static updateStatusBar( message: string) : void{
+        vscode.window.spgo.statusBarItem.text = message;
+    }
 }
 

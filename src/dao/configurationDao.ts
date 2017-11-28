@@ -20,27 +20,34 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 
 			var configFilePath = vscode.workspace.rootPath + path.sep + Constants.CONFIG_FILE_NAME;
 			
-			fs.pathExists(configFilePath, (err, exists) => {
-				// console.log(err) // => null
-				// console.log(exists) // => false
-				if( exists){
-					self.config = _.extend(self.config || {}, fs.readJsonSync(configFilePath));
-					// this is an internal property only
-					self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
-				}
-				else{
-					Logger.outputMessage(err);
-					//create the file
-					fs.ensureFileSync(configFilePath);
-					// hydrage self.config
-					self.config = self.config || {};
-				}
+			fs.stat(configFilePath, (err) => {
+				try{
+					// file exists!
+					if( err == null){
+						self.config = _.extend(self.config || {}, fs.readJsonSync(configFilePath));
+						// this is an internal property only
+						self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
+					}
+					else{
+						Logger.outputMessage(err);
+						//create the file
+						fs.ensureFileSync(configFilePath);
+						// hydrate self.config
+						self.config = self.config || {};
+					}
 
-				if (typeof self.config === 'object' && !self.config.sourceDirectory) {
+					if (typeof self.config === 'object' && !self.config.sourceDirectory) {
+						self.config.sourceDirectory = 'src';
+					}
+		
+					resolve(self.config);
+				} 
+				catch (fileErr) {
+					Logger.outputError(fileErr);
+					self.config = {};
 					self.config.sourceDirectory = 'src';
+					resolve(self.config);
 				}
-	
-				resolve(self.config);
 			});	
 		} 
 		catch (err) {

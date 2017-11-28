@@ -32,8 +32,12 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
     * Download all subfolders automatically by using command `>SPGo: Populate workspace`
 
 
-## Security
-Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session.
+## Security and Authentication Support
+Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
+* Digest (Office365)
+* NTLM (most on-premise installations)
+* NTLM + wwwAuth
+A note for on-premise environments: If your Web Application does not implement one of the above authentication mechanisms, you can still use SPGo by extending your SharePoint Web Aplication to an additional zone that does implement a supported authentication mechanism.
 
 ## Configuration and Getting Started
 To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
@@ -82,6 +86,7 @@ I want to thank the following developers for inspiration and source packages:
 * [John Nelson](https://github.com/celador): ForceCode author - example of a great VSCode IDE extension
 * [Sergey Sergeev](https://github.com/s-KaiNet) : sp-request, spsave author
 * [Andrew Koltyakov](https://github.com/koltyakov) : sppull author
+* [@pkreipke](https://github.com/pkreipke) + [@lafayetteduarte](https://github.com/lafayetteduarte) : Authentication support
 
 ## More about SiteGo
 SiteGo is a SharePoint collaboration platform that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).

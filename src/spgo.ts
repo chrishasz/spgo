@@ -20,7 +20,6 @@ export interface ICredential{
     password? : string;
 }
 
-
 export interface IConfig{
     remoteFolders? : string[];
     publishingScope? : string;
@@ -31,4 +30,11 @@ export interface IConfig{
 
 export interface IError {
     message: string;
+}
+
+export interface IFileInformation{
+    checkOutType : number;
+    checkOutBy : string;
+    name : string;
+    timeLastModified : Date;
 }

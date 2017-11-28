@@ -1,11 +1,11 @@
 'use strict';
 import * as vscode from 'vscode';
-import * as SpFileGateway from './../gateway/spFileGateway';
 
 import {Logger} from '../util/logger';
 import Constants from './../constants';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
+import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
 
@@ -13,6 +13,7 @@ export default function publishFile(textDocument: vscode.TextDocument, publishin
 
     if( textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
         let fileName : string = FileHelper.getFileName(textDocument.fileName);
+        let fileService : SPFileService = new SPFileService();
         
         //ToDo: This is hacky - clean this up.
         if( publishingScope === Constants.PUBLISHING_MAJOR){
@@ -20,7 +21,7 @@ export default function publishFile(textDocument: vscode.TextDocument, publishin
          
             return UiHelper.showStatusBarProgress(`Publishing major file version:  ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                    .then(SpFileGateway.publishMajorFileVersion)
+                    .then(fileService.publishMajorFileVersion)
                     .then(function(){
                         Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                     })
@@ -32,7 +33,7 @@ export default function publishFile(textDocument: vscode.TextDocument, publishin
 
             return UiHelper.showStatusBarProgress(`Publishing minor file version:  ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                    .then(SpFileGateway.publishMinorFileVersion)
+                    .then(fileService.publishMinorFileVersion)
                     .then(function(){
                         Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                     })

@@ -61,10 +61,6 @@ export default function configureWorkspace() {
                 label: 'Create a minor version',
                 detail: Constants.PUBLISHING_MINOR
             },{
-                description: 'Save the file to the server, but do not publish. You must manually publish via the VSCode menu or hotkey (alt+shift+p)',
-                label: 'Save and keep editing',
-                detail: Constants.PUBLISHING_SAVEONLY
-            },{
                 description: 'Do not save the file to the server. You must manually publish via the VSCode menu or hotkey (alt+shift+p)',
                 label: 'Do nothing',
                 detail: Constants.PUBLISHING_NONE

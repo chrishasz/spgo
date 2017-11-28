@@ -15,6 +15,7 @@ import retrieveFolder from './command/retrieveFolder';
 import checkOutFile from './command/checkOutFile';
 import publishFile from './command/publishFile';
 import saveFile from './command/saveFile';
+import getCurrentFileInformation from './command/getCurrentFileInformation';
 import Constants from './constants';
 
 export function activate(context: vscode.ExtensionContext): any {
@@ -113,6 +114,15 @@ export function activate(context: vscode.ExtensionContext): any {
             }
         }
     }));
+
+    //get file info when the active text document changes.
+    context.subscriptions.push(vscode.workspace.onDidOpenTextDocument((textDocument: vscode.TextDocument) => {
+        if (vscode.window.spgo.config && textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
+            getCurrentFileInformation(textDocument);
+        }
+    }));
+
+
 }
 
 // this method is called when your extension is deactivated
