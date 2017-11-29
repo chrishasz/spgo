@@ -13,7 +13,7 @@ export default function publishWorkspace() : Thenable<any> {
     
     return UiHelper.showStatusBarProgress('Publishing workspace', 
         AuthenticationService.verifyCredentials(vscode.window.spgo)
-            .then(fileService.uploadWorkspaceToServer)
+            .then(() => fileService.uploadWorkspaceToServer)
             .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
     );
 }

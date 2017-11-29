@@ -1,7 +1,7 @@
 'use strict';
 import * as vscode from 'vscode';
-import {Logger} from '../util/logger';
 
+import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
 import {SPFileService} from './../service/spFileService';
@@ -17,7 +17,10 @@ export default function discardCheckOut(textDocument: vscode.TextDocument) : The
         
         return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then(fileService.undoFileCheckout)
+                .then(() => fileService.undoFileCheckout)
+                .then(() => {
+                    Logger.outputMessage(`Discard check-out successful for file ${textDocument.fileName}.`, vscode.window.spgo.outputChannel);
+                })
                 .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
         );
     }

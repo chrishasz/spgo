@@ -50,8 +50,11 @@ export class Logger {
         }
     }
 
-    static updateStatusBar( message: string) : void{
+    static updateStatusBar( message: string, duration? : number) : void{
         vscode.window.spgo.statusBarItem.text = message;
+        if(duration){
+            global.setTimeout(() => {vscode.window.spgo.statusBarItem.text = "";}, duration * 1000);
+        }
     }
 }
 

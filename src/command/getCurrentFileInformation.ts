@@ -16,7 +16,7 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
 
         return UiHelper.showStatusBarProgress('',
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then(fileService.getFileInformation)
+                .then(() => fileService.getFileInformation)
                 .then( fileInfo => showFileInformation(fileInfo))
                 .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
         );
@@ -24,10 +24,13 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
 
     function showFileInformation(fileInfo : IFileInformation) : void{
         
-        Logger.outputMessage('Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy);
+        Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
 
-        if( fileInfo.checkOutType == 2){
-            Logger.updateStatusBar(`Checked out to user: ${fileInfo.checkOutBy}`);
+        if( fileInfo.checkOutType == 0){
+            Logger.updateStatusBar(`File Checked out to user: ${fileInfo.checkOutBy}`, 5);
+        }
+        else{
+            Logger.updateStatusBar(`File is not checked out.`, 5);
         }
     }
 }

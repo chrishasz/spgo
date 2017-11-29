@@ -1,6 +1,8 @@
 'use strict';
 import * as spRequest from 'sp-request';
+
 import {IAppManager} from './../spgo';
+import Constants from './../constants';
 
 export class RequestHelper {
 
@@ -24,19 +26,39 @@ export class RequestHelper {
     }
 
     static createHeaders(appManager : IAppManager, digest : string) : any { 
-        if(appManager.credential.username.split('\\').length > 1){
-            return {
-                'X-RequestDigest': digest,
-                "X-FORMS_BASED_AUTH_ACCEPTED": "f" 
-            }
-        }   
-        return {
-            'X-RequestDigest': digest
+
+        let headers : any = {};
+
+        if( Constants.SECURITY_NTLM == appManager.config.authenticationType){
+            process.env['_sp_request_headers'] = JSON.stringify({
+                'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
+            });
+            headers['X-RequestDigest'] = digest
         }
+        else if( Constants.SECURITY_DIGEST == appManager.config.authenticationType){
+            headers['X-RequestDigest'] = digest
+        }
+
+        return headers;
+
+        // if(appManager.credential.username.split('\\').length > 1){
+        //     return {
+        //         'X-RequestDigest': digest,
+        //         "X-FORMS_BASED_AUTH_ACCEPTED": "f" 
+        //     }
+        // }   
+        // return {
+        //     'X-RequestDigest': digest
+        // }
     }
 
-    static createRequest(appManager : IAppManager) : spRequest.ISPRequest {    
+    static createRequest(appManager : IAppManager) : spRequest.ISPRequest {
         return spRequest.create(this.createCredentials(appManager));
     }
 
+    static setNtlmHeader(){
+        process.env['_sp_request_headers'] = JSON.stringify({
+            'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
+        });
+    }
 }

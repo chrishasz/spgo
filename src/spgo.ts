@@ -21,6 +21,8 @@ export interface ICredential{
 }
 
 export interface IConfig{
+    authenticationType? : string;
+    authenticationDetails? : any;
     remoteFolders? : string[];
     publishingScope? : string;
     sharePointSiteUrl? : string;
@@ -34,7 +36,7 @@ export interface IError {
 
 export interface IFileInformation{
     checkOutType : number;
-    checkOutBy : string;
+    checkOutBy? : string;
     name : string;
     timeLastModified : Date;
 }

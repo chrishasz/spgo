@@ -8,8 +8,7 @@ import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
 
-/* tslint:disable:noUnusedParameters */
-export default function checkOutFile(textDocument: vscode.TextDocument) : Thenable<any> { //, context: vscode.ExtensionContext) : Thenable<any> {
+export default function checkOutFile(textDocument: vscode.TextDocument) : Thenable<any> {
 
     if( textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
         let fileName : string = FileHelper.getFileName(textDocument.fileName);
@@ -19,7 +18,7 @@ export default function checkOutFile(textDocument: vscode.TextDocument) : Thenab
 
         return UiHelper.showStatusBarProgress(`Checking out File:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then(fileService.checkoutFile)
+                .then(() => fileService.checkoutFile)
                 .then(() => {
                     Logger.outputMessage(`file ${textDocument.fileName} successfully checked out from server.`, vscode.window.spgo.outputChannel);
                 })

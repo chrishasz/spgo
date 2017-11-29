@@ -27,12 +27,10 @@ export class SPFileGateway{
                 .then(digest => {
                     return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckOut()", {
                         body: {},
-                        headers: {
-                            'X-RequestDigest': digest,
-                        }
+                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
                     });
                 })
-                .then(function(){ //response => {
+                .then(function(){
                     resolve();
                 }, err => {
                     reject(err);
@@ -74,11 +72,7 @@ export class SPFileGateway{
 
     public getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>{
         return new Promise(function (resolve, reject) {
-            
-            //let spr = RequestHelper.createRequest(vscode.window.spgo);
-    
-            //let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
-            
+                        
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
                     return spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
@@ -88,12 +82,11 @@ export class SPFileGateway{
                     .then( response => {
                         let fileInfo : IFileInformation = {
                             checkOutType : response.body.d.CheckOutType,
-                            checkOutBy : response.body.d.CheckedOutByUser,
                             name : response.body.d.Name,
                             timeLastModified : response.body.d.TimeLastModified
                         }
 
-                        if( fileInfo.checkOutType == 2){
+                        if( fileInfo.checkOutType == 0){
                             // '/_api/web/getfilebyserverrelativeurl(\'' + encodeURI(fileName) + '\')/Checkedoutbyuser?$select=Title,Email';
                             spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckedOutByUser?$select=Title,Email", {
                                 body: {},
@@ -111,6 +104,23 @@ export class SPFileGateway{
                         reject(err);
                     });
                 })
+        });
+    }
+
+    public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+        return new Promise((resolve, reject) => {            
+            spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
+                .then(digest => {
+                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/undocheckout()", {
+                        body: {},
+                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
+                    });
+                })
+                .then(function(){ //response => {
+                    resolve();
+                }, err => {
+                    reject(err);
+                });
         });
     }
 
