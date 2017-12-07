@@ -21,7 +21,7 @@ export default function publishFile(textDocument: vscode.TextDocument, publishin
          
             return UiHelper.showStatusBarProgress(`Publishing major file version:  ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                    .then(() => fileService.publishMajorFileVersion)
+                    .then((textDocument) => fileService.publishMajorFileVersion(textDocument))
                     .then(function(){
                         Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                     })
@@ -33,7 +33,7 @@ export default function publishFile(textDocument: vscode.TextDocument, publishin
 
             return UiHelper.showStatusBarProgress(`Publishing minor file version:  ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                    .then(() => fileService.publishMinorFileVersion)
+                    .then((textDocument) => fileService.publishMinorFileVersion(textDocument))
                     .then(function(){
                         Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                     })

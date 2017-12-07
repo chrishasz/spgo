@@ -17,7 +17,7 @@ export default function discardCheckOut(textDocument: vscode.TextDocument) : The
         
         return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then(() => fileService.undoFileCheckout)
+                .then((textDocument) => fileService.undoFileCheckout(textDocument))
                 .then(() => {
                     Logger.outputMessage(`Discard check-out successful for file ${textDocument.fileName}.`, vscode.window.spgo.outputChannel);
                 })

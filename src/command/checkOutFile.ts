@@ -18,7 +18,7 @@ export default function checkOutFile(textDocument: vscode.TextDocument) : Thenab
 
         return UiHelper.showStatusBarProgress(`Checking out File:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then(() => fileService.checkoutFile)
+                .then((textDocument) => fileService.checkoutFile(textDocument))
                 .then(() => {
                     Logger.outputMessage(`file ${textDocument.fileName} successfully checked out from server.`, vscode.window.spgo.outputChannel);
                 })

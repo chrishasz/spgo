@@ -1,5 +1,11 @@
 'use strict';
 import * as spRequest from 'sp-request';
+import {
+    IUserCredentials,
+    IOnpremiseUserCredentials,
+    IOnpremiseFbaCredentials,
+    IAdfsUserCredentials
+  } from 'node-sp-auth';
 
 import {IAppManager} from './../spgo';
 import Constants from './../constants';
@@ -7,22 +13,55 @@ import Constants from './../constants';
 export class RequestHelper {
 
     static createCredentials(appManager : IAppManager) : any {
-        let credentials = {
-            password: appManager.credential.password,
-            username: appManager.credential.username,
-            domain: null
-        };
+        switch(appManager.config.authenticationType){
+            case Constants.SECURITY_ADFS:{
+                let credentials : IAdfsUserCredentials = {
+                    password: appManager.credential.password,
+                    username: appManager.credential.username,
+                    relyingParty: appManager.config.authenticationDetails.relayingParty,
+                    adfsUrl: appManager.config.authenticationDetails.adfsUrl
+                };
+                
+                return credentials;
+            }
+            case Constants.SECURITY_DIGEST: {
+                let credentials : IUserCredentials = {
+                    password: appManager.credential.password,
+                    username: appManager.credential.username
+                };
+                
+                return credentials;
+            }
+            case Constants.SECURITY_FORMS: {
+                let credentials : IOnpremiseFbaCredentials = {
+                    password: appManager.credential.password,
+                    username: appManager.credential.username,
+                    fba: true
+                  };
+                
+                return credentials;
+            }
+            case Constants.SECURITY_NTLM: {
+                let credentials : IOnpremiseUserCredentials ;
+                let parts : string[] = appManager.credential.username.split('\\');
+                if (parts.length > 1) {
+                    credentials.domain = parts[0];
+                    credentials.password = appManager.credential.password;
+                    credentials.username = parts[1];
+                }
+                
+                return credentials;
+            }
+            default:{
+                let credentials : IUserCredentials = {
+                    password: appManager.credential.password,
+                    username: appManager.credential.username
+                };
+                
+                return credentials;
+            }
 
-        let parts = appManager.credential.username.split('\\');
-        if (parts.length > 1) {
-            credentials.domain = parts[0];
-            credentials.username = parts[1];
         }
-        else{
-            appManager.credential.username
-        }
-
-        return credentials;
     }
 
     static createHeaders(appManager : IAppManager, digest : string) : any { 
@@ -40,16 +79,6 @@ export class RequestHelper {
         }
 
         return headers;
-
-        // if(appManager.credential.username.split('\\').length > 1){
-        //     return {
-        //         'X-RequestDigest': digest,
-        //         "X-FORMS_BASED_AUTH_ACCEPTED": "f" 
-        //     }
-        // }   
-        // return {
-        //     'X-RequestDigest': digest
-        // }
     }
 
     static createRequest(appManager : IAppManager) : spRequest.ISPRequest {

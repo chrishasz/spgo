@@ -37,10 +37,19 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
 * Digest (Office365)
 * NTLM (most on-premise installations)
 * NTLM + wwwAuth
-A note for on-premise environments: If your Web Application does not implement one of the above authentication mechanisms, you can still use SPGo by extending your SharePoint Web Aplication to an additional zone that does implement a supported authentication mechanism.
+* ADFS
+A note for ADFS Authentication: You will need to add the following JSON node to the root of your your SPGo.json file:
+```json
+{
+    "authenticationDetails": {
+        "relayingParty": "[relaying party]",
+        "adfsUrl": "ADFS Url"
+    }
+} 
+```
 
 ## Configuration and Getting Started
-To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
+To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
 
 ## SPGo.json Configuration Files
 If configuration was successful, you should see a file similar to below:

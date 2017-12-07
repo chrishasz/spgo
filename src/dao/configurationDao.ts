@@ -12,7 +12,7 @@ import Constants from './../constants';
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
 	return new Promise(function (resolve, reject) {
 		var self: IAppManager = appManager || vscode.window.spgo;
-		try {
+		try{
 			
 			if (!vscode.workspace.rootPath) {
 				throw { message: 'You must open a folder with VSCode' }

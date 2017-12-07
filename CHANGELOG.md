@@ -7,15 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Auto-diff files on save conflict
-- Report information about file on open (Checked out, current version, etc.)
-## Fixed
-- Better bad credential management. Was bad, now better.
 
-## 0.10.2 - 2017-09-
+## 0.10.2 - 2017-12-06
 ### Added
 - Current file status (Checked in | Checked out) now displayed in the VS Code footer.
+- Added support for Forms authentication.
+- Added support for ADFS authentication.
+### Changed
+- Enhanced support for NTLM authentication.
+- Refactored the command objects and much of the File Service/Gateway code to be more Typescripty.
 ###Fixed
 - Changelog dates were a month off. And you thought you WERE writing SharePoint code in the future!
+- Better bad credential management. Was bad, now better.
+- Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error (or manual cancellation by the user) occurs during workspace configuration, SPGo will no properly handle an empty config file.
+- Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/10) - Authentication issues when using Multi Auth Site (NTLM + Forms).
+- Resolved [This other, other issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error or cancellation causes an empty SPGo.json file to be created, SPGo will now properly recreate the json config on a subsequent use of the `>SPGo: Configure Workspace` command.
 
 ## 0.10.1 - 2017-09-11
 ### Added

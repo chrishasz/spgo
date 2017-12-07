@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext): any {
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
                 initializeConfiguration(vscode.window.spgo)
                     .then(function() {
-                        Logger.outputMessage('Configuration file reloaded', vscode.window.spgo.outputChannel);
+                        Logger.updateStatusBar('Configuration file reloaded', 5);
                     })
                     .catch(function(err) {
                         Logger.outputError(err, vscode.window.spgo.outputChannel);
