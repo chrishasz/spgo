@@ -12,6 +12,7 @@ export default function configureWorkspace() {
 
     return getSharePointSiteUrl()
         .then(cfg => getPublishingScope(cfg))
+        .then(cfg => getAuthenticationType(cfg))
         .then(cfg => finished(cfg))
         .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel));
         
@@ -61,10 +62,6 @@ export default function configureWorkspace() {
                 label: 'Create a minor version',
                 detail: Constants.PUBLISHING_MINOR
             },{
-                description: 'Save the file to the server, but do not publish. You must manually publish via the VSCode menu or hotkey (alt+shift+p)',
-                label: 'Save and keep editing',
-                detail: Constants.PUBLISHING_SAVEONLY
-            },{
                 description: 'Do not save the file to the server. You must manually publish via the VSCode menu or hotkey (alt+shift+p)',
                 label: 'Do nothing',
                 detail: Constants.PUBLISHING_NONE
@@ -72,6 +69,34 @@ export default function configureWorkspace() {
         ];
         return vscode.window.showQuickPick(options, quickPickOptions).then((res: vscode.QuickPickItem) => {
             config.publishingScope = res.detail;
+            return config;
+        });
+    }
+
+    function getAuthenticationType(config) {
+        let quickPickOptions: vscode.QuickPickOptions = {
+            ignoreFocusOut: true
+        };
+        let options: vscode.QuickPickItem[] = [{
+                description: 'Used in Office 365 instances',
+                label: 'Digest',
+                detail: Constants.SECURITY_DIGEST
+            },{
+                description: 'Used to authenticate against a system on a Windows domain or stand-alone systems.',
+                label: 'NTLM',
+                detail: Constants.SECURITY_NTLM
+            }, {
+                description: 'Common username/password setup for web sites.',
+                label: 'Forms',
+                detail: Constants.SECURITY_FORMS
+            }, {
+                description: 'Used to authenticate against a system using federated authentication.',
+                label: 'ADFS',
+                detail: Constants.SECURITY_ADFS
+            }
+        ];
+        return vscode.window.showQuickPick(options, quickPickOptions).then((res: vscode.QuickPickItem) => {
+            config.authenticationType = res.detail;
             return config;
         });
     }

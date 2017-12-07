@@ -16,11 +16,13 @@ export interface IAppManager{
 
 export interface ICredential{
     username? : string;
+    domain? : string;
     password? : string;
 }
 
-
 export interface IConfig{
+    authenticationType? : string;
+    authenticationDetails? : any;
     remoteFolders? : string[];
     publishingScope? : string;
     sharePointSiteUrl? : string;
@@ -30,4 +32,11 @@ export interface IConfig{
 
 export interface IError {
     message: string;
+}
+
+export interface IFileInformation{
+    checkOutType : number;
+    checkOutBy? : string;
+    name : string;
+    timeLastModified : Date;
 }

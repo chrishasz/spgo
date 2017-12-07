@@ -1,9 +1,9 @@
 'use strict';
 import * as vscode from 'vscode';
-import * as sprequest from 'sp-request';
 
 import {IAppManager} from './../spgo';
 import {Logger} from '../util/logger';
+import {RequestHelper} from './../util/requestHelper'
 
 export class AuthenticationService{
 	static verifyCredentials(appManager : IAppManager, payload? : any): Promise<any> {
@@ -69,10 +69,7 @@ export class AuthenticationService{
 		function verify(appManager){
 			return new Promise(function(resolve, reject) {
 				
-				let spr = sprequest.create({ 
-					username: appManager.credential.username,
-					password: appManager.credential.password
-				});
+				let spr = RequestHelper.createRequest(appManager);
 
 				spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
 					.then(function(){ //response => {
@@ -86,8 +83,7 @@ export class AuthenticationService{
 			});
 		}
 
-		function processNextCommand(appManager) {
-			
+		function processNextCommand(appManager) {			
 			return new Promise(function (resolve, reject) {
 				if(appManager && appManager.credential){
 					resolve(payload);

@@ -1,7 +1,6 @@
 'use strict';
 import {ICredential} from '../spgo';
 
-
 export class Credential implements ICredential {
     private _username: string;
     private _password: string;
@@ -17,5 +16,4 @@ export class Credential implements ICredential {
     public get password() : string {
         return this._password;
     }
-
 }

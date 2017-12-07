@@ -1,13 +1,14 @@
 'use strict';
 import * as vscode from 'vscode';
-import * as SpFileGateway from './../gateway/spFileGateway';
 
 import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
+import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
 export default function retrieveFolder() : Thenable<any> {
     Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);
+    let fileService : SPFileService = new SPFileService();
 
     return UiHelper.showStatusBarProgress('Downloading files',
         AuthenticationService.verifyCredentials(vscode.window.spgo)
@@ -24,7 +25,7 @@ export default function retrieveFolder() : Thenable<any> {
                 prompt: 'Enter a site relative path to the folder or file you would like to download. WARNING: This will overwrite all local files!!',
             };
             vscode.window.showInputBox(options).then(result => {
-                SpFileGateway.downloadFiles(result)
+                fileService.downloadFiles(result)
                     .then(function() {
                         resolve();
                     }).catch(err => {
