@@ -4,6 +4,7 @@ import { AppManager } from './appManager';
 import * as path from 'path';
 
 
+import compareFileWithServer from './command/compareFileWithServer';
 import {Logger} from './util/logger';
 import configureWorkspace from './command/configureWorkspace';
 import initializeConfiguration from './dao/configurationDao';
@@ -36,6 +37,15 @@ export function activate(context: vscode.ExtensionContext): any {
             checkOutFile(vscode.window.activeTextEditor.document);
         }
     }));
+
+    //Compare the selected file with it's version on the server.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: vscode.Uri) => {
+        if (selectedResource && selectedResource.path) {
+            compareFileWithServer(selectedResource);
+        } else {
+            compareFileWithServer(vscode.window.activeTextEditor.document.uri);
+        }
+    }));
     
     //Create the base configuration for this SharePoint workspace
     context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
@@ -43,7 +53,7 @@ export function activate(context: vscode.ExtensionContext): any {
         configureWorkspace();
     }));
 
-    //Create the base configuration for this SharePoint workspace
+    //Discard the checkout of the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
             vscode.workspace.openTextDocument(selectedResource)
