@@ -1,5 +1,8 @@
 # SPGo for Visual Studio Code
 
+## Final Preview Build
+We are really excited to announce that this will be our final preview branch! SPGo 1.0 will feature the ability to compare files between your local workspace and SharePoint and then we will be live. Thank you, everyone, for your feedback, useage and encouragement in making SPGo a reality!
+
 ## Feedback!
 We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u)!
 
