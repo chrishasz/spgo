@@ -14,7 +14,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "0.10.2",
+    "version": "0.10.3",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -50,6 +50,11 @@
                 "description": "Check out the current file from the server."
             },
             {
+                "command": "spgo.compareFileWithServer",
+                "title": "SPGo: Compare File With Server",
+                "description": "Compare the current open file with its instance on the server."
+            },
+            {
                 "command": "spgo.configureWorkspace",
                 "title": "SPGo: Configure workspace",
                 "description": "Create the base configuration for the local SharePoint workspace"
@@ -64,11 +69,7 @@
                 "title": "SPGo: Populate local workspace",
                 "description": "Populate your local workspace from the latest on the server."
             },
-            {
-                "command": "spgo.publishWorkspace",
-                "title": "SPGo: Publish local workspace",
-                "description": "Publish your local workspace to the server."
-            },
+
             {
                 "command": "spgo.publishMajor",
                 "title": "SPGo: Publish a major version of the current file",
@@ -123,21 +124,22 @@
         ],
         "menus": {
             "explorer/context": [
+
                 {
                     "command": "spgo.publishMajor",
-                    "group": "spgo@0"
-                },
-                {
-                    "command": "spgo.publishMinor",
                     "group": "spgo@1"
                 },
                 {
-                    "command": "spgo.checkOutFile",
+                    "command": "spgo.publishMinor",
                     "group": "spgo@2"
                 },
                 {
-                    "command": "spgo.discardCheckOut",
+                    "command": "spgo.checkOutFile",
                     "group": "spgo@3"
+                },
+                {
+                    "command": "spgo.discardCheckOut",
+                    "group": "spgo@4"
                 }
             ]
         }
@@ -161,7 +163,7 @@
         "lodash": "^4.17.4",
         "path": "^0.12.7",
         "sp-request": "^2.1.2",
-        "sppull": "^2.2.2",
+        "sppull": "^2.2.5",
         "spsave": "^3.0.2",
         "vscode-uri": "^1.0.1"
     }
