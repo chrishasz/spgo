@@ -1,5 +1,6 @@
 'use strict';
 //var sppull = require("sppull").sppull;
+import * as os from 'os';
 import * as path from 'path';
 import * as _ from 'lodash'; 
 import * as vscode from 'vscode';
@@ -54,6 +55,26 @@ export class SPFileService{
         }
 
         return fileGateway.downloadFiles(remoteFolder, context, options);
+    }
+
+    public downloadFileMajorVersion(localFilePath : string) : Promise<any>{
+        let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+        let fileUri : Uri = UrlHelper.getServerRelativeFileUri(localFilePath);
+        
+        let context : any = {
+            siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
+            creds : RequestHelper.createCredentials(vscode.window.spgo)
+        };
+    
+        let options : any = {
+            spRootFolder : sharePointSiteUrl.path,
+            strictObjects: [fileUri],
+            //spRootFolder : remoteFilePath,
+            dlRootFolder: os.tmpdir //vscode.window.spgo.config.workspaceRoot
+        };
+        let fileGateway : SPFileGateway = new SPFileGateway();
+
+        return fileGateway.downloadFile(context, options);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.
@@ -131,7 +152,13 @@ export class SPFileService{
                         }
                         //otherwise something else happened.
                         else{
-                            Logger.outputError(err, vscode.window.spgo.outputChannel);
+                            if(err.error){
+                                let innerError : any = JSON.parse(err.error); 
+                                Logger.showError(innerError.error.message.value, err);
+                            }
+                            else{
+                                Logger.outputError(err, vscode.window.spgo.outputChannel);
+                            }
                         }
                         reject(err);
                     });
@@ -187,7 +214,12 @@ export class SPFileService{
                         }
                         //otherwise something else happened.
                         else{
-                            Logger.outputError(err, vscode.window.spgo.outputChannel);
+                            if(err.message && err.message.value){
+                                Logger.showError(err.message.value, err);
+                            }
+                            else{
+                                Logger.outputError(err, vscode.window.spgo.outputChannel);
+                            } 
                             reject(err);
                         }
                     });

@@ -1,6 +1,6 @@
 # SPGo for Visual Studio Code
 
-##Feedback!
+## Feedback!
 We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u)!
 
 ## Experimental
@@ -40,12 +40,10 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
 * ADFS
 A note for ADFS Authentication: You will need to add the following JSON node to the root of your your SPGo.json file:
 ```json
-{
-    "authenticationDetails": {
-        "relayingParty": "[relaying party]",
-        "adfsUrl": "ADFS Url"
-    }
-} 
+"authenticationDetails": {
+    "relayingParty": "[relaying party]",
+    "adfsUrl": "[ADFS Url]"
+}
 ```
 
 ## Configuration and Getting Started
@@ -80,8 +78,7 @@ Additionally you can specify an array of remote folders in a node called `remote
 SPGo will automatically launch when you run the Configure Workspace command `>SPGo: Configure workspace` or any time the SPGO Configuration file `spgo.json` is detected in the root of the current workspace.
 
 ## Roadmap
-* [MVP] - Code cleanup, technical debt
-* [1.1] - Remote File Compare. Merge updates from the server with your local source
+* [1.0] - Remote File Compare. Merge updates from the server with your local source
 
 
 ## Issues

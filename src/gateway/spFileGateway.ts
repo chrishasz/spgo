@@ -39,6 +39,35 @@ export class SPFileGateway{
         });
     }
 
+    public downloadFile(context : any, fileOptions : any) : Promise<any>{
+        return new Promise(function (resolve, reject) {
+            
+            sppull(context, fileOptions)
+                .then(function(downloadResults) {
+                    if( fileOptions.strictObjects && fileOptions.strictObjects.length > 0){
+                        Logger.outputMessage(`Successfully downloaded ${fileOptions.strictObjects[0]} files to: ${fileOptions.dlRootFolder}`, vscode.window.spgo.outputChannel);
+                    }
+                    resolve(downloadResults);
+                })
+                .catch(function(err){
+                    //TODO: this is sorta hacky- Detect if this error was due to credentials - FATAL ERROR
+                    if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
+                        vscode.window.spgo.credential = null;
+                        let error : IError ={
+                            message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
+                        };
+                        Logger.outputError(error, vscode.window.spgo.outputChannel);
+                        reject();
+                    }
+                    //otherwise something else happened. - NON FATAL
+                    else{
+                        Logger.outputError(err, vscode.window.spgo.outputChannel);
+                        reject();
+                    }
+                });
+        });
+    }
+
     public downloadFiles(remoteFolder: string, context : any, fileOptions : any) : Promise<any>{
         return new Promise(function (resolve, reject) {
             
@@ -49,7 +78,7 @@ export class SPFileGateway{
                 })
                 .catch(function(err){
                     //TODO: this is sorta hacky- Detect if this error was due to credentials - FATAL ERROR
-                    if(err.message.indexOf('wst:FailedAuthentication') > 0){
+                    if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
                         vscode.window.spgo.credential = null;
                         let error : IError ={
                             message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 

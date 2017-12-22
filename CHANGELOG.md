@@ -6,7 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- Auto-diff files on save conflict
+- Compare workspace file to server
+- Auto-diff files on check-out conflict
+- File minification on save/upload
+- More control over which files/folders are synchronized
+
+## 0.10.2 - 2017-12-21
+### Added
+- You will now receive an error messages when attempting to edit or check out a file that another user has already checked out.
+###Fixed
+- Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/14) - Better handling for folder casing and managing files in root site collections.
+- Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/16) wherein we handle non-existent folders more gracefully when populating a local workspace.
 
 ## 0.10.2 - 2017-12-06
 ### Added
