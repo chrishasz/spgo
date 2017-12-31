@@ -29,13 +29,6 @@ export class Logger {
         outputChannel.appendLine(message);
     }
 
-    // static outputMessage(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
-    //     if(error && error.message){
-    //         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-    //         outputChannel.appendLine(error.message);
-    //     }
-    // };
-
     static outputWarning(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
         outputChannel.appendLine(Colors.yellow(message));

@@ -4,7 +4,7 @@ import {Credential} from './model/credential';
 import {IAppManager} from './spgo';
 import {IConfig} from './spgo';
 import {ICredential} from './spgo';
-import constants from './constants';
+import {Constants} from './constants';
 import {Logger} from './util/logger';
 import initializeConfiguration from './dao/configurationDao';
 
@@ -16,7 +16,7 @@ export class AppManager implements IAppManager {
     
     constructor() {
         this.credentials = new Credential('','');
-        this.outputChannel = vscode.window.createOutputChannel(constants.OUTPUT_CHANNEL_NAME);
+        this.outputChannel = vscode.window.createOutputChannel(Constants.OUTPUT_CHANNEL_NAME);
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
 
         //initialize Configuration file

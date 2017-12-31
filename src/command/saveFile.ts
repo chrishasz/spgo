@@ -17,7 +17,7 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
 
         return UiHelper.showStatusBarProgress(`Saving file:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then((textDocument) => fileService.uploadFileToServer(textDocument))//() => fileService.uploadFileToServer)//   
+                .then((textDocument) => fileService.uploadFileToServer(textDocument))  
                 .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
         );
     }

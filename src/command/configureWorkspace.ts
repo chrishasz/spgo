@@ -4,7 +4,7 @@ import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 import {Logger} from '../util/logger';
 
-import Constants from './../constants';
+import {Constants} from './../constants';
 import initializeConfiguration from './../dao/configurationDao';
 
 export default function configureWorkspace() {

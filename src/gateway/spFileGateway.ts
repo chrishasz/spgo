@@ -1,17 +1,13 @@
 'use strict';
-//import checkOutFile from '../command/checkOutFile';
 var sppull = require("sppull").sppull;
-//import * as path from 'path';
 
 import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
 import {ISPRequest} from 'sp-request';
 
-
+import {IFileInformation} from './../spgo'
 import {Logger} from '../util/logger';
-// import Constants from './../constants';
-// import {UrlHelper} from './../util/UrlHelper';
-import { IError, IFileInformation } from './../spgo';
+import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper';
 
 export class SPFileGateway{
@@ -30,12 +26,10 @@ export class SPFileGateway{
                         headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
                     });
                 })
-                .then(function(){
-                    resolve();
-                }, err => {
-                    reject(err);
-                });
-                
+                .then( (response) => {
+                    resolve(response);
+                })
+                .catch((err) => ErrorHelper.handleHttpError(err, reject));
         });
     }
 
@@ -49,22 +43,7 @@ export class SPFileGateway{
                     }
                     resolve(downloadResults);
                 })
-                .catch(function(err){
-                    //TODO: this is sorta hacky- Detect if this error was due to credentials - FATAL ERROR
-                    if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
-                        vscode.window.spgo.credential = null;
-                        let error : IError ={
-                            message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
-                        };
-                        Logger.outputError(error, vscode.window.spgo.outputChannel);
-                        reject();
-                    }
-                    //otherwise something else happened. - NON FATAL
-                    else{
-                        Logger.outputError(err, vscode.window.spgo.outputChannel);
-                        reject();
-                    }
-                });
+                .catch((err) => ErrorHelper.handleHttpError(err, reject));
         });
     }
 
@@ -74,30 +53,11 @@ export class SPFileGateway{
             sppull(context, fileOptions)
                 .then(function(downloadResults) {
                     Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
-                    resolve();
+                    resolve(downloadResults);
                 })
-                .catch(function(err){
-                    //TODO: this is sorta hacky- Detect if this error was due to credentials - FATAL ERROR
-                    if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
-                        vscode.window.spgo.credential = null;
-                        let error : IError ={
-                            message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
-                        };
-                        Logger.outputError(error, vscode.window.spgo.outputChannel);
-                        reject();
-                    }
-                    //otherwise something else happened. - NON FATAL
-                    else{
-                        Logger.outputError(err, vscode.window.spgo.outputChannel);
-                        reject();
-                    }
-                });
+                .catch((err) => ErrorHelper.handleHttpError(err, reject));
         });
     }
-
-    // public downloadFile() : Promise<any>{
-    //     return new Promise();
-    // }
 
     public getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>{
         return new Promise(function (resolve, reject) {
@@ -128,10 +88,8 @@ export class SPFileGateway{
                         else{
                             resolve(fileInfo);
                         }
-                    }, err => {
-                        Logger.outputError(err, vscode.window.spgo.outputChannel);
-                        reject(err);
-                    });
+                    })
+                    .catch((err) => ErrorHelper.handleHttpErrorSilently(err, reject));
                 })
         });
     }
@@ -145,12 +103,10 @@ export class SPFileGateway{
                         headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
                     });
                 })
-                .then(function(){ //response => {
+                .then(function(){
                     resolve();
-                }, err => {
-                    reject(err);
-                });
+                })
+                .catch((err) => ErrorHelper.handleHttpError(err, reject));
         });
     }
-
 }

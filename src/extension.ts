@@ -17,7 +17,7 @@ import checkOutFile from './command/checkOutFile';
 import publishFile from './command/publishFile';
 import saveFile from './command/saveFile';
 import getCurrentFileInformation from './command/getCurrentFileInformation';
-import Constants from './constants';
+import {Constants} from './constants';
 
 export function activate(context: vscode.ExtensionContext): any {
 
@@ -30,15 +30,14 @@ export function activate(context: vscode.ExtensionContext): any {
     //Check out the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
-            vscode.workspace.openTextDocument(selectedResource)
-                .then(doc => checkOutFile(doc));
+            checkOutFile(selectedResource);
         } 
         else {
-            checkOutFile(vscode.window.activeTextEditor.document);
+            checkOutFile(vscode.window.activeTextEditor.document.uri);
         }
     }));
 
-    //Compare the selected file with it's version on the server.
+    //Compare the selected file with it's latest version on the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
             compareFileWithServer(selectedResource);
@@ -56,10 +55,9 @@ export function activate(context: vscode.ExtensionContext): any {
     //Discard the checkout of the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
-            vscode.workspace.openTextDocument(selectedResource)
-                .then(doc => discardCheckOut(doc));
+            discardCheckOut(selectedResource)
         } else {
-            discardCheckOut(vscode.window.activeTextEditor.document);
+            discardCheckOut(vscode.window.activeTextEditor.document.uri);
         }
     }));
 
@@ -76,22 +74,20 @@ export function activate(context: vscode.ExtensionContext): any {
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
-            vscode.workspace.openTextDocument(selectedResource)
-                .then(doc => publishFile(doc, Constants.PUBLISHING_MAJOR));
+            publishFile(selectedResource, Constants.PUBLISHING_MAJOR)
         } 
         else {
-            publishFile(vscode.window.activeTextEditor.document, Constants.PUBLISHING_MAJOR);
+            publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MAJOR);
         }
     }));
 
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: vscode.Uri) => {
         if (selectedResource && selectedResource.path) {
-            vscode.workspace.openTextDocument(selectedResource)
-                .then(doc => publishFile(doc, Constants.PUBLISHING_MINOR));
+            publishFile(selectedResource, Constants.PUBLISHING_MINOR)
         } 
         else {
-            publishFile(vscode.window.activeTextEditor.document, Constants.PUBLISHING_MINOR);
+            publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MINOR);
         }
     }));
 
@@ -109,8 +105,8 @@ export function activate(context: vscode.ExtensionContext): any {
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
         if (vscode.window.spgo.config) {
             //is the file in the source folder? Save to the server.
-            if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
-                saveFile(textDocument);// , context);
+            if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) && Constants.PUBLISHING_NONE != vscode.window.spgo.config.publishingScope){
+                saveFile(textDocument);
             }
             //is this an update to the config? Reload the config.
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
@@ -131,12 +127,15 @@ export function activate(context: vscode.ExtensionContext): any {
             getCurrentFileInformation(textDocument);
         }
     }));
-
-
 }
 
 // this method is called when your extension is deactivated
 export function deactivate() {
     // Extension activated.
     Logger.outputMessage('SPGo deactivated.', vscode.window.spgo.outputChannel);
+    
+    //TODO:Should we clean temp files?
+    // if (vscode.window.spgo.config.cleanTempFolderOnExit){
+
+    // }
 }
