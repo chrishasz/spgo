@@ -11,15 +11,16 @@ export class UiHelper{
     
         //p.report({message: 'Start working...' });
         return vscode.window.withProgress(options, 
-            () => {//p => {
-                return new Promise((resolve, reject) => {
-                    action.then(function(){
-                        resolve();
-                    })
-                    .catch(function(err){
-                        reject(err);
-                    });
-                });
+            async () => {//p => {
+                // return new Promise((resolve, reject) => {
+                //     action.then(function(){
+                //         resolve();
+                //     })
+                //     .catch(function(err){
+                //         reject(err);
+                //     });
+                // });
+                return action;
             }
         );
     }

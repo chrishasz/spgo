@@ -6,15 +6,25 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- Compare workspace file to server
-- Auto-diff files on check-out conflict
 - File minification on save/upload
 - More control over which files/folders are synchronized
 
-## 0.10.2 - 2017-12-21
+## 1.0 - 2017-12-
+### Added
+- Integrated VSCode's file comparison tools. File compare can now be used:
+    - via the treeview context menu - right click on a file and compare to server.
+    - when checking out a file - if the current server version and your local copy of a file are different, you will be prompted to view both files in a compare window.
+- Refactored File Check in/out: Now you can manage binary files as well as text files through SPGo.
+### Changed
+- Reduced memory pressure with File checkout.
+- Refactored Http error handling to provide a consistent user experience and DRY up a bunch of code. I'm only 80% happy with the current system, so expect more updates here in the future.
+### Fixed
+- Random testing showed that a publishing type of `None` failed in keeping its promise to not upload your file.
+
+## 0.10.3 - 2017-12-21
 ### Added
 - You will now receive an error messages when attempting to edit or check out a file that another user has already checked out.
-###Fixed
+### Fixed
 - Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/14) - Better handling for folder casing and managing files in root site collections.
 - Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/16) wherein we handle non-existent folders more gracefully when populating a local workspace.
 
@@ -26,7 +36,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Enhanced support for NTLM authentication.
 - Refactored the command objects and much of the File Service/Gateway code to be more Typescripty.
-###Fixed
+### Fixed
 - Changelog dates were a month off. And you thought you WERE writing SharePoint code in the future!
 - Better bad credential management. Was bad, now better.
 - Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error (or manual cancellation by the user) occurs during workspace configuration, SPGo will no properly handle an empty config file.
@@ -79,7 +89,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - [Command] Retrieve the contents of a specified folder from SharePoint
 - [Command] Retrieve the contents of multiple folders from SharePoint (Synchronize)
 - Automatically save|publish|check-in current file on save action
-- Project:
 - Initial project documentation (Changelog.md, Readme.md, LICENCE.txt)
-
-## [Unreleased]: 

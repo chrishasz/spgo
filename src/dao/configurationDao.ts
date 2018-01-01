@@ -7,7 +7,7 @@ import * as vscode from 'vscode';
 import { IConfig } from './../spgo';
 import {IAppManager} from './../spgo';
 import {Logger} from '../util/logger';
-import Constants from './../constants';
+import {Constants} from './../constants';
 
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
 	return new Promise(function (resolve, reject) {

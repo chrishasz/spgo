@@ -1,5 +1,4 @@
 {
-    "preview": true,
     "author": {
         "email": "chris@sitego.co",
         "name": "Chris Hasz",
@@ -14,7 +13,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "0.10.3",
+    "version": "1.0.0",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -32,7 +31,7 @@
         "url": "https://github.com/ReadySiteGo/SPGo.git"
     },
     "engines": {
-        "vscode": "^1.17.0"
+        "vscode": "^1.19.0"
     },
     "categories": [
         "Other"
@@ -69,7 +68,11 @@
                 "title": "SPGo: Populate local workspace",
                 "description": "Populate your local workspace from the latest on the server."
             },
-
+            {
+                "command": "spgo.publishWorkspace",
+                "title": "SPGo: Publish local workspace",
+                "description": "Publish your local workspace to the server."
+            },
             {
                 "command": "spgo.publishMajor",
                 "title": "SPGo: Publish a major version of the current file",
@@ -124,7 +127,10 @@
         ],
         "menus": {
             "explorer/context": [
-
+                {
+                    "command": "spgo.compareFileWithServer",
+                    "group": "spgo@0"
+                },
                 {
                     "command": "spgo.publishMajor",
                     "group": "spgo@1"

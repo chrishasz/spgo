@@ -8,7 +8,7 @@ import {
   } from 'node-sp-auth';
 
 import {IAppManager} from './../spgo';
-import Constants from './../constants';
+import {Constants} from './../constants';
 
 export class RequestHelper {
 

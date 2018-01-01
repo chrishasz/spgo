@@ -12,7 +12,7 @@ export class UrlHelper{
         let remoteFileName = relativeFilePath.substring(relativeFilePath.lastIndexOf(path.sep)+1);
         let remoteFileUrl = UrlHelper.formatFolder(remoteFolder) + remoteFileName; 
     
-        return Uri.parse(vscode.window.spgo.config.sharePointSiteUrl + remoteFileUrl);
+        return Uri.parse(this.removeTrailingSlash(vscode.window.spgo.config.sharePointSiteUrl) + remoteFileUrl);
     }
     // properly append leading and trailing '/'s to a folder path.
     public static formatFolder(path : string) : string {
