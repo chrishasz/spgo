@@ -1,5 +1,4 @@
 {
-    "preview": true,
     "author": {
         "email": "chris@sitego.co",
         "name": "Chris Hasz",
@@ -32,7 +31,7 @@
         "url": "https://github.com/ReadySiteGo/SPGo.git"
     },
     "engines": {
-        "vscode": "^1.17.0"
+        "vscode": "^1.19.0"
     },
     "categories": [
         "Other"
