@@ -106,7 +106,7 @@ export function activate(context: vscode.ExtensionContext): any {
         if (vscode.window.spgo.config) {
             //is the file in the source folder? Save to the server.
             if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) && Constants.PUBLISHING_NONE != vscode.window.spgo.config.publishingScope){
-                saveFile(textDocument);
+                saveFile(textDocument.uri);
             }
             //is this an update to the config? Reload the config.
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
