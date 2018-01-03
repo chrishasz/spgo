@@ -33,21 +33,6 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
     * Configuration data is stored within the project directory and can be stored in source control
 
 
-## Security and Authentication Support
-Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
-* Digest (Office365)
-* NTLM (most on-premise installations)
-* NTLM + wwwAuth
-* ADFS
-A note for ADFS Authentication: You will need to add the following JSON node to the root of your your SPGo.json file:
-```json
-"authenticationDetails": {
-    "relayingParty": "[relaying party]",
-    "adfsUrl": "[ADFS Url]"
-}
-```
-
-
 ## Configuration and Getting Started
 To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
 
@@ -78,6 +63,19 @@ Additionally you can specify an array of remote folders in a node called `remote
 ## Use
 SPGo will automatically launch when you run the Configure Workspace command `>SPGo: Configure workspace` or any time the SPGO Configuration file `spgo.json` is detected in the root of the current workspace.
 
+## Security and Authentication Support
+Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
+* Digest (Office365)
+* NTLM (most on-premise installations)
+* NTLM + wwwAuth
+* ADFS
+A note for ADFS Authentication: You will need to add the following JSON node to the root of your your SPGo.json file:
+```json
+"authenticationDetails": {
+    "relayingParty": "[relaying party]",
+    "adfsUrl": "[ADFS Url]"
+}
+```
 
 ## Issues
 Please submit any issues or feature requests to [https://github.com/ReadySiteGo/SPGo/issues](https://github.com/ReadySiteGo/SPGo/issues) or, better yet, author a pull request.

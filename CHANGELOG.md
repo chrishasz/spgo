@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - File minification on save/upload
 - More control over which files/folders are synchronized
+- Ability to specify a comment when publishing a file.
 
-## 1.0 - 2017-12-
+## 1.0.1 - 2018-1-3
+### Fixed
+- [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
+
+## 1.0 - 2017-12-31
 ### Added
 - Integrated VSCode's file comparison tools. File compare can now be used:
     - via the treeview context menu - right click on a file and compare to server.
