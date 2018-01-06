@@ -11,10 +11,10 @@ export default function configureWorkspace() {
     vscode.window.spgo.statusBarItem.text = 'SPGo: Show Menu';
 
     return getSharePointSiteUrl()
-        .then(cfg => getPublishingScope(cfg))
-        .then(cfg => getAuthenticationType(cfg))
-        .then(cfg => finished(cfg))
-        .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel));
+        .then((cfg) => getPublishingScope(cfg))
+        .then((cfg) => getAuthenticationType(cfg))
+        .then((cfg) => finished(cfg))
+        .catch((err) => Logger.outputError(err, vscode.window.spgo.outputChannel));
         
     
     function getSharePointSiteUrl() {

@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - More control over which files/folders are synchronized
 - Ability to specify a comment when publishing a file.
 
+## 1.1.0 - 2018-1-
+### Added
+- Custom commit messages for publishing files and workspace.
+### Fixed
+- [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
+
 ## 1.0.1 - 2018-1-3
 ### Fixed
 - [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.

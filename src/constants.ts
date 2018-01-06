@@ -8,6 +8,7 @@ export const Constants = {
     PUBLISHING_MINOR : 'Minor',
     PUBLISHING_SAVEONLY : 'SaveOnly',
     PUBLISHING_NONE : 'None',
+    PUBLISHING_DEFAULT_MESSAGE : 'Updated by SPGo',
 
     SECURITY_DIGEST : 'Digest',
     SECURITY_NTLM : 'NTLM',

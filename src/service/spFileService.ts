@@ -14,11 +14,10 @@ import {FileHelper} from './../util/fileHelper';
 import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
+import {IPublishingAction} from '../spgo';
 
 export class SPFileService{
-    constructor (){
-
-    }
+    constructor (){}
 
     public checkOutFile(textDocument: vscode.TextDocument) : Promise<any>{
 
@@ -123,18 +122,18 @@ export class SPFileService{
         return fileGateway.undoCheckOutFile(fileUri, spr);
     }
     
-    public uploadFileToServer(filePath: vscode.Uri, publishingScope? : string) : Promise<any> { 
+    public uploadFileToServer(publishingInfo: IPublishingAction, publishingScope? : string) : Promise<any> { 
         return new Promise((resolve, reject) => {
             let localFilePath = vscode.window.spgo.config.workspaceRoot;
             
             publishingScope = publishingScope || vscode.window.spgo.config.publishingScope;
 
-            let coreOptions : any = this.buildCoreUploadOptions(publishingScope);
+            let coreOptions : any = this.buildCoreUploadOptions(publishingInfo);
             
             var credentials = RequestHelper.createCredentials(vscode.window.spgo);
 
             var fileOptions = {
-                glob : filePath.fsPath,
+                glob : publishingInfo.fileUri.fsPath,
                 base : localFilePath,
                 folder: '/'
             };
@@ -146,23 +145,18 @@ export class SPFileService{
 
             spsave(coreOptions, credentials, fileOptions)
                 .then(function(response){
-                    Logger.outputMessage(`file ${filePath.fsPath} successfully saved to server.`, vscode.window.spgo.outputChannel);
+                    Logger.outputMessage(`file ${publishingInfo.fileUri.fsPath} successfully saved to server.`, vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
                 .catch((err) => ErrorHelper.handleHttpError(err, reject));
         });
     }
 
-    public uploadWorkspaceToServer(publishingScope? : string) : Promise<vscode.TextDocument> {
+    public uploadWorkspaceToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
         return new Promise((resolve, reject) => {
             let localFilePath = vscode.window.spgo.config.workspaceRoot;
-            
-            publishingScope = publishingScope || Constants.PUBLISHING_MAJOR;
-
-            var coreOptions = this.buildCoreUploadOptions(publishingScope);
-            
+            var coreOptions = this.buildCoreUploadOptions(publishingInfo);
             var credentials = RequestHelper.createCredentials(vscode.window.spgo);
-
             var fileOptions = {
                 glob : localFilePath + '/**/*.*',
                 base : localFilePath,
@@ -183,18 +177,18 @@ export class SPFileService{
         });
     }
 
-    private buildCoreUploadOptions(publishingScope : string) : any {
+    private buildCoreUploadOptions(publishingInfo : IPublishingAction) : any {
         var coreOptions = {
             siteUrl: vscode.window.spgo.config.sharePointSiteUrl,
-            checkinMessage : 'Updated by SPGo',
+            checkinMessage : publishingInfo.message,
             checkin : false
         };
     
-        if(publishingScope === Constants.PUBLISHING_MAJOR){
+        if(publishingInfo.scope === Constants.PUBLISHING_MAJOR){
             coreOptions.checkin = true;
             _.extend(coreOptions,  {checkinType : 1});
         }
-        else if(publishingScope === Constants.PUBLISHING_MINOR){
+        else if(publishingInfo.scope === Constants.PUBLISHING_MINOR){
             coreOptions.checkin = true;
             _.extend(coreOptions,  {checkinType : 0});
         }

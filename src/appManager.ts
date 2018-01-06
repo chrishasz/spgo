@@ -1,11 +1,11 @@
 'use strict';
 import * as vscode from 'vscode';
-import {Credential} from './model/credential';
-import {IAppManager} from './spgo';
+
 import {IConfig} from './spgo';
-import {ICredential} from './spgo';
-import {Constants} from './constants';
 import {Logger} from './util/logger';
+import {Constants} from './constants';
+import {Credential} from './model/credential';
+import {IAppManager, ICredential} from './spgo';
 import initializeConfiguration from './dao/configurationDao';
 
 export class AppManager implements IAppManager {
@@ -26,6 +26,7 @@ export class AppManager implements IAppManager {
             Logger.showError('SPGo: Missing Configuration');
             Logger.outputError(err);
         });
+        
         this.statusBarItem.show();
     }
 }

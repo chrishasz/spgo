@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 
 import {Logger} from '../util/logger';
-import {IFileInformation} from './../spgo';
+import {ISPFileInformation} from './../spgo';
 import {UiHelper} from './../util/uiHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
@@ -15,13 +15,13 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
 
         return UiHelper.showStatusBarProgress('',
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
-                .then((textDocument) => fileService.getFileInformation(textDocument))//() => fileService.getFileInformation)
+                .then((textDocument) => fileService.getFileInformation(textDocument))
                 .then((fileInfo) => showFileInformation(fileInfo))
                 .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
         );
     }
 
-    function showFileInformation(fileInfo : IFileInformation) : void{//} : Promise<any> {
+    function showFileInformation(fileInfo : ISPFileInformation) : void{
 
         Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
         
@@ -31,23 +31,5 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
         else{
             Logger.updateStatusBar(`File is not checked out.`, 5);
         }
-        
-        // return new Promise(function (resolve, reject) {
-        //     try{
-        //         Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
-
-        //         if( fileInfo.checkOutType == 0){
-        //             Logger.updateStatusBar(`File Checked out to user: ${fileInfo.checkOutBy}`, 5);
-        //         }
-        //         else{
-        //             Logger.updateStatusBar(`File is not checked out.`, 5);
-        //         }
-        //         resolve();
-        //     }
-        //     catch (err) {
-        //         Logger.outputError(err);
-        //         reject();
-        //     }
-        // });
     }
 }

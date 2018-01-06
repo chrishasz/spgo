@@ -5,7 +5,7 @@ import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
 import {ISPRequest} from 'sp-request';
 
-import {IFileInformation} from './../spgo'
+import {ISPFileInformation} from './../spgo'
 import {Logger} from '../util/logger';
 import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper';
@@ -69,7 +69,7 @@ export class SPFileGateway{
                         headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
                     })
                     .then( response => {
-                        let fileInfo : IFileInformation = {
+                        let fileInfo : ISPFileInformation = {
                             checkOutType : response.body.d.CheckOutType,
                             name : response.body.d.Name,
                             timeLastModified : response.body.d.TimeLastModified
