@@ -45,17 +45,19 @@ export class RequestHelper {
                 let credentials : IOnpremiseUserCredentials ;
                 let parts : string[] = appManager.credential.username.split('\\');
                 if (parts.length > 1) {
-                    credentials.domain = parts[0];
-                    credentials.password = appManager.credential.password;
-                    credentials.username = parts[1];
+                    credentials = {
+                        domain : parts[0],
+                        password : appManager.credential.password,
+                        username : parts[1]
+                    }
                 }
                 
                 return credentials;
             }
             default:{
                 let credentials : IUserCredentials = {
-                    password: appManager.credential.password,
-                    username: appManager.credential.username
+                    password : appManager.credential.password,
+                    username : appManager.credential.username
                 };
                 
                 return credentials;

@@ -34,9 +34,15 @@ export interface IError {
     message: string;
 }
 
-export interface IFileInformation{
+export interface ISPFileInformation{
     checkOutType : number;
     checkOutBy? : string;
     name : string;
     timeLastModified : Date;
+}
+
+export interface IPublishingAction{
+    fileUri: vscode.Uri;
+    scope : string;
+    message : string;
 }
