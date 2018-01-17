@@ -1,6 +1,5 @@
-# SPGo for Visual Studio Code
-
-## Overview
+SPGo for Visual Studio Code
+===
 SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Now you can build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
 * Publish files on save
 * Use VSCode compare tools to diff local changes against the server
@@ -13,7 +12,8 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
     We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u)!
 
 
-## Features
+Features
+===
 * All of the great code authoring and management features of Visual Studio Code, plus the ability to...
 * Check out files from SharePoint
     * Check out current file using command `>SPGo: Check Out the current file`
@@ -24,16 +24,21 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
     * Publish a major version with the hotkey combo: `Alt+Shift+p`
     * Publish a minor version with the hotkey combo: `Alt+p`
     * Discard checkout using command `SPGo: Discard check out`
+    * Specify an optional publishing message
 * Retrieve the contents of a specified folder from SharePoint
     * Enter a site-relative folder into the dialog to automatically download the contents
 * Retrieve the contents of multiple folders from SharePoint (Synchronize)
+    * Download individual folders using the command `>SPGo: Retrieve folder`
     * Specify an array of site-relative folders in the `remoteFolders` configuration node
     * Download all subfolders automatically by using command `>SPGo: Populate workspace`
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
 
+### Blob
 
-## Configuration and Getting Started
+
+Configuration and Getting Started
+===
 To get started using SPGo, press `Ctrl+Shift+p` (Windows) `Cmd+Shift+p` (Mac) or open the Command Pallet and type `>SPGo: Configure Workspace` to bring up the SPGo Configuration Wizard. Upon successful configuration, a new file will be created in the root of your project folder called `spgo.json`. From there, all files and folders created under the `src` folder in your local workspace will be deployed to their corresponding site-relative path your SharePoint site upon save.
 
 ### SPGo.json Configuration Files
@@ -60,10 +65,12 @@ Additionally you can specify an array of remote folders in a node called `remote
 } 
 ```
 
-## Use
+Use
+===
 SPGo will automatically launch when you run the Configure Workspace command `>SPGo: Configure workspace` or any time the SPGO Configuration file `spgo.json` is detected in the root of the current workspace.
 
-## Security and Authentication Support
+Security and Authentication Support
+===
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
 * Digest (Office365)
 * NTLM (most on-premise installations)
@@ -77,15 +84,28 @@ A note for ADFS Authentication: You will need to add the following JSON node to 
 }
 ```
 
-## Issues
+How to get in touch
+===
+Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:
+
+* Tweet us: [@readysitego](https://twitter.com/ReadySiteGo)
+* Request a feature: [Github/ReadySiteGo](https://github.com/readysitego/spgo/issues)
+* Ask for help on [Stack Overflow](https://stackoverflow.com/): #SPGo
+* Send us an email: [SPGo@sitego.co](mailto:spgo@sitego.co)
+
+
+Issues
+===
 Please submit any issues or feature requests to [https://github.com/ReadySiteGo/SPGo/issues](https://github.com/ReadySiteGo/SPGo/issues) or, better yet, author a pull request.
 
 
-## Open Source
+Open Source
+===
 This project is offered under the MIT open source license. Collaboration, contribution, and feedback is welcomed and encouraged!
 
 
-## Thank You
+Thank You
+===
 I want to thank the following developers for inspiration and source packages:
 * [John Nelson](https://github.com/celador): ForceCode author - example of a great VSCode IDE extension
 * [Sergey Sergeev](https://github.com/s-KaiNet) : sp-request, spsave author
@@ -93,5 +113,6 @@ I want to thank the following developers for inspiration and source packages:
 * [@pkreipke](https://github.com/pkreipke) + [@lafayetteduarte](https://github.com/lafayetteduarte) : Authentication support
 
 
-## More about SiteGo
+More about SiteGo
+===
 SiteGo is a SharePoint collaboration platform that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).

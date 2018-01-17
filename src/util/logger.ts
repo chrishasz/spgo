@@ -1,7 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
 import * as SPGo from './../spgo';
-import * as Colors from 'colors';
 
 export class Logger {
     
@@ -31,15 +30,15 @@ export class Logger {
 
     static outputWarning(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-        outputChannel.appendLine(Colors.yellow(message));
+        outputChannel.appendLine(message);
     }
     
     static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
         if(error && error.message){
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-            outputChannel.appendLine(Colors.red('================================     ERROR     ================================\n'));
-            outputChannel.appendLine(Colors.red(error.message));
-            outputChannel.appendLine(Colors.red('===============================================================================\n'));
+            outputChannel.appendLine('================================     ERROR     ================================\n');
+            outputChannel.appendLine(error.message);
+            outputChannel.appendLine('===============================================================================\n');
         }
     }
 

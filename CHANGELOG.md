@@ -7,18 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - File minification on save/upload
-- More control over which files/folders are synchronized
-- Ability to specify a comment when publishing a file.
+- Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)
 
-## 1.1.0 - 2018-1-
+## 1.1.0 - 2018-1-18
 ### Added
 - Custom commit messages for publishing files and workspace.
+### Changed
+- Cleaned up Changelog + Readme visual layouts.
 ### Fixed
-- [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
+- [This issue from Github](https://github.com/readysitego/spgo/issues/21) which prevented authentication when users specified NTLM.
+
 
 ## 1.0.1 - 2018-1-3
 ### Fixed
 - [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
+
 
 ## 1.0 - 2017-12-31
 ### Added
@@ -32,12 +35,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Random testing showed that a publishing type of `None` failed in keeping its promise to not upload your file.
 
+
 ## 0.10.3 - 2017-12-21
 ### Added
 - You will now receive an error messages when attempting to edit or check out a file that another user has already checked out.
 ### Fixed
 - Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/14) - Better handling for folder casing and managing files in root site collections.
 - Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/16) wherein we handle non-existent folders more gracefully when populating a local workspace.
+
 
 ## 0.10.2 - 2017-12-06
 ### Added
@@ -54,6 +59,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/10) - Authentication issues when using Multi Auth Site (NTLM + Forms).
 - Resolved [This other, other issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error or cancellation causes an empty SPGo.json file to be created, SPGo will now properly recreate the json config on a subsequent use of the `>SPGo: Configure Workspace` command.
 
+
 ## 0.10.1 - 2017-09-11
 ### Added
 - File Management (Publish, Check out, Undo check out) added as context menu items to
@@ -63,6 +69,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - [Our first Open Issue on Github!](https://github.com/readysitego/spgo/issues/7) - Consequently our first resolved issue on Github. SPGo will now properly retrieve files from the root Site Collection of a SharePoint Web Application.
 - Entering incorrect credentials will no longer cause the progress spinner to spin endlessly, robbing it of its one joy in life.
+
 
 ## 0.10.0 - 2017-08-29
 ### Added
@@ -74,6 +81,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Readme.md typos (I need type checking assistance for capital letters!)
 
+
 ## 0.9.1 - 2017-08-16
 ### Added
 - Publish Minor version of a file via menu or hotkey
@@ -83,6 +91,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Synchronize Folders works now, regardless of which publish type a user has specified.
 - CHANGELOG.md schema alignment
 
+
 ## 0.9.0 - 2017-08-15
 ### Added
 - Language support for Master Pages (.master)
@@ -91,6 +100,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Better output logging: activity start and finish.
 ### Fixed
 - Readme.md typos
+
 
 ## 0.8.1 - 2017-08-14
 ### Added

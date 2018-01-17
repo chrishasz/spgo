@@ -164,9 +164,9 @@
         "vscode": "^1.1.6"
     },
     "dependencies": {
-        "colors": "^1.1.2",
         "fs-extra": "^4.0.2",
         "lodash": "^4.17.4",
+        "parse-glob": "^3.0.4",
         "path": "^0.12.7",
         "sp-request": "^2.1.2",
         "sppull": "^2.2.5",
