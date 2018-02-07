@@ -13,7 +13,7 @@
         "Office 365",
         "o365"
     ],
-    "version": "1.1.0",
+    "version": "1.2.0",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -170,7 +170,7 @@
         "path": "^0.12.7",
         "sp-request": "^2.1.2",
         "sppull": "^2.2.5",
-        "spsave": "^3.0.2",
+        "spsave": "^3.1.1",
         "vscode-uri": "^1.0.1"
     }
 }

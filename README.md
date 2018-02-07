@@ -34,8 +34,6 @@ Features
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
 
-### Blob
-
 
 Configuration and Getting Started
 ===

@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - File minification on save/upload
 - Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)
 
+## 1.2.0 - 2018-1-
+### Added
+- Glob file management for uploads.
+
 ## 1.1.0 - 2018-1-18
 ### Added
 - Custom commit messages for publishing files and workspace.

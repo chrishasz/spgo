@@ -1,20 +1,22 @@
 'use strict';
 
-// import * as path from 'path';
 import * as _ from 'lodash'; 
+// import * as path from 'path';
 import * as vscode from 'vscode';
 import {ISPRequest} from 'sp-request';
 
 import Uri from 'vscode-uri'
 import {spsave} from 'spsave';
 import {Logger} from '../util/logger';
+import {ISPPullOptions} from 'sppull';
 import {Constants} from './../constants';
+import {IPublishingAction} from '../spgo';
 import {UrlHelper} from './../util/UrlHelper';
 import {FileHelper} from './../util/fileHelper';
 import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
-import {IPublishingAction} from '../spgo';
+import {GlobToCamlConverter} from '../converter/globToCamlConverter';
 
 export class SPFileService{
     constructor (){}
@@ -28,42 +30,18 @@ export class SPFileService{
         return fileGateway.checkOutFile(fileUri, spr);
     }
 
-    public downloadFile(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{
-        let remoteFolder : string = FileHelper.getFolderFromPath(filePath.fsPath);
-        let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
-        let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath);
-        
-        let context : any = {
-            siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
-            creds : RequestHelper.createCredentials(vscode.window.spgo)
-        };
-    
-        let options : any = {
-            spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
-            spRootFolder : remoteFolder,
-            strictObjects: [fileUri.path],
-            dlRootFolder: downloadFilePath
-        };
-        let fileGateway : SPFileGateway = new SPFileGateway();
-
-        return fileGateway.downloadFile(context, options);
-    }
-
-    public downloadFiles(remoteFolder) : Promise<any>{
+    public downloadFiles(remoteFolder : string) : Promise<any>{
         //format the remote folder to /<folder structure>/  
-        remoteFolder = UrlHelper.formatFolder(remoteFolder);
-        let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+        remoteFolder = UrlHelper.formatWebFolder(remoteFolder);
+        //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+        let converter : GlobToCamlConverter = new GlobToCamlConverter(remoteFolder);
     
         let context : any = {
             siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
             creds : RequestHelper.createCredentials(vscode.window.spgo)
         };
     
-        let options : any = {
-            spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
-            spRootFolder : remoteFolder,
-            dlRootFolder: vscode.window.spgo.config.workspaceRoot
-        };
+        let options : ISPPullOptions = converter.Convert();
     
         let fileGateway : SPFileGateway = new SPFileGateway();
 
@@ -72,7 +50,7 @@ export class SPFileService{
             RequestHelper.setNtlmHeader();
         }
 
-        return fileGateway.downloadFiles(remoteFolder, context, options);
+        return fileGateway.downloadFiles(remoteFolder.replace('/**/','/'), context, options);
     }
 
     public downloadFileMajorVersion(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{
