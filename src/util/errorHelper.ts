@@ -6,7 +6,7 @@ import {Logger} from '../util/logger';
 
 export class ErrorHelper{
 
-    static handleHttpError(err, reject, outputMethod?){
+    static handleError(err, reject, outputMethod?){
         outputMethod = outputMethod || Logger.showError;
 
         //HACK: Come up with a better way to detect if this error was due to credentials
@@ -34,7 +34,7 @@ export class ErrorHelper{
         reject(err);
     }
 
-    static handleHttpErrorSilently(err, reject){
-        this.handleHttpError(err, reject, Logger.outputError);
+    static handleErrorSilently(err, reject){
+        this.handleError(err, reject, Logger.outputError);
     }
 }

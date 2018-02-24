@@ -26,15 +26,16 @@ Features
     * Discard checkout using command `SPGo: Discard check out`
     * Specify an optional publishing message
 * Retrieve the contents of a specified folder from SharePoint
-    * Enter a site-relative folder into the dialog to automatically download the contents
-* Retrieve the contents of multiple folders from SharePoint (Synchronize)
     * Download individual folders using the command `>SPGo: Retrieve folder`
-    * Specify an array of site-relative folders in the `remoteFolders` configuration node
+    * Optionally provide glob patterns to download only specific files
+* Retrieve the contents of multiple folders from SharePoint (Synchronize)
+    * Specify a glob pattern array of site-relative folders in the `remoteFolders` configuration node (See **Additional Configuration Options** below)
     * Download all subfolders automatically by using command `>SPGo: Populate workspace`
+* Glob Support
+    * All bulk download and upload functionality supports Glob formatting.
+    * note: individual file wildcard support for bulk downloads is still in progress. `>SPGo: Publish local workspace` supports all Glob patterns.
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
-
-### Blob
 
 
 Configuration and Getting Started
@@ -51,14 +52,23 @@ If configuration was successful, you should see a file similar to below:
     "publishingScope": "SaveOnly",
 } 
 ```
-Additionally you can specify an array of remote folders in a node called `remoteFolders`, which SPGo will recursively downloaded to your local workspace when you issue the Synchronize Files command `SPGo: Populate Workspace`. Note: This WILL overwrite all local files.
+### Additional Configuration Options ###
+#### Glob support for Publishing Workspace ####
+Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into a node called `publishWorkspaceGlobPattern` will cause SPGo to publish only files which match this glob pattern. For example, if you use another VSCode plugin to minify files on save, you can configure the `>SPGo: Publish local workspace` command to publish all minified files in the workspace with the format *.min.* by setting the  `publishWorkspaceGlobPattern` property to `/**/*.min.*`.
+
+#### Populating Remote Files ####
+When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `SPGo: Populate Workspace`. 
+Note: This WILL overwrite all local files.
+
+#### Example Config json ####
 ```json
 {
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",
+    "publishWorkspaceGlobPattern": "/**/*.min.*",
     "remoteFolders": [
-        "/SiteAssets/MyProject/",
+        "/SiteAssets/**/*.*",
         "/_catalogs/wp/",
         "/_catalogs/masterpage/"
     ]
@@ -73,8 +83,8 @@ Security and Authentication Support
 ===
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
 * Digest (Office365)
-* NTLM (most on-premise installations)
-* NTLM + wwwAuth
+* NTLM v1 (most on-premise installations)
+* NTLM v1 + wwwAuth
 * ADFS
 A note for ADFS Authentication: You will need to add the following JSON node to the root of your your SPGo.json file:
 ```json
