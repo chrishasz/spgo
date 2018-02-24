@@ -29,7 +29,7 @@ export class SPFileGateway{
                 .then( (response) => {
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -43,7 +43,7 @@ export class SPFileGateway{
                     }
                     resolve(downloadResults);
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -55,7 +55,7 @@ export class SPFileGateway{
                     Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
                     resolve(downloadResults);
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -89,7 +89,7 @@ export class SPFileGateway{
                             resolve(fileInfo);
                         }
                     })
-                    .catch((err) => ErrorHelper.handleHttpErrorSilently(err, reject));
+                    .catch((err) => ErrorHelper.handleErrorSilently(err, reject));
                 })
         });
     }
@@ -106,7 +106,7 @@ export class SPFileGateway{
                 .then(function(){
                     resolve();
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 }

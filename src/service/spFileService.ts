@@ -16,7 +16,7 @@ import {FileHelper} from './../util/fileHelper';
 import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
-import {GlobToCamlConverter} from '../converter/globToCamlConverter';
+import { DownloadFileOptionsFactory } from '../factory/downloadFileOptionsFactory';
 
 export class SPFileService{
     constructor (){}
@@ -34,14 +34,14 @@ export class SPFileService{
         //format the remote folder to /<folder structure>/  
         remoteFolder = UrlHelper.formatWebFolder(remoteFolder);
         //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
-        let converter : GlobToCamlConverter = new GlobToCamlConverter(remoteFolder);
+        let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     
         let context : any = {
             siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
             creds : RequestHelper.createCredentials(vscode.window.spgo)
         };
     
-        let options : ISPPullOptions = converter.Convert();
+        let options : ISPPullOptions = factory.createFileOptions();
     
         let fileGateway : SPFileGateway = new SPFileGateway();
 
@@ -126,7 +126,7 @@ export class SPFileService{
                     Logger.outputMessage(`file ${publishingInfo.fileUri.fsPath} successfully saved to server.`, vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -136,7 +136,7 @@ export class SPFileService{
             var coreOptions = this.buildCoreUploadOptions(publishingInfo);
             var credentials = RequestHelper.createCredentials(vscode.window.spgo);
             var fileOptions = {
-                glob : localFilePath + '/**/*.*',
+                glob : localFilePath + (vscode.window.spgo.config.publishWorkspaceGlobPattern ? UrlHelper.ensureLeadingSlash(vscode.window.spgo.config.publishWorkspaceGlobPattern) : '/**/*.*'),
                 base : localFilePath,
                 folder: '/'
             };
@@ -151,7 +151,7 @@ export class SPFileService{
                     Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleHttpError(err, reject));
+                .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 

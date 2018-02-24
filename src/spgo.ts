@@ -23,8 +23,9 @@ export interface ICredential{
 export interface IConfig{
     authenticationType? : string;
     authenticationDetails? : any;
-    remoteFolders? : string[];
     publishingScope? : string;
+    publishWorkspaceGlobPattern? : string;
+    remoteFolders? : string[];
     sharePointSiteUrl? : string;
     sourceDirectory? : string;      // The relative directory structure underneath the VSCode local workspace root directory
     workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root + sourceDirectory)

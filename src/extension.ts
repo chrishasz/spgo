@@ -1,23 +1,23 @@
 'use strict';
 import * as vscode from 'vscode';
-import { AppManager } from './appManager';
 import * as path from 'path';
+import * as SPGo from './spgo';
 
-
-import compareFileWithServer from './command/compareFileWithServer';
 import {Logger} from './util/logger';
-import configureWorkspace from './command/configureWorkspace';
-import initializeConfiguration from './dao/configurationDao';
+import {Constants} from './constants';
+import {AppManager} from './appManager';
+import saveFile from './command/saveFile';
+import publishFile from './command/publishFile';
+import checkOutFile from './command/checkOutFile';
+import retrieveFolder from './command/retrieveFolder';
 import discardCheckOut from './command/discardCheckOut';
+import publishWorkspace from './command/publishWorkspace';
 import resetCredentials from './command/resetCredentials';
 import populateWorkspace from './command/populateWorkspace';
-import publishWorkspace from './command/publishWorkspace';
-import retrieveFolder from './command/retrieveFolder';
-import checkOutFile from './command/checkOutFile';
-import publishFile from './command/publishFile';
-import saveFile from './command/saveFile';
+import initializeConfiguration from './dao/configurationDao';
+import configureWorkspace from './command/configureWorkspace';
+import compareFileWithServer from './command/compareFileWithServer';
 import getCurrentFileInformation from './command/getCurrentFileInformation';
-import {Constants} from './constants';
 
 export function activate(context: vscode.ExtensionContext): any {
 
@@ -114,8 +114,8 @@ export function activate(context: vscode.ExtensionContext): any {
                     .then(function() {
                         Logger.updateStatusBar('Configuration file reloaded', 5);
                     })
-                    .catch(function(err) {
-                        Logger.outputError(err, vscode.window.spgo.outputChannel);
+                    .catch(function(err : SPGo.IError) {
+                        Logger.showError(err.message, err);
                     });
             }
         }

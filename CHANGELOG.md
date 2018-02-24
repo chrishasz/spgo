@@ -6,12 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 ### Added
-- File minification on save/upload
 - Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)
+- Support for German, Chinese Office 365 datacenters
 
-## 1.2.0 - 2018-1-
+## 1.2.0 - 2018-2-23
 ### Added
-- Glob file management for uploads.
+- Glob file management for uploads using the `SPGo: Publish local workspace` command.
+    - Inspiration: [this issue](https://github.com/readysitego/spgo/issues/24) from GitHub.
+- Unit Tests! They're all the rage these days.
+### Changed
+- By Popular demand, all folders specified in the `remoteFolders` configuration property now respect glob formatting. If you want to download a folder and all subfolders, make sure to append `**/*.*` to all existing folder entries.
+- Note: Glob support is ongoing development. File masking for remote file download is still in development.
+### Fixed
+- Security issue with dependency: `marked`
 
 ## 1.1.0 - 2018-1-18
 ### Added
