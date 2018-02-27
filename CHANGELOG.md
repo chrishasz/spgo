@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)
 - Support for German, Chinese Office 365 datacenters
 
+## 1.2.1 - 2018-2-26
+### Added
+- SPGo now supports Germany, China, and the US Government's private Office 365 deployments! Not so private now, huh?!?
+### Fixed
+- Resolved a visual issue where a glob pattern matching 0 items would cause the progress spinner to spin endlessly.
+- Resolved a number of dependency errors and version incompatibilities between SPGo, TypeScript, VSCode and various Typings.
+
 ## 1.2.0 - 2018-2-23
 ### Added
 - Glob file management for uploads using the `SPGo: Publish local workspace` command.

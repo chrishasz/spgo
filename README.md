@@ -32,10 +32,12 @@ Features
     * Specify a glob pattern array of site-relative folders in the `remoteFolders` configuration node (See **Additional Configuration Options** below)
     * Download all subfolders automatically by using command `>SPGo: Populate workspace`
 * Glob Support
-    * All bulk download and upload functionality supports Glob formatting.
-    * note: individual file wildcard support for bulk downloads is still in progress. `>SPGo: Publish local workspace` supports all Glob patterns.
+    * All bulk download and upload functionality supports Glob formatting
+    * note: individual file wildcard support for bulk downloads is still in progress. `>SPGo: Publish local workspace` supports all Glob patterns
 * Manage multiple configurations
     * Configuration data is stored within the project directory and can be stored in source control
+* Global Access
+    * Support for Germany, China, and the US Government's private Office 365 deployments
 
 
 Configuration and Getting Started
