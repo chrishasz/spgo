@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 ### Added
 - Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)
-- Support for German, Chinese Office 365 datacenters
+
+## 1.2.2 - 2018-2-28
+### Fixed
+- Resolved the final dependency issue, [#27](https://github.com/readysitego/spgo/issues/27) & [#30](https://github.com/readysitego/spgo/issues/30), preventing SPGo from loading. Root cause was an issue with NPM resolving dependencies.
 
 ## 1.2.1 - 2018-2-26
 ### Added
