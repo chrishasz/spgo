@@ -18,7 +18,7 @@ export class DownloadFileOptionsFactory {
 
     public createFileOptions() : ISPPullOptions{
         let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
-        let remoteFolder : string = this.glob.orig;//FileHelper.getFolderFromPath(this.glob.orig);
+        let remoteFolder : string = this.glob.path.dirname;//.orig;
         let camlQuery : string = GlobToCamlConverter.Convert(this.glob);
 
         let options : ISPPullOptions = {

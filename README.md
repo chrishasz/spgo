@@ -56,10 +56,10 @@ If configuration was successful, you should see a file similar to below:
 ```
 ### Additional Configuration Options ###
 #### Glob support for Publishing Workspace ####
-Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into a node called `publishWorkspaceGlobPattern` will cause SPGo to publish only files which match this glob pattern. For example, if you use another VSCode plugin to minify files on save, you can configure the `>SPGo: Publish local workspace` command to publish all minified files in the workspace with the format *.min.* by setting the  `publishWorkspaceGlobPattern` property to `/**/*.min.*`.
+Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into a node called `publishWorkspaceGlobPattern` will cause SPGo to publish only files which match this glob pattern. For example, if you use another VSCode plugin to minify files on save, you can configure the `>SPGo: Publish local workspace` command to publish all minified files in the workspace with the format `<fiel>.min.<ext>` by setting the  `publishWorkspaceGlobPattern` property to `/**/*.min.*`.
 
 #### Populating Remote Files ####
-When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `SPGo: Populate Workspace`. 
+When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `>SPGo: Populate Workspace`. 
 Note: This WILL overwrite all local files.
 
 #### Example Config json ####
@@ -127,4 +127,4 @@ I want to thank the following developers for inspiration and source packages:
 
 More about SiteGo
 ===
-SiteGo is a SharePoint collaboration platform that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).
+SiteGo is a content sharing solution for Office 365 that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).
