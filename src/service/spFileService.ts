@@ -32,7 +32,7 @@ export class SPFileService{
 
     public downloadFiles(remoteFolder : string) : Promise<any>{
         //format the remote folder to /<folder structure>/  
-        remoteFolder = UrlHelper.formatWebFolder(remoteFolder);
+        //remoteFolder = UrlHelper.formatWebFolder(remoteFolder);
         //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
         let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     

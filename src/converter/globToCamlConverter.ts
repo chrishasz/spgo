@@ -1,14 +1,12 @@
 'use strict';
 
-// import * as vscode from 'vscode';
-// import * as parseGlob from 'parse-glob';
-
 export class GlobToCamlConverter {
 
-    static Convert(glob : any) : string{
+    static Convert(glob : any) : string {
         
         let camlQuery : string = '';
 
+        //Limitation - can only support Neq for specific filenames.
         if(glob.is.negated){
             camlQuery = this.queryNotEqual(glob.path.basename);
         }
@@ -20,7 +18,7 @@ export class GlobToCamlConverter {
                 }
                 //trim out *, and create like: *.css => .css
                 else{
-                    camlQuery = this.queryLike(glob.path.basename.replace('*',''));
+                    camlQuery = this.queryLike(glob.path.basename.replace(/\*/gi,''));
                 }
             }
             else{
