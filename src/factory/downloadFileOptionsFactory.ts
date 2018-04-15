@@ -7,7 +7,6 @@ import {Uri, window} from 'vscode';
 import {ISPPullOptions} from 'sppull';
 import {UrlHelper} from './../util/UrlHelper';
 import { GlobToCamlConverter } from '../converter/globToCamlConverter';
-// import {FileHelper} from './../util/fileHelper';
 
 export class DownloadFileOptionsFactory {
 
