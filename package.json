@@ -11,7 +11,8 @@
         "SharePoint",
         "SharePoint Online",
         "Office 365",
-        "o365"
+        "o365",
+        "ide"
     ],
     "version": "1.2.2",
     "publisher": "SiteGo",
