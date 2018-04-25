@@ -1,2 +1,4 @@
 #theme: jekyll-theme-minimal
 remote_theme: readysitego/readysitego.github.io
+
+theme: jekyll-theme-cayman
