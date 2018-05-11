@@ -23,6 +23,7 @@ export interface ICredential{
 export interface IConfig{
     authenticationType? : string;
     authenticationDetails? : any;
+    checkInMessage? : string,
     publishingScope? : string;
     publishWorkspaceGlobPattern? : string;
     remoteFolders? : string[];

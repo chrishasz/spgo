@@ -76,9 +76,7 @@ export class AuthenticationService{
 						resolve(appManager);
 					}, err => {
 						appManager.credential = null;
-						Logger.showError('Invalid user credentials.', err)
-						reject(null);
-						throw err;
+						reject(err);
 					});
 			});
 		}

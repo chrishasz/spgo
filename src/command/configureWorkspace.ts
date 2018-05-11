@@ -2,7 +2,7 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
-import {Logger} from '../util/logger';
+import { ErrorHelper } from '../util/errorHelper';
 
 import {Constants} from './../constants';
 import initializeConfiguration from './../dao/configurationDao';
@@ -14,7 +14,7 @@ export default function configureWorkspace() {
         .then((cfg) => getPublishingScope(cfg))
         .then((cfg) => getAuthenticationType(cfg))
         .then((cfg) => finished(cfg))
-        .catch((err) => Logger.outputError(err, vscode.window.spgo.outputChannel));
+        .catch(err => ErrorHelper.handleError(err));
         
     
     function getSharePointSiteUrl() {

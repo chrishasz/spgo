@@ -14,7 +14,7 @@
         "o365",
         "ide"
     ],
-    "version": "1.2.2",
+    "version": "1.2.4",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -85,6 +85,11 @@
                 "description": "Publish the current file to the server."
             },
             {
+                "command": "spgo.reloadConfiguration",
+                "title": "SPGo: Reload Configuration",
+                "description": "Reload the configuration file (SPGo.json) from disk."
+            },
+            {
                 "command": "spgo.resetCredentials",
                 "title": "SPGo: Reset credentials",
                 "description": "Reset the current user's SharePoint credentials."
@@ -113,6 +118,11 @@
                 "command": "spgo.publishMinor",
                 "when": "editorFocus",
                 "win": "alt+p"
+            },
+            {
+                "key": "alt+r alt+c",
+                "command": "spgo.reloadConfiguration",
+                "win": "alt+r alt+c"
             }
         ],
         "languages": [

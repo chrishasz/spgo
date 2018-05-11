@@ -7,7 +7,6 @@ import {ISPRequest} from 'sp-request';
 
 import {ISPFileInformation} from './../spgo'
 import {Logger} from '../util/logger';
-import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper';
 
 export class SPFileGateway{
@@ -29,7 +28,8 @@ export class SPFileGateway{
                 .then( (response) => {
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
+                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -43,7 +43,8 @@ export class SPFileGateway{
                     }
                     resolve(downloadResults);
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
+                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -55,7 +56,8 @@ export class SPFileGateway{
                     Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
                     resolve(downloadResults);
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
+                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -89,7 +91,8 @@ export class SPFileGateway{
                             resolve(fileInfo);
                         }
                     })
-                    .catch((err) => ErrorHelper.handleErrorSilently(err, reject));
+                    .catch((err) => reject(err));
+                    // .catch((err) => ErrorHelper.handleErrorSilently(err, reject));
                 })
         });
     }
@@ -106,7 +109,8 @@ export class SPFileGateway{
                 .then(function(){
                     resolve();
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
+                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 }

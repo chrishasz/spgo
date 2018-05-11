@@ -7,6 +7,7 @@ import {Logger} from '../util/logger';
 import {Constants} from './../constants';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
+import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -23,7 +24,7 @@ export default function compareFileWithServer(localPath : vscode.Uri) : Thenable
             AuthenticationService.verifyCredentials(vscode.window.spgo, localPath)
                 .then((localPath) => fileService.downloadFileMajorVersion(localPath, downloadPath))
                 .then((dlFileUrl) => openFileCompare(localPath, dlFileUrl))
-                .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+                .catch(err => ErrorHelper.handleError(err))
         );
 
         function openFileCompare(localPath : vscode.Uri, dlFileUrl : any){            
