@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 
+## 1.2.4 - 2018-5-10
+### Added
+- [This request from Github](https://github.com/readysitego/spgo/issues/35) will now allow you to specify a default check-in message using the `checkInMessage` config property in `SPGo.json`
+- [This other request from Github](https://github.com/readysitego/spgo/issues/34) will now allow you to manually reload config data from `SPGo.json` using the command `SPGO> Reload Configuration` or the shortcut `<alt> + r, <alt> + c`
+### Fixed
+- An issue where [Git integration caused unnecessary error messages in the SPGo output file](https://github.com/readysitego/spgo/issues/34)
+- You will now be prompted to enter a check-in message when you set "Publish a Major|Minor" Version" as your default save action.
+- Refactored our core promise chain to properly, and most-importantly: DRY-ly, handle errors. Errors should consistently log and the progress bar will once again cease its endless spinning.
+
 ## 1.2.3 - 2018-4-14
 ### Added
 - Glob support for retrieving files (e.g. /SiteAssets/*.*, /SiteAssets/*.css)

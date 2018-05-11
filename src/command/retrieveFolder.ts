@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 
 import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
+import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -13,7 +14,7 @@ export default function retrieveFolder() : Thenable<any> {
     return UiHelper.showStatusBarProgress('Downloading files',
         AuthenticationService.verifyCredentials(vscode.window.spgo)
             .then(downloadFiles)
-            .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+            .catch(err => ErrorHelper.handleError(err))
     );
 
     function downloadFiles() : Thenable<any> {
@@ -29,8 +30,7 @@ export default function retrieveFolder() : Thenable<any> {
                     .then(function() {
                         resolve();
                     }).catch(err => {
-                        Logger.outputError(err);
-                        reject();
+                        reject(err);
                     });
             });
         });

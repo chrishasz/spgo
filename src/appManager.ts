@@ -20,7 +20,7 @@ export class AppManager implements IAppManager {
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
 
         //initialize Configuration file
-        initializeConfiguration(this).then(()=> {//config => {
+        initializeConfiguration(this).then(()=> {
             this.statusBarItem.text = 'SPGo enabled';
         }).catch(err => {
             Logger.showError('SPGo: Missing Configuration');

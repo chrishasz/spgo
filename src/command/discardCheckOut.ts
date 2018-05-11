@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
+import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -21,7 +22,7 @@ export default function discardCheckOut(fileUri: vscode.Uri) : Thenable<any> {
                 .then(() => {
                     Logger.outputMessage(`Discard check-out successful for file ${fileUri.path}.`, vscode.window.spgo.outputChannel);
                 })
-                .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+                .catch(err => ErrorHelper.handleError(err))
         );
     }
 }

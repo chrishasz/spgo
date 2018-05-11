@@ -1,5 +1,6 @@
 'use strict';
 import * as vscode from 'vscode';
+
 import {IPublishingAction} from './../spgo';
 
 export class UiHelper{
@@ -26,10 +27,8 @@ export class UiHelper{
             title: message
         }
     
-        return vscode.window.withProgress(options, 
-            async () => {
-                return action;
-            }
-        );
+        return vscode.window.withProgress(options, async () => {
+            return action;
+        });
     }
 }

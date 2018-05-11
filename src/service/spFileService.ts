@@ -13,7 +13,6 @@ import {Constants} from './../constants';
 import {IPublishingAction} from '../spgo';
 import {UrlHelper} from './../util/UrlHelper';
 import {FileHelper} from './../util/fileHelper';
-import {ErrorHelper} from './../util/errorHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
 import { DownloadFileOptionsFactory } from '../factory/downloadFileOptionsFactory';
@@ -32,8 +31,6 @@ export class SPFileService{
 
     public downloadFiles(remoteFolder : string) : Promise<any>{
         //format the remote folder to /<folder structure>/  
-        //remoteFolder = UrlHelper.formatWebFolder(remoteFolder);
-        //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
         let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     
         let context : any = {
@@ -126,7 +123,7 @@ export class SPFileService{
                     Logger.outputMessage(`file ${publishingInfo.fileUri.fsPath} successfully saved to server.`, vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
         });
     }
 
@@ -151,14 +148,14 @@ export class SPFileService{
                     Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
-                .catch((err) => ErrorHelper.handleError(err, reject));
+                .catch((err) => reject(err));
         });
     }
 
     private buildCoreUploadOptions(publishingInfo : IPublishingAction) : any {
         var coreOptions = {
             siteUrl: vscode.window.spgo.config.sharePointSiteUrl,
-            checkinMessage : publishingInfo.message,
+            checkinMessage : encodeURI(publishingInfo.message),
             checkin : false
         };
     

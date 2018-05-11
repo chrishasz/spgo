@@ -91,6 +91,17 @@ export function activate(context: vscode.ExtensionContext): any {
         }
     }));
 
+     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
+     context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
+        initializeConfiguration(vscode.window.spgo)
+                    .then(function() {
+                        Logger.updateStatusBar('Configuration file reloaded', 5);
+                    })
+                    .catch(function(err : SPGo.IError) {
+                        Logger.showError(err.message, err);
+                    });
+    }));
+
     //Reset the current user's SharePoint credentials
     context.subscriptions.push(vscode.commands.registerCommand('spgo.resetCredentials', () => {
         resetCredentials();
@@ -106,7 +117,12 @@ export function activate(context: vscode.ExtensionContext): any {
         if (vscode.window.spgo.config) {
             //is the file in the source folder? Save to the server.
             if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) && Constants.PUBLISHING_NONE != vscode.window.spgo.config.publishingScope){
-                saveFile(textDocument.uri);
+                if(Constants.PUBLISHING_MAJOR == vscode.window.spgo.config.publishingScope || Constants.PUBLISHING_MINOR == vscode.window.spgo.config.publishingScope){
+                    publishFile(textDocument.uri, vscode.window.spgo.config.publishingScope);
+                }
+                else{
+                    saveFile(textDocument.uri);
+                }
             }
             //is this an update to the config? Reload the config.
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
@@ -123,8 +139,10 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //get file info when the active text document changes.
     context.subscriptions.push(vscode.workspace.onDidOpenTextDocument((textDocument: vscode.TextDocument) => {
-        if (vscode.window.spgo.config && textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
-            getCurrentFileInformation(textDocument);
+        if (vscode.window.spgo.config 
+            && textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) 
+            && !textDocument.fileName.endsWith('.git')){
+                getCurrentFileInformation(textDocument);
         }
     }));
 }

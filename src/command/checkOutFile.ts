@@ -10,6 +10,7 @@ import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
+import { ErrorHelper } from '../util/errorHelper';
 
 export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
 
@@ -24,7 +25,7 @@ export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
             AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
                 .then((filePath) => fileService.checkoutFile(filePath))
                 .then(() => downloadFileAndCompare(fileUri, downloadPath))
-                .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+                .catch(err => ErrorHelper.handleError(err))
         );
 
         
@@ -50,9 +51,7 @@ export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
                                     }
                                 });
                         },
-                        (err) => {
-                                Logger.outputError(err, vscode.window.spgo.outputChannel);
-                        });
+                        (err) => {ErrorHelper.handleError(err);});
                 })
         }
     }

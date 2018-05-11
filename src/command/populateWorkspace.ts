@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import {IError} from './../spgo';
 import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
+import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -15,7 +16,7 @@ export default function populateWorkspace() : Thenable<any> {
     return UiHelper.showStatusBarProgress('Populating workspace',
         AuthenticationService.verifyCredentials(vscode.window.spgo)
             .then(downloadFiles)
-            .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+            .catch(err => ErrorHelper.handleError(err))
     );
 
     function downloadFiles() : Thenable<any> {

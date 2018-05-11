@@ -6,6 +6,7 @@ import {Constants} from './../constants';
 import {IPublishingAction} from './../spgo';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
+import {ErrorHelper} from './../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -18,7 +19,7 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
         let publishingInfo : IPublishingAction = {
             fileUri : fileUri,
             scope : publishingScope,
-            message : Constants.PUBLISHING_DEFAULT_MESSAGE
+            message : vscode.window.spgo.config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
         }
 
         Logger.outputMessage(`Publishing ${publishingScope} file version:  ${fileUri.path}`, vscode.window.spgo.outputChannel);
@@ -30,7 +31,7 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
                 .then(function(){
                     Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                 })
-                .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+                .catch(err => ErrorHelper.handleError(err))
         );
     }
 }

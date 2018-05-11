@@ -4,6 +4,7 @@ import * as vscode from 'vscode';
 import {Logger} from '../util/logger';
 import {ISPFileInformation} from './../spgo';
 import {UiHelper} from './../util/uiHelper';
+import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationservice';
 
@@ -17,7 +18,7 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
                 .then((textDocument) => fileService.getFileInformation(textDocument))
                 .then((fileInfo) => showFileInformation(fileInfo))
-                .catch(err => Logger.outputError(err, vscode.window.spgo.outputChannel))
+                .catch(err => ErrorHelper.handleError(err))
         );
     }
 

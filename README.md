@@ -56,7 +56,7 @@ If configuration was successful, you should see a file similar to below:
 ```
 ### Additional Configuration Options ###
 #### Glob support for Publishing Workspace ####
-Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into a node called `publishWorkspaceGlobPattern` will cause SPGo to publish only files which match this glob pattern. For example, if you use another VSCode plugin to minify files on save, you can configure the `>SPGo: Publish local workspace` command to publish all minified files in the workspace with the format `<fiel>.min.<ext>` by setting the  `publishWorkspaceGlobPattern` property to `/**/*.min.*`.
+Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into a node called `publishWorkspaceGlobPattern` will cause SPGo to publish only files which match this glob pattern. For example, if you use another VSCode plugin to minify files on save, you can configure the `>SPGo: Publish local workspace` command to publish all minified files in the workspace with the format `<file>.min.<ext>` by setting the  `publishWorkspaceGlobPattern` property to `/**/*.min.*`.
 
 #### Populating Remote Files ####
 When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `>SPGo: Populate Workspace`. 
@@ -65,6 +65,7 @@ Note: This WILL overwrite all local files.
 #### Example Config json ####
 ```json
 {
+    "checkInMessage" : "Your custom Check-in message here",
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",

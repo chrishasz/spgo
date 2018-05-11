@@ -6,7 +6,7 @@ import {Logger} from '../util/logger';
 
 export class ErrorHelper{
 
-    static handleError(err, reject, outputMethod?){
+    static handleError(err, outputMethod?){
         outputMethod = outputMethod || Logger.showError;
 
         //HACK: Come up with a better way to detect if this error was due to credentials
@@ -30,11 +30,9 @@ export class ErrorHelper{
                 Logger.outputError(err, vscode.window.spgo.outputChannel);
             }
         }
-        
-        reject(err);
     }
 
-    static handleErrorSilently(err, reject){
-        this.handleError(err, reject, Logger.outputError);
-    }
+    // static handleErrorSilently(err, reject){
+    //     this.handleError(err, reject, Logger.outputError);
+    // }
 }
