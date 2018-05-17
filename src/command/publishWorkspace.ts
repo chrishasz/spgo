@@ -7,7 +7,7 @@ import {IPublishingAction} from './../spgo';
 import {UiHelper} from './../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 
 export default function publishWorkspace() : Thenable<any> {
     let publishingInfo : IPublishingAction = {

@@ -5,7 +5,7 @@ import * as parseGlob from 'parse-glob';
 
 import {Uri, window} from 'vscode';
 import {ISPPullOptions} from 'sppull';
-import {UrlHelper} from './../util/UrlHelper';
+import {UrlHelper} from './../util/urlHelper';
 import { GlobToCamlConverter } from '../converter/globToCamlConverter';
 
 export class DownloadFileOptionsFactory {

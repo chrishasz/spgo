@@ -8,7 +8,7 @@ import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
 import {ErrorHelper} from './../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 
 
 export default function publishFile(fileUri: vscode.Uri, publishingScope : string) : Thenable<any> {
