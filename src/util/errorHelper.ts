@@ -6,7 +6,7 @@ import {Logger} from '../util/logger';
 
 export class ErrorHelper{
 
-    static handleError(err, outputMethod?){
+    static handleError(err){
 
         //HACK: Come up with a better way to detect if this error was due to credentials
         if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
