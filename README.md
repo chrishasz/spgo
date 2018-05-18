@@ -5,6 +5,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 * Use VSCode compare tools to diff local changes against the server
 * Pull down remote folders to your local workspace
 * No more editors messing with your markup 
+* Support for: Windows, OSX, and Unix
 * Keep all project configuration in Source Control for easy team integration
     ### Learn More
     You can view additional documentation [on our blog.](https://www.sitego.co/blog/?category=SPGo)
