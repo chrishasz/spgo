@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## 1.2.7 - 2018-5-
+### Fixed
+- Unix-related Issues.
+
+## 1.2.6 - 2018-5-18
+### Fixed
+- A packaging issue which prevented dependencies from being resolved.
+
 ## 1.2.5 - 2018-5-17
 ### Added
 - Unix support! Resoved [This Request](https://github.com/readysitego/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
