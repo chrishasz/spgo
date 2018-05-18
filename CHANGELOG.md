@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.2.5 - 2018-5-17
 ### Added
 - Unix support! Resoved [This Request](https://github.com/readysitego/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
+### Changed
+- Better warnings/errors for bad passwords and checked-out files.
 
 ## 1.2.4 - 2018-5-10
 ### Added
