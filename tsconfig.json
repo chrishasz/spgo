@@ -11,7 +11,8 @@
         "allowJs": true,
         "noUnusedParameters": true,
         "noUnusedLocals": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+        "forceConsistentCasingInFileNames": true
     },
     "include": [
         "src/**/*",
