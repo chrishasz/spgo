@@ -14,7 +14,7 @@
         "o365",
         "ide"
     ],
-    "version": "1.2.5",
+    "version": "1.2.6",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -177,7 +177,6 @@
     },
     "dependencies": {
         "fs-extra": "^4.0.3",
-        "lodash": "^4.17.5",
         "node-sp-auth": "^2.4.0",
         "parse-glob": "^3.0.4",
         "path": "^0.12.7",

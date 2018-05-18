@@ -1,5 +1,5 @@
 'use strict';
-import * as _ from 'lodash';
+
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
@@ -24,7 +24,7 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 				try{
 					// file exists!
 					if( err == null){
-						self.config = _.extend(self.config || {}, fs.readJsonSync(configFilePath));
+						self.config = {...self.config || {}, ... fs.readJsonSync(configFilePath)};
 						// this is an internal property only
 						self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
 					}

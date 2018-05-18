@@ -1,7 +1,5 @@
 'use strict';
 
-import * as _ from 'lodash'; 
-// import * as path from 'path';
 import * as vscode from 'vscode';
 import {ISPRequest} from 'sp-request';
 
@@ -161,11 +159,11 @@ export class SPFileService{
     
         if(publishingInfo.scope === Constants.PUBLISHING_MAJOR){
             coreOptions.checkin = true;
-            _.extend(coreOptions,  {checkinType : 1});
+            coreOptions['checkinType'] = 1;
         }
         else if(publishingInfo.scope === Constants.PUBLISHING_MINOR){
             coreOptions.checkin = true;
-            _.extend(coreOptions,  {checkinType : 0});
+            coreOptions['checkinType'] = 0;
         }
     
         return coreOptions;
