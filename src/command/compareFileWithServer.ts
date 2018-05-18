@@ -6,8 +6,9 @@ import * as vscode from 'vscode';
 import {Logger} from '../util/logger';
 import {Constants} from './../constants';
 import {UiHelper} from './../util/uiHelper';
+import {UrlHelper} from './../util/urlHelper';
 import {FileHelper} from './../util/fileHelper';
-import { ErrorHelper } from '../util/errorHelper';
+import {ErrorHelper} from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationService';
 
@@ -28,7 +29,7 @@ export default function compareFileWithServer(localPath : vscode.Uri) : Thenable
         );
 
         function openFileCompare(localPath : vscode.Uri, dlFileUrl : any){            
-            let remotePath : vscode.Uri = vscode.Uri.parse('file://' + dlFileUrl[0].SavedToLocalPath);
+            let remotePath : vscode.Uri = vscode.Uri.parse('file:///' + UrlHelper.removeLeadingSlash(dlFileUrl[0].SavedToLocalPath));
             Logger.outputMessage(`localPath:  ${localPath} dlFilrUrl: ${remotePath}`, vscode.window.spgo.outputChannel);
 
             vscode.commands.executeCommand('vscode.diff', remotePath, localPath, '(Server)  <=====>  (Local)');
