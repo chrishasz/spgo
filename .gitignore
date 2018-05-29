@@ -7,3 +7,6 @@ out
 node_modules
 *.vsix
 .vscode-test
+
+#NPM Stuff
+npm-debug.log

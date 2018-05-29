@@ -5,7 +5,7 @@ import {Logger} from '../util/logger';
 import {UiHelper} from './../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 
 export default function retrieveFolder() : Thenable<any> {
     Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);

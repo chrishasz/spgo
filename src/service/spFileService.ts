@@ -9,7 +9,7 @@ import {Logger} from '../util/logger';
 import {ISPPullOptions} from 'sppull';
 import {Constants} from './../constants';
 import {IPublishingAction} from '../spgo';
-import {UrlHelper} from './../util/UrlHelper';
+import {UrlHelper} from './../util/urlHelper';
 import {FileHelper} from './../util/fileHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
@@ -45,7 +45,7 @@ export class SPFileService{
             RequestHelper.setNtlmHeader();
         }
 
-        return fileGateway.downloadFiles(remoteFolder.replace('/**/','/'), context, options);
+        return fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
     }
 
     public downloadFileMajorVersion(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{

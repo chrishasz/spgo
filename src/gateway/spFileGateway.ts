@@ -11,9 +11,7 @@ import {RequestHelper} from './../util/requestHelper';
 
 export class SPFileGateway{
 
-    constructor(){
-
-    }
+    constructor(){}
 
     public checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
         return new Promise(function (resolve, reject) {
@@ -29,7 +27,6 @@ export class SPFileGateway{
                     resolve(response);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -44,7 +41,6 @@ export class SPFileGateway{
                     resolve(downloadResults);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -57,7 +53,6 @@ export class SPFileGateway{
                     resolve(downloadResults);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -92,7 +87,6 @@ export class SPFileGateway{
                         }
                     })
                     .catch((err) => reject(err));
-                    // .catch((err) => ErrorHelper.handleErrorSilently(err, reject));
                 })
         });
     }
@@ -110,7 +104,6 @@ export class SPFileGateway{
                     resolve();
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 }

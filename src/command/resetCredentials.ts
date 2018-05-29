@@ -2,7 +2,7 @@
 import * as vscode from 'vscode';
 
 import { ErrorHelper } from '../util/errorHelper';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 
 //Reset the Current user's Credentials.
 export default function resetCredentials() : Promise<any> {

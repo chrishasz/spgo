@@ -9,7 +9,7 @@ import {Constants} from './../constants';
 import {UiHelper} from './../util/uiHelper';
 import {FileHelper} from './../util/fileHelper';
 import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 import { ErrorHelper } from '../util/errorHelper';
 
 export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {

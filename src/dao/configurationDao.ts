@@ -23,7 +23,7 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 				try{
 					// file exists!
 					if( err == null){
-						self.config = {...self.config || {}, ...fs.readJsonSync(configFilePath)};// _.extend(self.config || {}, );
+						self.config = {...self.config || {}, ... fs.readJsonSync(configFilePath)};
 						// this is an internal property only
 						self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
 					}

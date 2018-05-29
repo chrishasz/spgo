@@ -4,8 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## 1.3.0
+### Added
 
+### Fixed
+- [This Issue](https://github.com/readysitego/spgo/issues/46) opened a number of Glob->Caml related issues. I've resolved as many of them as I could find.
+- Continued Improving Unix/Linux support for SPGo. Authoring SP customiations from Ubuntu; What a world we live in.
+
+## 1.2.5 - 2018-5-17
+### Added
+- Unix support! Resoved [This Request](https://github.com/readysitego/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
+### Changed
+- Better warnings/errors for bad passwords and checked-out files.
 
 ## 1.2.4 - 2018-5-10
 ### Added

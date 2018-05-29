@@ -6,7 +6,7 @@ import {ISPFileInformation} from './../spgo';
 import {UiHelper} from './../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationservice';
+import {AuthenticationService} from './../service/authenticationService';
 
 export default function saveFile(textDocument: vscode.TextDocument) : Thenable<any> { 
 
@@ -27,7 +27,9 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
         Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
         
         if( fileInfo.checkOutType == 0){
-            Logger.updateStatusBar(`File Checked out to user: ${fileInfo.checkOutBy}`, 5);
+            let message : string = `File Checked out to user: ${fileInfo.checkOutBy}`;
+            Logger.outputWarning(message);
+            Logger.updateStatusBar(message, 5);
         }
         else{
             Logger.updateStatusBar(`File is not checked out.`, 5);

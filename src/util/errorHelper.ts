@@ -6,8 +6,7 @@ import {Logger} from '../util/logger';
 
 export class ErrorHelper{
 
-    static handleError(err, outputMethod?){
-        outputMethod = outputMethod || Logger.showError;
+    static handleError(err){
 
         //HACK: Come up with a better way to detect if this error was due to credentials
         if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
@@ -15,16 +14,16 @@ export class ErrorHelper{
             let error : IError ={
                 message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
             };
-            Logger.outputError(error, vscode.window.spgo.outputChannel);
+            Logger.showError(error.message, err);
         }
         //otherwise something else happened.
         else{
             if(err.message && err.message.value){
-                outputMethod(err.message.value, err);
+                Logger.showError(err.message.value, err);
             }
             // log sharepoint errors
             else if(err.error && err.error.error ){
-                outputMethod(err.error.error.message.value, err);
+                Logger.showError(err.error.error.message.value, err);
             }
             else{
                 Logger.outputError(err, vscode.window.spgo.outputChannel);
