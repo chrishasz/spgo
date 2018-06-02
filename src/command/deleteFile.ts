@@ -41,17 +41,6 @@ export default function deleteFile(fileUri: vscode.Uri) : Thenable<any> {
                             }
                         })
                     })
-                //
-                // .then((fileUri) => fileService.deleteFileFromServer(fileUri))
-                // .then(() => {
-                //     Logger.outputMessage('Remote file delete complete.', vscode.window.spgo.outputChannel);
-                // })
-                // .then(() =>{
-                //     fs.remove(fileUri.fsPath)
-                //         .then(() => {
-                //             Logger.outputMessage('Local file delete complete.', vscode.window.spgo.outputChannel);
-                //         });
-                // })
                 .catch(err => ErrorHelper.handleError(err))
         );
     }

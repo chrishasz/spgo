@@ -13,6 +13,13 @@ export class UrlHelper{
         return filePath;
     }
 
+    public static ensureLeadingWebSlash(filePath : string) : string{
+        if(!filePath.startsWith('/')){
+            filePath = '/' + filePath;
+        }
+        return filePath;
+    }
+
     public static getSiteRelativeFileUri(fileName : string) : string {
         return fileName.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
     }

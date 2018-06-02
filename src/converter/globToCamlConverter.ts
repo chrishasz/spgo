@@ -33,7 +33,7 @@ export class GlobToCamlConverter {
             }
 
             //check to see if this is a single folder or not
-            if(!glob.is.globstar){
+            if(!glob.is.globstar && camlQuery != ''){
                 camlQuery = this.combineAnd(this.queryEqual(this.getFileDirRef, spSitePath + glob.base), camlQuery );
             }
         }

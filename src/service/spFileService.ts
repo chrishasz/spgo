@@ -53,6 +53,7 @@ export class SPFileService{
 
     public downloadFiles(remoteFolder : string) : Promise<any>{
         //format the remote folder to /<folder structure>/  
+        remoteFolder = UrlHelper.ensureLeadingWebSlash(remoteFolder);
         let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     
         let context : any = {
