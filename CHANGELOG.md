@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+
 ## 1.3.0 - 2018-6-1
 ### Added
 - Delete files from SharePoint (plus your local file system) using the `SPGo: Publish local workspace` command.
@@ -11,6 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - [This Issue](https://github.com/readysitego/spgo/issues/46) opened a number of Glob->Caml related issues. I've resolved as many of them as I could find.
 - Continued Improving Unix/Linux support for SPGo. Authoring SP customiations from Ubuntu; what a world we live in!
+
+## 1.2.7 - 2018-5-18
+### Fixed
+- Unix-related Issues.
+
+## 1.2.6 - 2018-5-18
+### Fixed
+- A packaging issue which prevented dependencies from being resolved.
 
 ## 1.2.5 - 2018-5-17
 ### Added
