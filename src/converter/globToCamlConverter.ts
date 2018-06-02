@@ -2,13 +2,13 @@
 
 export class GlobToCamlConverter {
 
-    static Convert(glob : any) : string {
+    static Convert(glob : any, spSitePath : string) : string {
         
         let camlQuery : string = '';
 
         //Limitation - can only support Neq for specific filenames.
         if(glob.is.negated){
-            camlQuery = this.queryNotEqual(glob.path.basename);
+            camlQuery = this.queryNotEqual(() => this.getFieldRef, glob.path.basename);
         }
         else if(!glob.is.negated){
             if(glob.path.filename == '*'){
@@ -18,34 +18,47 @@ export class GlobToCamlConverter {
                 }
                 //trim out *, and create like: *.css => .css
                 else{
-                    camlQuery = this.queryLike(glob.path.basename.replace(/\*/gi,''));
+                    camlQuery = this.queryLike(this.getFieldRef, glob.path.basename.replace(/\*/gi,''));
                 }
             }
             else{
                 // looking for single basename: fileName.*
                 if(glob.path.extname == '*'){
-                    camlQuery = this.queryLike(glob.path.basename);
+                    camlQuery = this.queryLike(this.getFieldRef, glob.path.basename);
                 }
                 // looking for a single file: filename.ext
                 else{
-                    camlQuery = this.queryEqual(glob.path.basename);
+                    camlQuery = this.queryEqual(this.getFieldRef, glob.path.basename);
                 }
+            }
+
+            //check to see if this is a single folder or not
+            if(!glob.is.globstar && camlQuery != ''){
+                camlQuery = this.combineAnd(this.queryEqual(this.getFileDirRef, spSitePath + glob.base), camlQuery );
             }
         }
         
         return camlQuery;
     }
 
-    private static queryEqual(value:string){
-        return `<Eq>${this.getFieldRef()}${this.getValue(value)}</Eq>`;
+    private static combineAnd(firstQuery:string, secondQuery:string){
+        return `<And>${firstQuery}${secondQuery}</And>`;
     }
 
-    private static queryLike(value:string){
-        return `<Contains>${this.getFieldRef()}${this.getValue(value)}</Contains>`;
+    private static queryEqual(operation : Function, value:string){
+        return `<Eq>${operation()}${this.getValue(value)}</Eq>`;
     }
 
-    private static queryNotEqual(value:string){
-        return `<Neq>${this.getFieldRef()}${this.getValue(value)}</Neq>`;
+    private static queryLike(operation : Function, value:string){
+        return `<Contains>${operation()}${this.getValue(value)}</Contains>`;
+    }
+
+    private static queryNotEqual(operation : Function, value:string){
+        return `<Neq>${operation()}${this.getValue(value)}</Neq>`;
+    }
+
+    private static getFileDirRef(){
+        return '<FieldRef Name="FileDirRef"/>';
     }
 
     private static getFieldRef(){

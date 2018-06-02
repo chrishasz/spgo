@@ -41,7 +41,7 @@ describe("Convert Glob to Caml Tests", () => {
     it("Should return an empty string if there is no glob", () => {
         let glob : any = parseGlob(globRoot);
 
-        assert.equal(GlobToCamlConverter.Convert(glob), '');
+        assert.equal(GlobToCamlConverter.Convert(glob, ''), '');
     });
 
     // it("Should detect when a valid source directory has been provided", () => {

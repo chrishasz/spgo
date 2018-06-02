@@ -66,9 +66,9 @@ export class RequestHelper {
         }
     }
 
-    static createHeaders(appManager : IAppManager, digest : string) : any { 
+    static createHeaders(appManager : IAppManager, digest : string, additionalHeaders? : any) : any { 
 
-        let headers : any = {};
+        let headers : any = additionalHeaders || {};
 
         if( Constants.SECURITY_NTLM == appManager.config.authenticationType){
             process.env['_sp_request_headers'] = JSON.stringify({

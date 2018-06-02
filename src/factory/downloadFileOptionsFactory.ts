@@ -18,8 +18,8 @@ export class DownloadFileOptionsFactory {
 
     public createFileOptions() : ISPPullOptions{
         let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
-        let remoteFolder : string = this.glob.path.dirname;
-        let camlQuery : string = GlobToCamlConverter.Convert(this.glob);
+        let remoteFolder : string = this.glob.base; //.path.dirname;
+        let camlQuery : string = GlobToCamlConverter.Convert(this.glob, UrlHelper.removeLeadingSlash(sharePointSiteUrl.path));
 
         let options : ISPPullOptions = {
             spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path,
@@ -30,19 +30,17 @@ export class DownloadFileOptionsFactory {
             if(camlQuery != ''){
                 options.spDocLibUrl = remoteFolder;
                 options.camlCondition = camlQuery;
-                
             }
             else{
-                options.recursive = this.glob.is.globstar;
                 options.spRootFolder = remoteFolder.replace('/**/','/');
-                options.createEmptyFolders = this.glob.is.globstar;
             }
         }
         else{
             options.spRootFolder = UrlHelper.formatWebFolder(this.glob.orig);
-            options.recursive = false;
-            options.createEmptyFolders = false;
         }
+
+        options.recursive = this.glob.is.globstar;
+        options.createEmptyFolders = this.glob.is.globstar;
 
         return options;
     }

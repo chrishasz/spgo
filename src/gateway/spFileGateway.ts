@@ -8,12 +8,9 @@ import {ISPRequest} from 'sp-request';
 import {ISPFileInformation} from './../spgo'
 import {Logger} from '../util/logger';
 import {RequestHelper} from './../util/requestHelper';
-
 export class SPFileGateway{
 
-    constructor(){
-
-    }
+    constructor(){}
 
     public checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
         return new Promise(function (resolve, reject) {
@@ -29,7 +26,34 @@ export class SPFileGateway{
                     resolve(response);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
+        });
+    }
+
+    public deleteFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+        return new Promise(function (resolve, reject) {
+            
+            spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
+                .then(digest => {
+                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')", {
+                        body: {},
+                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest, {
+                            'X-HTTP-Method':'DELETE',
+                            'accept': 'application/json; odata=verbose',
+                            'content-type': 'application/json; odata=verbose'
+                        })
+                    });
+                })
+                .then( (response) => {
+                    resolve(response);
+                })
+                .catch((err) => reject(err));
+
+            // sppurge(credentials, fileOptions)
+            //     .then(function(response){
+            //         Logger.outputMessage(`file ${fileOptions.filePath} successfully deleted from server.`, vscode.window.spgo.outputChannel);
+            //         resolve(response);
+            //     })
+            //     .catch((err) => reject(err));
         });
     }
 
@@ -44,7 +68,6 @@ export class SPFileGateway{
                     resolve(downloadResults);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -57,7 +80,6 @@ export class SPFileGateway{
                     resolve(downloadResults);
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 
@@ -92,7 +114,6 @@ export class SPFileGateway{
                         }
                     })
                     .catch((err) => reject(err));
-                    // .catch((err) => ErrorHelper.handleErrorSilently(err, reject));
                 })
         });
     }
@@ -110,7 +131,6 @@ export class SPFileGateway{
                     resolve();
                 })
                 .catch((err) => reject(err));
-                // .catch((err) => ErrorHelper.handleError(err, reject));
         });
     }
 }
