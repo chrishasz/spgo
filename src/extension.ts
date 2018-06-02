@@ -7,6 +7,7 @@ import {Logger} from './util/logger';
 import {Constants} from './constants';
 import {AppManager} from './appManager';
 import saveFile from './command/saveFile';
+import deleteFile from './command/deleteFile';
 import publishFile from './command/publishFile';
 import checkOutFile from './command/checkOutFile';
 import retrieveFolder from './command/retrieveFolder';
@@ -50,6 +51,16 @@ export function activate(context: vscode.ExtensionContext): any {
     context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
         // run config
         configureWorkspace();
+    }));
+
+    //Delete the current file.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: vscode.Uri) => {
+        if (selectedResource && selectedResource.path) {
+            deleteFile(selectedResource);
+        } 
+        else {
+            deleteFile(vscode.window.activeTextEditor.document.uri);
+        }
     }));
 
     //Discard the checkout of the current file.

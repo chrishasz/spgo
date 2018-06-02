@@ -17,7 +17,9 @@ export const Constants = {
 
     TEMP_FOLDER : 'SPGo',
 
-    OPTIONS_OPEN : 'Open'
+    OPTIONS_OPEN : 'Open',
+    OPTIONS_NO : 'No',
+    OPTIONS_YES : 'Yes'
 
     //✔
 };

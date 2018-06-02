@@ -1,10 +1,10 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import {IPublishingAction} from './../spgo';
+import { IPublishingAction } from './../spgo';
 
 export class UiHelper{
-    
+
     static getPublishingMessage(publishingInfo : IPublishingAction) : Thenable<any> {
         let options: vscode.InputBoxOptions = {
             ignoreFocusOut: true,

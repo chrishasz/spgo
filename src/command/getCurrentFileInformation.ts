@@ -24,7 +24,7 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
 
     function showFileInformation(fileInfo : ISPFileInformation) : void{
 
-        Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + " by user: " + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
+        Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + ' by user: ' + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
         
         if( fileInfo.checkOutType == 0){
             let message : string = `File Checked out to user: ${fileInfo.checkOutBy}`;
