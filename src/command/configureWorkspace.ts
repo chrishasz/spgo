@@ -4,7 +4,8 @@ import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 import { ErrorHelper } from '../util/errorHelper';
 
-import {Constants} from './../constants';
+import { Constants } from './../constants';
+import { UrlHelper } from '../util/urlHelper';
 import initializeConfiguration from './../dao/configurationDao';
 
 export default function configureWorkspace() {
@@ -33,7 +34,7 @@ export default function configureWorkspace() {
                         siteUrl = 'https://' + siteUrl;
                     }
 
-                    config.sharePointSiteUrl = siteUrl.toString() || config.sharePointSiteUrl || '';
+                    config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(siteUrl.toString() || config.sharePointSiteUrl || '');
 
                     if (!config.sharePointSiteUrl) { 
                         reject('SharePoint site Url is required'); 

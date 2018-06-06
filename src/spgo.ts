@@ -8,7 +8,7 @@ declare module 'vscode' {
 }
 
 export interface IAppManager{  
-    credential? : ICredential;
+    credentials? : ICredential;
     config? : IConfig;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
@@ -29,6 +29,7 @@ export interface IConfig{
     remoteFolders? : string[];
     sharePointSiteUrl? : string;
     sourceDirectory? : string;      // The relative directory structure underneath the VSCode local workspace root directory
+    storeCredentials? : Boolean;
     workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root + sourceDirectory)
 }
 

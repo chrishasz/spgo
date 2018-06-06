@@ -16,8 +16,8 @@ export class RequestHelper {
         switch(appManager.config.authenticationType){
             case Constants.SECURITY_ADFS:{
                 let credentials : IAdfsUserCredentials = {
-                    password: appManager.credential.password,
-                    username: appManager.credential.username,
+                    password: appManager.credentials.password,
+                    username: appManager.credentials.username,
                     relyingParty: appManager.config.authenticationDetails.relayingParty,
                     adfsUrl: appManager.config.authenticationDetails.adfsUrl
                 };
@@ -26,16 +26,16 @@ export class RequestHelper {
             }
             case Constants.SECURITY_DIGEST: {
                 let credentials : IUserCredentials = {
-                    password: appManager.credential.password,
-                    username: appManager.credential.username
+                    password: appManager.credentials.password,
+                    username: appManager.credentials.username
                 };
                 
                 return credentials;
             }
             case Constants.SECURITY_FORMS: {
                 let credentials : IOnpremiseFbaCredentials = {
-                    password: appManager.credential.password,
-                    username: appManager.credential.username,
+                    password: appManager.credentials.password,
+                    username: appManager.credentials.username,
                     fba: true
                   };
                 
@@ -43,11 +43,11 @@ export class RequestHelper {
             }
             case Constants.SECURITY_NTLM: {
                 let credentials : IOnpremiseUserCredentials ;
-                let parts : string[] = appManager.credential.username.split('\\');
+                let parts : string[] = appManager.credentials.username.split('\\');
                 if (parts.length > 1) {
                     credentials = {
                         domain : parts[0],
-                        password : appManager.credential.password,
+                        password : appManager.credentials.password,
                         username : parts[1]
                     }
                 }
@@ -56,8 +56,8 @@ export class RequestHelper {
             }
             default:{
                 let credentials : IUserCredentials = {
-                    password : appManager.credential.password,
-                    username : appManager.credential.username
+                    password : appManager.credentials.password,
+                    username : appManager.credentials.username
                 };
                 
                 return credentials;

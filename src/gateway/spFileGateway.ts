@@ -115,7 +115,8 @@ export class SPFileGateway{
                     })
                     .catch((err) => reject(err));
                 })
-        });
+                .catch((err) => reject(err));
+        })
     }
 
     public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{

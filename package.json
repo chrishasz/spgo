@@ -184,6 +184,8 @@
         "typescript": "2.5.0"
     },
     "dependencies": {
+        "@types/fs-extra": "^5.0.2",
+        "cpass": "^2.0.3",
         "fs-extra": "^4.0.3",
         "node-sp-auth": "^2.4.2",
         "parse-glob": "^3.0.4",

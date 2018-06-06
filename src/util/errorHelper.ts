@@ -9,8 +9,8 @@ export class ErrorHelper{
     static handleError(err){
 
         //HACK: Come up with a better way to detect if this error was due to credentials
-        if(err.message && err.message.indexOf('wst:FailedAuthentication') > 0){
-            vscode.window.spgo.credential = null;
+        if(err.message && (err.message.indexOf('wst:FailedAuthentication') >= 0 || err.message.indexOf('Unable to resolve namespace authentiation type') >= 0)){
+            vscode.window.spgo.credentials = null;
             let error : IError ={
                 message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
             };

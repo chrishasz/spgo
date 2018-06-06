@@ -6,7 +6,7 @@ import {AuthenticationService} from './../service/authenticationService';
 
 //Reset the Current user's Credentials.
 export default function resetCredentials() : Promise<any> {
-    vscode.window.spgo.credential = null;
+    vscode.window.spgo.credentials = null;
 
     return AuthenticationService.verifyCredentials(vscode.window.spgo)
     .catch(err => ErrorHelper.handleError(err));

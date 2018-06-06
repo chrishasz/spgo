@@ -38,6 +38,10 @@ export class UrlHelper{
         return Uri.parse(this.removeTrailingSlash(vscode.window.spgo.config.sharePointSiteUrl) + remoteFileUrl);
     }
 
+    public static formatUriAsFileName(uri : string){
+        return uri.replace(/[^a-zA-Z0-9]/g,'_');
+    }
+
     // properly append leading and trailing '/'s to a folder path.
     public static formatWebFolder(filePath : string) : string {
         if(!filePath.startsWith('/')){
