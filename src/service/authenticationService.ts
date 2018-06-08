@@ -1,21 +1,22 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import {IAppManager} from './../spgo';
-import {Logger} from '../util/logger';
-import {RequestHelper} from './../util/requestHelper'
+import { IAppManager } from './../spgo';
+import { Logger } from '../util/logger';
+import { CredentialDao } from '../dao/credentialDao';
+import { RequestHelper } from './../util/requestHelper'
 
 export class AuthenticationService{
 	static verifyCredentials(appManager : IAppManager, payload? : any): Promise<any> {
 		appManager = appManager || vscode.window.spgo;
 	
 		try {
-			if(!appManager.credential){
-				appManager.credential = {};
+			if(!appManager.credentials){
+				appManager.credentials = {};
 				return getUserName(appManager)
 					.then(mgr => getPassword(mgr))
 					.then(mgr => verify(mgr))
-					.then(mgr => processNextCommand(mgr))
+					.then(mgr => processNextCommand(mgr));
 			}
 			else{
 				return processNextCommand(appManager);
@@ -23,7 +24,7 @@ export class AuthenticationService{
 		} 
 		catch (err) {
 			Logger.outputError(err, vscode.window.spgo.outputChannel)
-			appManager.credential = {};
+			appManager.credentials = {};
 		} 
 	
 		function getUserName(appManager) {
@@ -31,14 +32,14 @@ export class AuthenticationService{
 				let options: vscode.InputBoxOptions = {
 					ignoreFocusOut: true,
 					placeHolder: 'user@domain.com [or domain\\user]',
-					value: appManager.credential.username || '',
+					value: appManager.credentials.username || '',
 					prompt: 'Please enter your SharePoint username',
 				};
 				vscode.window.showInputBox(options).then(result => {
-					appManager.credential.username = result || appManager.credential.username || '';
-					if (!appManager.credential.username) { 
+					appManager.credentials.username = result || appManager.credentials.username || '';
+					if (!appManager.credentials.username) { 
 						reject('No Username'); 
-						appManager.credential = null;
+						appManager.credentials = null;
 					};
 					resolve(appManager);
 				});
@@ -50,15 +51,15 @@ export class AuthenticationService{
 				let options: vscode.InputBoxOptions = {
 					ignoreFocusOut: true,
 					password: true,
-					value: appManager.credential.password || '',
+					value: appManager.credentials.password || '',
 					placeHolder: 'password',
 					prompt: 'Please enter your SharePoint password',
 				};
 				return vscode.window.showInputBox(options).then(function (result: string) {
-					appManager.credential.password = result || appManager.credential.password || '';
-					if (!appManager.credential.password) { 
+					appManager.credentials.password = result || appManager.credentials.password || '';
+					if (!appManager.credentials.password) { 
 						reject('No Password'); 
-						appManager.credential = null;
+						appManager.credentials = null;
 					};
 					resolve(appManager);
 				});
@@ -73,9 +74,14 @@ export class AuthenticationService{
 
 				spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
 					.then(function(){ //response => {
+						//store credentials?
+						if(appManager.config.storeCredentials){
+							CredentialDao.setCredentials(vscode.window.spgo.config.sharePointSiteUrl, appManager.credentials);
+							return processNextCommand(appManager);
+						}
 						resolve(appManager);
 					}, err => {
-						appManager.credential = null;
+						appManager.credentials = null;
 						reject(err);
 					});
 			});
@@ -83,7 +89,7 @@ export class AuthenticationService{
 
 		function processNextCommand(appManager) {			
 			return new Promise(function (resolve, reject) {
-				if(appManager && appManager.credential){
+				if(appManager && appManager.credentials){
 					resolve(payload);
 				}
 				else{

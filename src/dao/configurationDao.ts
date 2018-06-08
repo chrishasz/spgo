@@ -7,6 +7,7 @@ import { IConfig } from './../spgo';
 import {IAppManager} from './../spgo';
 import {Logger} from '../util/logger';
 import {Constants} from './../constants';
+import { UrlHelper } from '../util/urlHelper';
 
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
 	return new Promise(function (resolve, reject) {
@@ -28,16 +29,19 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 						self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
 					}
 					else{
-						Logger.outputMessage(err);
+						Logger.outputMessage("Config file does not exist, creating now.\r" + err);
 						//create the file
 						fs.ensureFileSync(configFilePath);
 						// hydrate self.config
 						self.config = self.config || {};
 					}
 
+					//Clean up any possible input issues
 					if (typeof self.config === 'object' && !self.config.sourceDirectory) {
 						self.config.sourceDirectory = 'src';
 					}
+					//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
+					self.config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(self.config.sharePointSiteUrl);
 		
 					resolve(self.config);
 				} 

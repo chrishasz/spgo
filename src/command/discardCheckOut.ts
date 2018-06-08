@@ -1,4 +1,5 @@
 'use strict';
+import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
 import {Logger} from '../util/logger';
@@ -10,19 +11,25 @@ import {AuthenticationService} from './../service/authenticationService';
 
 export default function discardCheckOut(fileUri: vscode.Uri) : Thenable<any> {
 
-    if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-        let fileName : string = FileHelper.getFileName(fileUri.path);
-        let fileService : SPFileService = new SPFileService();
+    //is this a directory?
+    if(fs.lstatSync(fileUri.fsPath).isDirectory()){
+        Logger.showWarning('The discard file check-out command only works for single files at this time.')
+    }
+    else{
+        if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
+            let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+            let fileService : SPFileService = new SPFileService();
 
-        Logger.outputMessage(`Discarding Check out for File:  ${fileUri.path}`, vscode.window.spgo.outputChannel);
-        
-        return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,
-            AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
-                .then((filePath) => fileService.undoFileCheckout(filePath))
-                .then(() => {
-                    Logger.outputMessage(`Discard check-out successful for file ${fileUri.path}.`, vscode.window.spgo.outputChannel);
-                })
-                .catch(err => ErrorHelper.handleError(err))
-        );
+            Logger.outputMessage(`Discarding Check out for File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
+            
+            return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,
+                AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
+                    .then((filePath) => fileService.undoFileCheckout(filePath))
+                    .then(() => {
+                        Logger.outputMessage(`Discard check-out successful for file ${fileUri.fsPath}.`, vscode.window.spgo.outputChannel);
+                    })
+                    .catch(err => ErrorHelper.handleError(err))
+            );
+        }
     }
 }

@@ -1,17 +1,18 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import {Logger} from '../util/logger';
-import {Constants} from './../constants';
-import {IPublishingAction} from './../spgo';
-import {UiHelper} from './../util/uiHelper';
+import { Logger } from '../util/logger';
+import { Constants } from './../constants';
+import { UrlHelper } from '../util/urlHelper';
+import { IPublishingAction } from './../spgo';
+import { UiHelper } from './../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
-import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationService';
+import { SPFileService } from './../service/spFileService';
+import { AuthenticationService } from './../service/authenticationService';
 
 export default function publishWorkspace() : Thenable<any> {
     let publishingInfo : IPublishingAction = {
-        fileUri : null,
+        contentUri : vscode.window.spgo.config.publishWorkspaceGlobPattern ? UrlHelper.ensureLeadingSlash(vscode.window.spgo.config.publishWorkspaceGlobPattern) : vscode.window.spgo.config.workspaceRoot + UrlHelper.osAwareGlobStar(),
         scope : Constants.PUBLISHING_MAJOR,
         message : vscode.window.spgo.config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
     }
@@ -21,7 +22,7 @@ export default function publishWorkspace() : Thenable<any> {
     return UiHelper.showStatusBarProgress('Publishing workspace', 
         AuthenticationService.verifyCredentials(vscode.window.spgo, publishingInfo)
             .then((publishingInfo) => UiHelper.getPublishingMessage(publishingInfo))
-            .then((publishingInfo) => fileService.uploadWorkspaceToServer(publishingInfo))
+            .then((publishingInfo) => fileService.uploadFilesToServer(publishingInfo))
             .catch(err => ErrorHelper.handleError(err))
     );
 }

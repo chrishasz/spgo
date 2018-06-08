@@ -18,7 +18,7 @@ export default function saveFile(textDocument: vscode.TextDocument) : Thenable<a
             AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
                 .then((textDocument) => fileService.getFileInformation(textDocument))
                 .then((fileInfo) => showFileInformation(fileInfo))
-                .catch(err => ErrorHelper.handleError(err))
+                .catch(err => ErrorHelper.handleError(err, true))
         );
     }
 

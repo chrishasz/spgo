@@ -31,11 +31,14 @@ export class GlobToCamlConverter {
                     camlQuery = this.queryEqual(this.getFieldRef, glob.path.basename);
                 }
             }
+        }
 
-            //check to see if this is a single folder or not
-            if(!glob.is.globstar && camlQuery != ''){
-                camlQuery = this.combineAnd(this.queryEqual(this.getFileDirRef, spSitePath + glob.base), camlQuery );
-            }
+        //check for folder scope
+        if(!glob.is.globstar && camlQuery != ''){
+            camlQuery = this.combineAnd(this.queryEqual(this.getFileDirRef, spSitePath + glob.base), camlQuery );
+        }
+        else if(glob.is.globstar && camlQuery != ''){
+            camlQuery = this.combineAnd(this.queryLike(this.getFileDirRef, spSitePath + glob.base), camlQuery );
         }
         
         return camlQuery;

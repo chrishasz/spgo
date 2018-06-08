@@ -131,7 +131,7 @@ export class SPFileService{
             var credentials = RequestHelper.createCredentials(vscode.window.spgo);
 
             var fileOptions = {
-                glob : publishingInfo.fileUri.fsPath,
+                glob : publishingInfo.contentUri,
                 base : localFilePath,
                 folder: '/'
             };
@@ -143,20 +143,20 @@ export class SPFileService{
 
             spsave(coreOptions, credentials, fileOptions)
                 .then(function(response){
-                    Logger.outputMessage(`file ${publishingInfo.fileUri.fsPath} successfully saved to server.`, vscode.window.spgo.outputChannel);
+                    Logger.outputMessage(`file ${publishingInfo.contentUri} successfully saved to server.`, vscode.window.spgo.outputChannel);
                     resolve(response);
                 })
                 .catch((err) => reject(err));
         });
     }
 
-    public uploadWorkspaceToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
+    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
         return new Promise((resolve, reject) => {
             let localFilePath = vscode.window.spgo.config.workspaceRoot;
             var coreOptions = this.buildCoreUploadOptions(publishingInfo);
             var credentials = RequestHelper.createCredentials(vscode.window.spgo);
             var fileOptions = {
-                glob : localFilePath + (vscode.window.spgo.config.publishWorkspaceGlobPattern ? UrlHelper.ensureLeadingSlash(vscode.window.spgo.config.publishWorkspaceGlobPattern) : '/**/*.*'),
+                glob : publishingInfo.contentUri,
                 base : localFilePath,
                 folder: '/'
             };
