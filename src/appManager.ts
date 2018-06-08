@@ -4,7 +4,6 @@ import * as vscode from 'vscode';
 import { IConfig } from './spgo';
 import { Logger } from './util/logger';
 import { Constants } from './constants';
-import { Credential } from './model/credential';
 import { IAppManager, ICredential } from './spgo';
 import { CredentialDao } from './dao/credentialDao';
 import initializeConfiguration from './dao/configurationDao';
@@ -16,7 +15,7 @@ export class AppManager implements IAppManager {
     statusBarItem: vscode.StatusBarItem;
     
     constructor() {
-        this.credentials = new Credential('','');
+        this.credentials = null;
         this.outputChannel = vscode.window.createOutputChannel(Constants.OUTPUT_CHANNEL_NAME);
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
 
