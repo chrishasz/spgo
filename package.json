@@ -180,11 +180,10 @@
     "devDependencies": {
         "@types/mocha": "^2.2.32",
         "@types/node": "^6.0.109",
-        "mocha": "^2.3.3",
+        "mocha": "^4.0.1",
         "typescript": "2.5.0"
     },
     "dependencies": {
-        "@types/fs-extra": "^5.0.2",
         "cpass": "^2.0.3",
         "fs-extra": "^4.0.3",
         "node-sp-auth": "^2.4.2",
