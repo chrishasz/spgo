@@ -105,12 +105,12 @@ export function activate(context: vscode.ExtensionContext): any {
      //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
      context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
         initializeConfiguration(vscode.window.spgo)
-                    .then(function() {
-                        Logger.updateStatusBar('Configuration file reloaded', 5);
-                    })
-                    .catch(function(err : SPGo.IError) {
-                        Logger.showError(err.message, err);
-                    });
+            .then(function() {
+                Logger.updateStatusBar('Configuration file reloaded', 5);
+            })
+            .catch(function(err : SPGo.IError) {
+                Logger.showError(err.message, err);
+            });
     }));
 
     //Reset the current user's SharePoint credentials

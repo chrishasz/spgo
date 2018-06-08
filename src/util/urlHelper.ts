@@ -53,6 +53,10 @@ export class UrlHelper{
         return filePath;
     } 
 
+    public static osAwareGlobStar(){
+        return path.sep + '**' + path.sep + '*.*';
+    }
+
     public static removeTrailingSlash(url: string): string {
         return url.replace(/(\/$)|(\\$)/, '');
     }

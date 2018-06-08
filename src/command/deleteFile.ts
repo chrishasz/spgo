@@ -13,35 +13,41 @@ import { AuthenticationService } from './../service/authenticationService';
 
 export default function deleteFile(fileUri: vscode.Uri) : Thenable<any> {
 
-    if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-        let fileName : string = FileHelper.getFileName(fileUri.path);
-        let fileService : SPFileService = new SPFileService();
-
-        Logger.outputMessage(`Deleting file  ${fileUri.path} from server.`, vscode.window.spgo.outputChannel);
-        
-        return UiHelper.showStatusBarProgress(`Deleting ${fileName}`,
-            AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
-                .then((fileUri) => {
-                    return vscode.window.showWarningMessage(`Are you sure you want to delete ${fileName} from the server?`, Constants.OPTIONS_YES, Constants.OPTIONS_NO)
-                        .then(result => {
-                            if( result == Constants.OPTIONS_YES){
-                                return fileService.deleteFileFromServer(fileUri)
-                                    .then(() => {
-                                        Logger.outputMessage('Remote file delete complete.', vscode.window.spgo.outputChannel);
-                                    })
-                                    .then(() =>{
-                                        fs.remove(fileUri.fsPath)
-                                            .then(() => {
-                                                Logger.outputMessage('Local file delete complete.', vscode.window.spgo.outputChannel);
-                                            });
-                                    });
-                            }
-                            else{
-                                Logger.outputMessage('Delete operation cancelled.', vscode.window.spgo.outputChannel);
-                            }
+    //is this a directory?
+    if(fs.lstatSync(fileUri.fsPath).isDirectory()){
+        Logger.showWarning('The delete file command only works for single files at this time.')
+    }
+    else{
+        if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
+            let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+            let fileService : SPFileService = new SPFileService();
+    
+            Logger.outputMessage(`Deleting file  ${fileUri.fsPath} from server.`, vscode.window.spgo.outputChannel);
+            
+            return UiHelper.showStatusBarProgress(`Deleting ${fileName}`,
+                AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
+                    .then((fileUri) => {
+                        return vscode.window.showWarningMessage(`Are you sure you want to delete ${fileName} from the server?`, Constants.OPTIONS_YES, Constants.OPTIONS_NO)
+                            .then(result => {
+                                if( result == Constants.OPTIONS_YES){
+                                    return fileService.deleteFileFromServer(fileUri)
+                                        .then(() => {
+                                            Logger.outputMessage('Remote file delete complete.', vscode.window.spgo.outputChannel);
+                                        })
+                                        .then(() =>{
+                                            fs.remove(fileUri.fsPath)
+                                                .then(() => {
+                                                    Logger.outputMessage('Local file delete complete.', vscode.window.spgo.outputChannel);
+                                                });
+                                        });
+                                }
+                                else{
+                                    Logger.outputMessage('Delete operation cancelled.', vscode.window.spgo.outputChannel);
+                                }
+                            })
                         })
-                    })
-                .catch(err => ErrorHelper.handleError(err))
-        );
+                    .catch(err => ErrorHelper.handleError(err))
+            );
+        }
     }
 }

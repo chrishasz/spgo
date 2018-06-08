@@ -45,7 +45,7 @@ export interface ISPFileInformation{
 }
 
 export interface IPublishingAction{
-    fileUri: vscode.Uri;
+    contentUri: string;
     scope : string;
     message : string;
 }
