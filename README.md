@@ -12,7 +12,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 You can view additional documentation [on our wiki.](https://github.com/readysitego/spgo/wiki)
 
 ## Feedback
-We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u) and help make 
+We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u) and help make SPGo better!
 
 
 Features
