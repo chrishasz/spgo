@@ -41,6 +41,7 @@ Features
     * Configuration data is stored within the project directory and can be stored in source control
 * Global Access
     * Support for Germany, China, and the US Government's private Office 365 deployments
+* Support for SharePoint Online and 2016 + 2013 on-premise
 
 
 Configuration and Getting Started
@@ -91,6 +92,7 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
 * Digest (Office365)
 * NTLM v1 (most on-premise installations)
 * NTLM v1 + wwwAuth
+* NTLM v2
 * ADFS
 
     _A note for ADFS Authentication:_ You will need to add the following JSON node to the root of your your SPGo.json file:

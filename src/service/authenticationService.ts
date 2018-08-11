@@ -7,6 +7,14 @@ import { CredentialDao } from '../dao/credentialDao';
 import { RequestHelper } from './../util/requestHelper'
 
 export class AuthenticationService{
+	
+	// Performs Three checks:
+	// 1. are the current in-memory credentials valid?
+	// 2. If not:
+	// 2a. Get new credentials (Username + Password)
+	// 2b. Validate User credentials
+	// 2c. Fail if new credentials are valid
+	// 3. Continue to execute the promise object provided.
 	static verifyCredentials(appManager : IAppManager, payload? : any): Promise<any> {
 		appManager = appManager || vscode.window.spgo;
 	
@@ -27,6 +35,7 @@ export class AuthenticationService{
 			appManager.credentials = {};
 		} 
 	
+		// take user's SharePoint username input
 		function getUserName(appManager) {
 			return new Promise(function (resolve, reject) {
 				let options: vscode.InputBoxOptions = {
@@ -46,6 +55,7 @@ export class AuthenticationService{
 			});
 		}
 	
+		// take user's password input
 		function getPassword(appManager) {
 			return new Promise(function (resolve, reject) {
 				let options: vscode.InputBoxOptions = {
@@ -87,6 +97,7 @@ export class AuthenticationService{
 			});
 		}
 
+		// Authtntication was successful, process the command provided by the caller.
 		function processNextCommand(appManager) {			
 			return new Promise(function (resolve, reject) {
 				if(appManager && appManager.credentials){

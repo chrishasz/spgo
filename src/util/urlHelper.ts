@@ -6,6 +6,7 @@ import Uri from 'vscode-uri'
 
 export class UrlHelper{
     
+    //Make sure there is a leading slash.
     public static ensureLeadingSlash(filePath : string) : string{
         if(!filePath.startsWith(path.sep)){
             filePath = path.sep + filePath;
@@ -13,6 +14,7 @@ export class UrlHelper{
         return filePath;
     }
 
+    //Make sure there is a leading web slash (This is sort of a multi-platform hack).
     public static ensureLeadingWebSlash(filePath : string) : string{
         if(!filePath.startsWith('/')){
             filePath = '/' + filePath;
@@ -20,6 +22,7 @@ export class UrlHelper{
         return filePath;
     }
 
+    //get the file path relative to the current SharePoint site.
     public static getSiteRelativeFileUri(fileName : string) : string {
         return fileName.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
     }
@@ -53,18 +56,23 @@ export class UrlHelper{
         return filePath;
     } 
 
+    // make our glob processor os aware.
+    // this is also for cross-platform compatibility, but much less hacky.
     public static osAwareGlobStar(){
         return path.sep + '**' + path.sep + '*.*';
     }
 
+    //Make sure there is no leading slash.
     public static removeTrailingSlash(url: string): string {
         return url.replace(/(\/$)|(\\$)/, '');
     }
     
+    //Make sure there is no leading slash.
     public static removeLeadingSlash(url: string): string {
         return url.replace(/(^\/)|(^\\)/, '');
     }
 
+    //Make sure there are no slashes either place.
     public static trimSlashes(url: string): string {
         return url.replace(/(^\/)|(^\\)|(\/$)|(\\$)/g, '');
     }
