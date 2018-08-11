@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.3.2 - 2018-8-11
+### Added
+- Support for NTLM v2 authentication, via [node-sp-auth](https://www.npmjs.com/package/node-sp-auth/v/2.5.5) package upgrade
+### Fixed
+- Resolved an issue with file names in packaging. strictly cased file systems should be able to run SPGo without issue.
+
 ## 1.3.1 - 2018-6-7
 ### Added
 - Integrated [cpass](https://www.npmjs.com/package/cpass), allowing users to store credentials for each SharePoint site, removing the need to always reenter creds when launching SPGo. [Issue 47](https://github.com/readysitego/spgo/issues/47)

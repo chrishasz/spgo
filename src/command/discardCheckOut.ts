@@ -11,10 +11,12 @@ import {AuthenticationService} from './../service/authenticationService';
 
 export default function discardCheckOut(fileUri: vscode.Uri) : Thenable<any> {
 
-    //is this a directory?
+    // is this a directory?
+    // if so, tell the user we are too lazy to implement a recursive version of discard checkout.
     if(fs.lstatSync(fileUri.fsPath).isDirectory()){
         Logger.showWarning('The discard file check-out command only works for single files at this time.')
     }
+    // undo the checkout.
     else{
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
             let fileName : string = FileHelper.getFileName(fileUri.fsPath);
