@@ -7,12 +7,12 @@ title: SPGo - Home
 
 SPGo was created to make building SharePoint web and branding solutions easier. The goal of this documentation is to make using SPGo easier.
 
-[Getting Started with SPGo](https://github.com/readysitego/spgo/wiki/Getting-Started-with-SPGo)
+[Getting Started with SPGo](https://github.com/readysitego/spgo/Getting-Started-with-SPGo)
 
 ## Help Topics
 ### General
-* [SPGo.json configuration options](https://github.com/readysitego/spgo/wiki/Config-Options)
-* [Synchronizing Files with SharePoint](https://github.com/readysitego/spgo/wiki/Synchronizing-Files-with-SharePoint)
+* [SPGo.json configuration options](https://github.com/readysitego/spgo/general/Config-Options)
+* [Synchronizing Files with SharePoint](https://github.com/readysitego/spgo/general/Synchronizing-Files-with-SharePoint)
 
 ### Authentication
 * [Digest (Office365)](https://github.com/readysitego/spgo/wiki/ADFS-Authentication)
