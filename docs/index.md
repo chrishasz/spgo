@@ -7,39 +7,39 @@ title: SPGo - Home
 
 SPGo was created to make building SharePoint web and branding solutions easier. The goal of this documentation is to make using SPGo easier.
 
-[Getting Started with SPGo](https://github.com/readysitego/spgo/Getting-Started-with-SPGo)
+[Getting Started with SPGo](./Getting-Started-with-SPGo)
 
 ## Help Topics
 ### General
-* [SPGo.json configuration options](https://github.com/readysitego/spgo/general/Config-Options)
-* [Synchronizing Files with SharePoint](https://github.com/readysitego/spgo/general/Synchronizing-Files-with-SharePoint)
+* [SPGo.json configuration options](/spgo/general/Config-Options)
+* [Synchronizing Files with SharePoint](/spgo/general/Synchronizing-Files-with-SharePoint)
 
 ### Authentication
-* [Digest (Office365)](https://github.com/readysitego/spgo/wiki/ADFS-Authentication)
-* [Forms](https://github.com/readysitego/spgo/wiki/Forms-Authentication)
-* [NTLM v1 (most on-premise installations)](https://github.com/readysitego/spgo/wiki/NTLM-Authentication)
-* [NTLM v1 + wwwAuth](https://github.com/readysitego/spgo/wiki/NTLM-www-Authentication)
-* [ADFS](https://github.com/readysitego/spgo/wiki/ADFS-Authentication)
-* [Two-Factor](https://github.com/readysitego/spgo/wiki/Two-Factor-Authentication)
+* [Digest (Office365)](/spgo/authentication/ADFS-Authentication)
+* [Forms](/spgo/authentication/Forms-Authentication)
+* [NTLM v1 (most on-premise installations)](/spgo/authentication/NTLM-Authentication)
+* [NTLM v1 + wwwAuth](/spgo/authentication/NTLM-www-Authentication)
+* [ADFS](/spgo/authentication/ADFS-Authentication)
+* [Two-Factor](./spgo/authentication/Two-Factor-Authentication)
 
 ### Commands
-* [Check out a file](https://github.com/readysitego/spgo/wiki/Check-Out-File)
-* [Compare file with server](https://github.com/readysitego/spgo/wiki/Compare-With-Server)
-* [Configure workspace](https://github.com/readysitego/spgo/wiki/Configure-Workspace)
-* [Delete file from server](https://github.com/readysitego/spgo/wiki/Delete-File)
-* [Discard checkout](https://github.com/readysitego/spgo/wiki/Discard-Checkout)
-* [Populate workspace](https://github.com/readysitego/spgo/wiki/Populate-Workspace)
-* [Publish workspace](https://github.com/readysitego/spgo/wiki/Publish-Workspace)
-* [Publish a Major Version of a file](https://github.com/readysitego/spgo/wiki/Publish-Major-File)
-* [Publish a Minor Version of a file](https://github.com/readysitego/spgo/wiki/Publish-Minor-File)
-* [Manually reload SPGo configuration](https://github.com/readysitego/spgo/wiki/Reload-Configuration)
-* [Reset credentials](https://github.com/readysitego/spgo/wiki/Reset-Credentials)
-* [Retrieve folder](https://github.com/readysitego/spgo/wiki/Retrieve-Folder)
+* [Check out a file](/spgo/commands/Check-Out-File)
+* [Compare file with server](/spgo/commands/Compare-With-Server)
+* [Configure workspace](/spgo/commands/Configure-Workspace)
+* [Delete file from server](/spgo/commands/Delete-File)
+* [Discard checkout](/spgo/commands/Discard-Checkout)
+* [Populate workspace](/spgo/commands/Populate-Workspace)
+* [Publish workspace](/spgo/commands/Publish-Workspace)
+* [Publish a Major Version of a file](/spgo/commands/Publish-Major-File)
+* [Publish a Minor Version of a file](/spgo/commands/Publish-Minor-File)
+* [Manually reload SPGo configuration](/spgo/commands/Reload-Configuration)
+* [Reset credentials](/spgo/commands/Reset-Credentials)
+* [Retrieve folder](/spgo/commands/Retrieve-Folder)
 
 ### Advanced Topics
 * Upload only specific files
 * Working with Glob notation
-* [GitHub integration](https://github.com/readysitego/spgo/wiki/Github-Integration)
+* [GitHub integration](/spgo/wiki/Github-Integration)
 
 ## Getting in touch
 Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:
