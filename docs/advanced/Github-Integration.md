@@ -1,3 +1,8 @@
+---
+layout: post
+title: Github Integration
+---
+
 SPGo was designed from the beginning to be a code-first and source-first tool for building SharePoint web solutions. Below are outlines for two common delivery scenarios: The first example shows how to use GitHub repo for one or more developers with their own SharePoint development environments. The second describes a collaborative approach where two ore more developers share a single SharePoint environment. Github useage is very similar across both of these scenarios, with configuration management (`spgo.json`) being the key differentiator.
 
 _This is not a general GitHub tutorial, but there may be opinions ahead!_

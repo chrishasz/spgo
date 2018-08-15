@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Configure Workspace
+---
+
 ## Command Name
 `SPGo: Configure Workspace`
 

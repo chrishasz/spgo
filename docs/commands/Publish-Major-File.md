@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Publish Major Version
+---
+
 ## Command Name
 `SPGo: Publish a major version of the current file`
 

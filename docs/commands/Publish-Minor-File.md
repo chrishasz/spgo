@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Publish Minor Version
+---
+
 ## Command Name
 `SPGo: Publish a minor version of the current file`
 

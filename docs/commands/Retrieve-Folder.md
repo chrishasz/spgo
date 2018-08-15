@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Retrieve Folder
+---
+
 ## Command Name
 `SPGo: Retrieve Folder`
 

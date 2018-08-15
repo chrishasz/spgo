@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Delete File
+---
+
 ## Command Name
 `SPGo: Delete this File`
 

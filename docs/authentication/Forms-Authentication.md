@@ -1,3 +1,8 @@
+---
+layout: post
+title: Forms Authentication
+---
+
 Forms authentication is commonly used by internal SharePoint instances which are visible on the internet, such as Extranets and shared project sites. Your username will take the format of an email address when prompted for login credentials.
 
 ## Additional Configuration

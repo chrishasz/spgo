@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Reset Credentials
+---
+
 ## Command Name
 `SPGo: Reset Credentials`
 

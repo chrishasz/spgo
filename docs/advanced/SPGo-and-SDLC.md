@@ -1,3 +1,8 @@
+---
+layout: post
+title: SDLC
+---
+
 Building SharePoint solutions with VSCode and SPGo follows common practices for software development. Generally, code is authored directly against development instances of SharePoint only. Code deployments to PPE and Production environments should be automated as much as possible using tools such as gulp and supporting libraries like [spsave](https://www.npmjs.com/package/spsave) ([GitHub](https://github.com/s-KaiNet/spsave))
 
 ## Development Environment

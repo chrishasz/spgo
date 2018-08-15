@@ -1,6 +1,6 @@
 ---
 layout: default
-title: SPGo - Home
+title: Home
 ---
 
 # SPGo for Visual Studio Code

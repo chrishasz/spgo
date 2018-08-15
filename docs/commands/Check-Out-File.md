@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Check Out The Current File
+---
+
 ## Command Name
 `SPGo: Check out the current file`
 

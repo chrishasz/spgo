@@ -1,3 +1,8 @@
+---
+layout: post
+title: Digest Authentication
+---
+
 Digest authentication is commonly used by SharePoint Online (Office 365). Your username will take the format of an email address when prompted for login credentials.
 
 ## Additional Configuration

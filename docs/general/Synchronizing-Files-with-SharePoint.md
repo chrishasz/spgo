@@ -1,3 +1,8 @@
+---
+layout: post
+title: Synchronize Files
+---
+
 You can synchronize files to SharePoint using the following methods:
 
 ## Saving a File in Visual Studio Code

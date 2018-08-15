@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Populate Workspace
+---
+
 ## Command Name
 `SPGo: Populate Workspace`
 

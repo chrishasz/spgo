@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Compare File With Server
+---
+
 ## Command Name
 `SPGo: Compare File With Server`
 

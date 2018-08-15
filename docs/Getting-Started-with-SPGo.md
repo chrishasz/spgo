@@ -1,3 +1,8 @@
+---
+layout: post
+title: Getting Started
+---
+
 When you build SharePoint customizations using SPGo, all files are stored locally. This is for two primary reasons:
 1. We believe in building solutions source-code first and that all source code should live in an SCM tool.
 2. Many high or medium-latency situations can cause a poor developer experience when interacting directly with the server for file customization.

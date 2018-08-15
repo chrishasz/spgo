@@ -1,4 +1,9 @@
 
+---
+layout: post
+title: Reload Configuration
+---
+
 ## Command Name
 `SPGo: Reload Configuration`
 

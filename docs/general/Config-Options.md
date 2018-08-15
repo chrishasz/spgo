@@ -1,3 +1,8 @@
+---
+layout: post
+title: Configuration Options
+---
+
 Listed below are all `spgo.json` configuration options, with explainations of their use.
 
 ## authenticationType
