@@ -1,6 +1,6 @@
 
 ---
-layout: post
+layout: page
 title: Publish Major Version
 ---
 

@@ -1,6 +1,6 @@
 
 ---
-layout: post
+layout: page
 title: Compare File With Server
 ---
 

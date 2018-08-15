@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: page
 title: NTLM v2 Authentication
 ---
 
