@@ -1,0 +1,53 @@
+toc:
+  - title: General
+    subfolderitems:
+      - page: Configuration Options
+        url: /spgo/Getting-Started-with-SPGo
+  - title: Authentication
+    subfolderitems:
+      - page: ADFS
+        url: /spgo/authentication/ADFS-Authentication
+      - page: Digest
+        url: /spgo/authentication/Digest-Authentication
+      - page: Forms
+        url: /spgo/authentication/Forms-Authentication
+      - page: NTLM
+        url: /spgo/authentication/NTLM-Authentication
+      - page: NTLM (with WWW)
+        url: /spgo/authentication/NTLM-with-www-Authentication
+      - page: NTLM v2
+        url: /spgo/authentication/NTLMv2-Authentication
+      - page: Two-Factor
+        url: /spgo/authentication/Two-Factor-Authentication
+  - title: Commands
+    subfolderitems:
+      - page: Check out the Current File
+        url: /spgo/commands/Check-Out-File
+      - page: Compare File With Server
+        url: /spgo/commands/Compare-with-Server
+      - page: Configure Workspace
+        url: /spgo/commands/Configure-Workspace
+      - page: Delete File
+        url: /spgo/commands/Delete-File
+      - page: Discard Checkout
+        url: /spgo/commands/Discard-Checkout
+      - page: Populate Workspace
+        url: /spgo/commands/Populate-Workspace
+      - page: Publish Major Version
+        url: /spgo/commands/Publish-Major-File
+      - page: Publish Minor Version
+        url: /spgo/commands/Publish-Minor-Version
+      - page: Publish Local Workspace
+        url: /spgo/commands/Publish-Workspace
+      - page: Reload Configuration
+        url: /spgo/commands/Reload-Configuration
+      - page: Reset Credentials
+        url: /spgo/commands/Reset-Credentials
+      - page: Retrieve Folder
+        url: /spgo/commands/Retrieve-Folder
+  - title: Advanced Topics
+    subfolderitems:
+      - page: SDLC Best Practices
+        url: /spgo/advanced/SPGo-and-SDLC
+      - page: GitHub Integration
+        url: /spgo/advanced/Github-Integration

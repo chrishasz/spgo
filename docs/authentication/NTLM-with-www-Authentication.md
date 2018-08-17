@@ -1,6 +1,6 @@
 ---
 layout: page
-title: NTLM Authentication
+title: NTLM (with www) Authentication
 ---
 
 Similar to standard NTLM authentication, NTLM with www-auth authentication is commonly used in corporate and on-premise SharePoint instances. Your username will be formatted as a domain login (e.g. `domain\username`) when prompted for login credentials.
