@@ -16,7 +16,7 @@
 title: SPGo
 email: spgo@sitego.co
 description: >- # this means to ignore newlines until "baseurl:"
-  SiteGo open source developer pages and documentation.
+  Documentation for SPGo. The SharePoint IDE for Visual Studio Code.
 baseurl: "/spgo" # the subpath of your site, e.g. /blog
 url: "https://docs.sitego.co" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: readysitego
