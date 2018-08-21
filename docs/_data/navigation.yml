@@ -2,11 +2,11 @@ toc:
   - title: General
     subfolderitems:
       - page: Configuration Options
-        url: /spgo/config-options
+        url: /spgo/general/config-options
       - page: Getting Started with SPGo
-        url: /spgo/getting-started-with-spgo
+        url: /spgo/general/getting-started-with-spgo
       - page: Synchronizing Files with SharePoint
-        url: /spgo/synchronizing-files-with-sharepoint
+        url: /spgo/general/synchronizing-files-with-sharepoint
   - title: Authentication
     subfolderitems:
       - page: ADFS
@@ -40,7 +40,7 @@ toc:
       - page: Publish Major Version
         url: /spgo/commands/publish-major-file
       - page: Publish Minor Version
-        url: /spgo/commands/publish-minor-version
+        url: /spgo/commands/publish-minor-file
       - page: Publish Local Workspace
         url: /spgo/commands/publish-workspace
       - page: Reload Configuration
@@ -52,6 +52,6 @@ toc:
   - title: Advanced Topics
     subfolderitems:
       - page: SDLC Best Practices
-        url: /spgo/advanced/spgoo-and-sdlc
+        url: /spgo/advanced/spgo-and-sdlc
       - page: GitHub Integration
         url: /spgo/advanced/github-integration
