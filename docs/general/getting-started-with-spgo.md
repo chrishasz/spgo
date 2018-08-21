@@ -23,12 +23,12 @@ Example default `spgo.json` file:
     "authenticationType": "Digest"
 } 
 ```
-_note: for more on the `publishingScope` property and how to control when a file is synchronized with SharePoint, please see documentation [here](https://github.com/readysitego/spgo/wiki/Synchronizing-Files-with-SharePoint)_
+_note: for more on the `publishingScope` property and how to control when a file is synchronized with SharePoint, please see documentation [here](/spgo/general/synchronizing-files-with-sharepoint)_
 
 You are now ready to start building SharePoint solutions with SPGo.
 
 ### Working with a New SharePoint Site
-As you create files and folders inside your `src` directory, they will be synchronized with SharePoint, either when you save the files, or when you issue the `SPGo> Publish Workspace` command. See [this page](https://github.com/readysitego/spgo/wiki/Synchronizing-Files-with-SharePoint) for more details on publishing files.
+As you create files and folders inside your `src` directory, they will be synchronized with SharePoint, either when you save the files, or when you issue the `SPGo> Publish Workspace` command. See [this page](/spgo/general/synchronizing-files-with-sharepoint) for more details on publishing files.
 
 
 ### Working with an existing SharePoint Site

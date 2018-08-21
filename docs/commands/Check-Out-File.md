@@ -1,4 +1,3 @@
-
 ---
 layout: page
 title: Check Out The Current File

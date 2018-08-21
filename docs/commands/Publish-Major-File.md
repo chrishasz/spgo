@@ -1,4 +1,3 @@
-
 ---
 layout: page
 title: Publish Major Version
@@ -14,7 +13,7 @@ Publish a major version of the current file to SharePoint. This command will per
 - A major version of the file will be published to the server, including the user-entered publishing message
 - The file will be checked-in to SharePoint
 
-_note: A default publishing message can be set using the `checkInMessage` parameter defined in the `spgo.json` [configuration file](https://github.com/readysitego/spgo/wiki/Config-Options)._
+_note: A default publishing message can be set using the `checkInMessage` parameter defined in the `spgo.json` [configuration file](/spgo/general/config-options)._
 
 ### Advanced Usage
 You can publish an entire folder at once, by left-clicking on the folder in the Visual Studio Code Explorer window and executing the `SPGo: Publish a major version of the current file` command.

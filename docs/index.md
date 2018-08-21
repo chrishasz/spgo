@@ -5,43 +5,43 @@ title: Home
 
 # SPGo for Visual Studio Code
 
-SPGo was created to make building SharePoint web and branding solutions easier. The goal of this documentation is to make using SPGo easier.
+SPGo was created to make it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
 
-[Getting Started with SPGo](./Getting-Started-with-SPGo)
+[Getting Started with SPGo](/spgo/general/getting-started-with-spgo)
 
 ## Help Topics
 ### General
-* [SPGo.json configuration options](/spgo/general/Config-Options)
-* [Synchronizing Files with SharePoint](/spgo/general/Synchronizing-Files-with-SharePoint)
+* [SPGo.json configuration options](/spgo/general/config-options)
+* [Synchronizing Files with SharePoint](/spgo/general/synchronizing-files-with-sharepoint)
 
 ### Authentication
-* [Digest (Office365)](/spgo/authentication/ADFS-Authentication)
-* [Forms](/spgo/authentication/Forms-Authentication)
-* [NTLM v1 (most on-premise installations)](/spgo/authentication/NTLM-Authentication)
-* [NTLM v1 + wwwAuth](/spgo/authentication/NTLM-www-Authentication)
-* [NTLM v2 ](/spgo/authentication/NTLMv2-Authentication)
-* [ADFS](/spgo/authentication/ADFS-Authentication)
-* [Two-Factor](./spgo/authentication/Two-Factor-Authentication)
+* [Digest (Office365)](/spgo/authentication/adfs-authentication)
+* [Forms](/spgo/authentication/forms-authentication)
+* [NTLM v1 (most on-premise installations)](/spgo/authentication/ntlm-authentication)
+* [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-www-Authentication)
+* [NTLM v2 ](/spgo/authentication/ntlm-v2-authentication)
+* [ADFS](/spgo/authentication/adfs-authentication)
+* [Two-Factor](./spgo/authentication/two-factor-authentication)
 
 ### Commands
-* [Check out a file](/spgo/commands/Check-Out-File)
-* [Compare file with server](/spgo/commands/Compare-With-Server)
-* [Configure workspace](/spgo/commands/Configure-Workspace)
-* [Delete file from server](/spgo/commands/Delete-File)
-* [Discard checkout](/spgo/commands/Discard-Checkout)
-* [Populate workspace](/spgo/commands/Populate-Workspace)
-* [Publish workspace](/spgo/commands/Publish-Workspace)
-* [Publish a Major Version of a file](/spgo/commands/Publish-Major-File)
-* [Publish a Minor Version of a file](/spgo/commands/Publish-Minor-File)
-* [Manually reload SPGo configuration](/spgo/commands/Reload-Configuration)
-* [Reset credentials](/spgo/commands/Reset-Credentials)
-* [Retrieve folder](/spgo/commands/Retrieve-Folder)
+* [Check out a file](/spgo/commands/check-out-file)
+* [Compare file with server](/spgo/commands/compare-with-server)
+* [Configure workspace](/spgo/commands/configure-workspace)
+* [Delete file from server](/spgo/commands/delete-file)
+* [Discard checkout](/spgo/commands/discard-checkout)
+* [Populate workspace](/spgo/commands/populate-workspace)
+* [Publish workspace](/spgo/commands/publish-workspace)
+* [Publish a Major Version of a file](/spgo/commands/publish-major-file)
+* [Publish a Minor Version of a file](/spgo/commands/publish-minor-file)
+* [Manually reload SPGo configuration](/spgo/commands/reload-configuration)
+* [Reset credentials](/spgo/commands/reset-credentials)
+* [Retrieve folder](/spgo/commands/retrieve-folder)
 
 ### Advanced Topics
 * Upload only specific files
 * Working with Glob notation
-* [SDLC Best Practices](/spgo/wiki/advanced/SPGo-and-SDLC)
-* [GitHub integration](/spgo/wiki/advanced/Github-Integration)
+* [SDLC Best Practices](/spgo/advanced/spgo-and-sdlc)
+* [GitHub integration](/spgo/advanced/github-integration)
 
 ## Getting in touch
 Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:

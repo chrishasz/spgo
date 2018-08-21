@@ -8,7 +8,7 @@ Building SharePoint solutions with VSCode and SPGo follows common practices for 
 ## Development Environment
 Working in a development environment with SPGo is similar to using other IDEs such as SharePoint designer. Code is authored in VSCode with SPGo, and either automatically or manually published to SharePoint. The major difference is that all files will also live on your local host so that they can be committed to source control.
 
-For more information see [working with source control](https://github.com/readysitego/spgo/wiki/Github-Integration).
+For more information see [working with source control](/spgo/advanced/github-integration).
 
 ## PreProduction (PPE) and Production Environments
 In order to ensure consistent deployments to PPE and production environments, we recommend that you use a task-based build tool such as `gulp` to fetch, minify, and deploy builds. Authoring code directly against PPE and production environments is consitered bad practice and should be avoided (even if the author has done this before once or twice!).

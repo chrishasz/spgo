@@ -43,7 +43,7 @@ Provide an optional Glob pattern to SPGo to fine tune which files are published 
 An example of this would be to specify a glob pattern such that only minified files are published to SharePoint when using a minification plugin with VSCode. In this scenario, it is recommended that you use a `publishingScope` of `None` should you wish to prevent unminified files from being deployed to SharePoint.
 
 ## remoteFolders
-Define a set of folders to download to your local workspace any time the `SPGo> Populate local workspace` [command](https://github.com/readysitego/spgo/wiki/Populate-Workspace) is used. Each entry in this array can use Glob formatting to further refine which files are downloaded to your local workspace.
+Define a set of folders to download to your local workspace any time the `SPGo> Populate local workspace` [command](/spgo/commands/populate-workspace) is used. Each entry in this array can use Glob formatting to further refine which files are downloaded to your local workspace.
 
 ## sharePointSiteUrl
 The URL of the SharePoint site that you will be building customizations for. If you are hand-entering this value, it must always start with either `http://` or `https://`.

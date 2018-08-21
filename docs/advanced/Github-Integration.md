@@ -74,4 +74,4 @@ _recommendation: it may be easier for a single developer to intiialize the repo 
 
 
 ##Further Reading
-For multi-stage environments, such as dev->test->prod, please see: [SPGo and SDLC](https://github.com/readysitego/spgo/wiki/SPGo-and-SDLC)
+For multi-stage environments, such as dev->test->prod, please see: [SPGo and SDLC](/spgo/advanced/spgo-and-sdlc)
