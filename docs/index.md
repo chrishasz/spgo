@@ -13,6 +13,7 @@ SPGo was created to make it easier to build SharePoint web and branding solution
 ### General
 * [SPGo.json configuration options](/spgo/general/config-options)
 * [Synchronizing Files with SharePoint](/spgo/general/synchronizing-files-with-sharepoint)
+* [Store Credentials](/spgo/general/store-credentials)
 
 ### Authentication
 * [Digest (Office365)](/spgo/authentication/adfs-authentication)

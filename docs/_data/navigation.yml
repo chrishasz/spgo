@@ -7,6 +7,8 @@ toc:
         url: /spgo/general/getting-started-with-spgo
       - page: Synchronizing Files with SharePoint
         url: /spgo/general/synchronizing-files-with-sharepoint
+      - page: Store Credentials
+        url: /spgo/general/store-credentials
   - title: Authentication
     subfolderitems:
       - page: ADFS

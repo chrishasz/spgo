@@ -51,7 +51,10 @@ The URL of the SharePoint site that you will be building customizations for. If 
 ## storeCredentials
 You will be prompted to enter credentials the first time you connect to SharePoint during your SPGo development session. Setting this property to true will allow SPGo to store your credentials locally from session to session, so that you do not need to reenter them every time you open VSCode.
 
+Default Value: `true`
+
 _note: all credentials are hashed and saved to your OS' local temp folder using [CPass](https://www.npmjs.com/package/cpass), providing a modicum of security.
+_note: SPGo can store unique credentials for each site collection you work with._
 
 ## Example Complete spgo.json file
 ``` json
