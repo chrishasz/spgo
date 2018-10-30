@@ -21,8 +21,6 @@ export default function discardCheckOut(fileUri: vscode.Uri) : Thenable<any> {
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
             let fileName : string = FileHelper.getFileName(fileUri.fsPath);
             let fileService : SPFileService = new SPFileService();
-
-            Logger.outputMessage(`Discarding Check out for File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
             
             return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)

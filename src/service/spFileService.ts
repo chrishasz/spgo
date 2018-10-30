@@ -13,6 +13,7 @@ import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
 import { DownloadFileOptionsFactory } from '../factory/downloadFileOptionsFactory';
 import { ICoreOptions, FileOptions } from 'spsave';
+import { Logger } from '../util/logger';
 
 export class SPFileService{
     constructor (){}
@@ -80,6 +81,8 @@ export class SPFileService{
         let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
         
+        Logger.outputMessage(`Getting file information for:  ${textDocument.fileName}`, vscode.window.spgo.outputChannel);
+        
         return fileGateway.getFileInformation(fileUri, spr);
     }
 
@@ -87,6 +90,8 @@ export class SPFileService{
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath);
         let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
+        
+        Logger.outputMessage(`Checking out File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
         
         return fileGateway.checkOutFile(fileUri, spr);
     }
@@ -96,6 +101,8 @@ export class SPFileService{
         let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
         
+        Logger.outputMessage(`Discarding Check out for File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
+
         return fileGateway.undoCheckOutFile(fileUri, spr);
     }
     
@@ -123,7 +130,9 @@ export class SPFileService{
             base : localFilePath,
             folder: '/'
         };
-
+        
+        Logger.outputMessage(`Saving file:  ${publishingInfo.contentUri}`, vscode.window.spgo.outputChannel);
+        
         return fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
     }
 

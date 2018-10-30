@@ -1,7 +1,8 @@
 'use strict';
-import * as vscode from 'vscode';
 import * as path from 'path';
 import * as SPGo from './spgo';
+// import * as fs from 'fs-extra';
+import * as vscode from 'vscode';
 
 import {Logger} from './util/logger';
 import {Constants} from './constants';
@@ -30,21 +31,27 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Check out the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            checkOutFile(selectedResource);
-        } 
-        else {
-            checkOutFile(vscode.window.activeTextEditor.document.uri);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() =>{
+                if (selectedResource && selectedResource.path) {
+                    checkOutFile(selectedResource);
+                } 
+                else {
+                    checkOutFile(vscode.window.activeTextEditor.document.uri);
+                }
+            });
     }));
 
     //Compare the selected file with it's latest version on the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            compareFileWithServer(selectedResource);
-        } else {
-            compareFileWithServer(vscode.window.activeTextEditor.document.uri);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() =>{
+                if (selectedResource && selectedResource.path) {
+                    compareFileWithServer(selectedResource);
+                } else {
+                    compareFileWithServer(vscode.window.activeTextEditor.document.uri);
+                }
+            });
     }));
     
     //Create the base configuration for this SharePoint workspace
@@ -55,55 +62,69 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Delete the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            deleteFile(selectedResource);
-        } 
-        else {
-            deleteFile(vscode.window.activeTextEditor.document.uri);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() =>{
+                if (selectedResource && selectedResource.path) {
+                    deleteFile(selectedResource);
+                } 
+                else {
+                    deleteFile(vscode.window.activeTextEditor.document.uri);
+                }
+            });
     }));
 
     //Discard the checkout of the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            discardCheckOut(selectedResource)
-        } else {
-            discardCheckOut(vscode.window.activeTextEditor.document.uri);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() =>{
+                if (selectedResource && selectedResource.path) {
+                    discardCheckOut(selectedResource)
+                } else {
+                    discardCheckOut(vscode.window.activeTextEditor.document.uri);
+                }
+            });
     }));
 
     //Synchronize your local environment from the latest on the server
     context.subscriptions.push(vscode.commands.registerCommand('spgo.populateWorkspace', () => {
-        populateWorkspace();
+        vscode.window.spgo.initialize()    
+            .then(() =>{ populateWorkspace(); });
     }));
 
     //Synchronize your local environment from the latest on the server
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishWorkspace', () => {
-        publishWorkspace();
+        vscode.window.spgo.initialize()    
+            .then(() =>{ publishWorkspace(); });
     }));
 
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            publishFile(selectedResource, Constants.PUBLISHING_MAJOR)
-        } 
-        else {
-            publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MAJOR);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() => {
+                if (selectedResource && selectedResource.path) {
+                    publishFile(selectedResource, Constants.PUBLISHING_MAJOR);
+                } 
+                else {
+                    publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MAJOR);
+                }
+            });
     }));
 
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: vscode.Uri) => {
-        if (selectedResource && selectedResource.path) {
-            publishFile(selectedResource, Constants.PUBLISHING_MINOR)
-        } 
-        else {
-            publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MINOR);
-        }
+        vscode.window.spgo.initialize()    
+            .then(() => {
+                if (selectedResource && selectedResource.path) {
+                    publishFile(selectedResource, Constants.PUBLISHING_MINOR);
+                } 
+                else {
+                    publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MINOR);
+                }
+            });
     }));
 
-     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
-     context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
+    //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
         initializeConfiguration(vscode.window.spgo)
             .then(() => {
                 Logger.updateStatusBar('Configuration file reloaded', 5);
@@ -120,32 +141,36 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.retrieveFolder', () => {
-        retrieveFolder();
+        vscode.window.spgo.initialize()    
+                .then(() => retrieveFolder());
     }));
 
     // autoPublish Feature
     context.subscriptions.push(vscode.workspace.onDidSaveTextDocument((textDocument: vscode.TextDocument) => {
-        if (vscode.window.spgo.config) {
-            //is the file in the source folder? Save to the server.
-            if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) && Constants.PUBLISHING_NONE != vscode.window.spgo.config.publishingScope){
-                if(Constants.PUBLISHING_MAJOR == vscode.window.spgo.config.publishingScope || Constants.PUBLISHING_MINOR == vscode.window.spgo.config.publishingScope){
-                    publishFile(textDocument.uri, vscode.window.spgo.config.publishingScope);
+        vscode.window.spgo.initialize()    
+            .then(() =>{
+                if (vscode.window.spgo.config) {
+                    //is the file in the source folder? Save to the server.
+                    if(textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) && Constants.PUBLISHING_NONE != vscode.window.spgo.config.publishingScope){
+                        if(Constants.PUBLISHING_MAJOR == vscode.window.spgo.config.publishingScope || Constants.PUBLISHING_MINOR == vscode.window.spgo.config.publishingScope){
+                            publishFile(textDocument.uri, vscode.window.spgo.config.publishingScope);
+                        }
+                        else{
+                            saveFile(textDocument.uri);
+                        }
+                    }
+                    //is this an update to the config? Reload the config.
+                    else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
+                        initializeConfiguration(vscode.window.spgo)
+                            .then(() => {
+                                Logger.updateStatusBar('Configuration file reloaded', 5);
+                            })
+                            .catch((err : SPGo.IError) => {
+                                Logger.showError(err.message, err);
+                            });
+                    }
                 }
-                else{
-                    saveFile(textDocument.uri);
-                }
-            }
-            //is this an update to the config? Reload the config.
-            else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
-                initializeConfiguration(vscode.window.spgo)
-                    .then(() => {
-                        Logger.updateStatusBar('Configuration file reloaded', 5);
-                    })
-                    .catch((err : SPGo.IError) => {
-                        Logger.showError(err.message, err);
-                    });
-            }
-        }
+            });
     }));
 
     //get file info when the active text document changes.
@@ -153,9 +178,11 @@ export function activate(context: vscode.ExtensionContext): any {
         if (vscode.window.spgo.config 
             && textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot) 
             && !textDocument.fileName.endsWith('.git')){
-                getCurrentFileInformation(textDocument);
+                vscode.window.spgo.initialize()    
+                    .then(() => getCurrentFileInformation(textDocument));
         }
     }));
+    
 }
 
 // this method is called when your extension is deactivated

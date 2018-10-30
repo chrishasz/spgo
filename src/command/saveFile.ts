@@ -21,8 +21,6 @@ export default function saveFile(fileUri: vscode.Uri) : Thenable<any> {
             scope : null,
             message : vscode.window.spgo.config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
         }
-        
-        Logger.outputMessage(`Saving file:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
 
         return UiHelper.showStatusBarProgress(`Saving file:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, publishAction)

@@ -8,7 +8,7 @@ import { Constants } from './../constants';
 import { UrlHelper } from '../util/urlHelper';
 import initializeConfiguration from './../dao/configurationDao';
 
-export default function configureWorkspace() {
+export default function configureWorkspace() : Promise<any> {
     vscode.window.spgo.statusBarItem.text = 'SPGo: Show Menu';
 
     return getSharePointSiteUrl()

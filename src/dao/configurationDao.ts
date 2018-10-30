@@ -3,11 +3,11 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
-import { IConfig } from './../spgo';
+import {IConfig} from './../spgo';
 import {IAppManager} from './../spgo';
 import {Logger} from '../util/logger';
 import {Constants} from './../constants';
-import { UrlHelper } from '../util/urlHelper';
+import {UrlHelper} from '../util/urlHelper';
 
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
 	return new Promise((resolve, reject) => {
@@ -41,7 +41,9 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 						self.config.sourceDirectory = 'src';
 					}
 					//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
-					self.config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(self.config.sharePointSiteUrl);
+					if(self.config.sharePointSiteUrl !== undefined){
+						self.config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(self.config.sharePointSiteUrl);
+					}
 		
 					resolve(self.config);
 				} 

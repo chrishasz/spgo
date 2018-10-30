@@ -8,7 +8,6 @@ import {SPFileService} from './../service/spFileService';
 import {AuthenticationService} from './../service/authenticationService';
 
 export default function retrieveFolder() : Thenable<any> {
-    Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);
     let fileService : SPFileService = new SPFileService();
 
     return UiHelper.showStatusBarProgress('Downloading files',
@@ -18,6 +17,8 @@ export default function retrieveFolder() : Thenable<any> {
     );
 
     function downloadFiles() : Thenable<any> {
+        
+        Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);
         
         return new Promise((resolve, reject) => {
             let options: vscode.InputBoxOptions = {

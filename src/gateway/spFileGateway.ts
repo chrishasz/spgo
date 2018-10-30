@@ -66,7 +66,7 @@ export class SPFileGateway{
             .then(()=>{
                 return new Promise((resolve,reject) => {
                     sppull(context, fileOptions)
-                        .then((downloadResults : []) => {
+                        .then((downloadResults : Array<any>) => {
                             if( fileOptions.strictObjects && fileOptions.strictObjects.length > 0){
                                 Logger.outputMessage(`Successfully downloaded ${fileOptions.strictObjects[0]} files to: ${fileOptions.dlRootFolder}`, vscode.window.spgo.outputChannel);
                             }
@@ -83,7 +83,7 @@ export class SPFileGateway{
             .then(()=>{
                 return new Promise((resolve,reject) => {
                     sppull(context, fileOptions)
-                        .then((downloadResults : []) => {
+                        .then((downloadResults : Array<any>) => {
                             Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
                             resolve(downloadResults);
                         })
@@ -156,7 +156,5 @@ export class SPFileGateway{
                         .catch((err) => reject(err));
                 });
             });
-        
     }
-
 }

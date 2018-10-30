@@ -4,7 +4,6 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
-
 import { Logger } from '../util/logger';
 import { Constants } from './../constants';
 import { UiHelper } from './../util/uiHelper';
@@ -25,10 +24,8 @@ export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
             let fileName : string = FileHelper.getFileName(fileUri.fsPath);
             let fileService : SPFileService = new SPFileService();
 
-            Logger.outputMessage(`Checking out File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
-
             return UiHelper.showStatusBarProgress(`Checking out File:  ${fileName}`,
-                AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
+                 AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
                     .then((filePath) => fileService.checkoutFile(filePath))
                     .then(() => downloadFileAndCompare(fileUri, downloadPath))
                     .catch(err => ErrorHelper.handleError(err))

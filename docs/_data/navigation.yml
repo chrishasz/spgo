@@ -57,3 +57,7 @@ toc:
         url: /spgo/advanced/spgo-and-sdlc
       - page: GitHub Integration
         url: /spgo/advanced/github-integration
+  - title: Development
+    subfolderitems:
+      - page: Building SPGo locally
+        url: /spgo/development/build-locally
