@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.3.3 - 2018-10-30
+### Added
+- Running any SPGo-based command will now activate SPGo, or prompt you to configure a local workspace if no `spgo.json` config file is present. Great UX enhancement idea via email request.
+### Fixed
+- [This Issue](https://github.com/readysitego/spgo/issues/64) where SPGo *did not* consistently apply the correct auth headers for NTLM + www Auth, which *did* consistently annoying users.
+- [This Other Issue](https://github.com/readysitego/spgo/issues/63) where SPGo was unable to download files outside of folders. Really I didn't do much outside of type "npm update", as the heavy lifting was done by [@koltyakov](https://github.com/koltyakov). THANKS!
+- [This Other, Other, Issue](https://github.com/readysitego/spgo/issues/60) where json files without json extensions did not properly download. Again, thanks to [@koltyakov](https://github.com/koltyakov) for providing a fix via his great [sppull](https://github.com/koltyakov/sppull) library!
+
 ## 1.3.2 - 2018-8-11
 ### Added
 - Support for NTLM v2 authentication, via [node-sp-auth](https://www.npmjs.com/package/node-sp-auth/v/2.5.5) package upgrade
