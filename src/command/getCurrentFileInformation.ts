@@ -11,7 +11,6 @@ import {AuthenticationService} from './../service/authenticationService';
 export default function saveFile(textDocument: vscode.TextDocument) : Thenable<any> { 
 
     if( textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
-        Logger.outputMessage(`Getting file information for:  ${textDocument.fileName}`, vscode.window.spgo.outputChannel);
         let fileService : SPFileService = new SPFileService();
 
         return UiHelper.showStatusBarProgress('',

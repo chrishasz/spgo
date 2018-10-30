@@ -12,6 +12,8 @@ export interface IAppManager{
     config? : IConfig;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
+
+    initialize() : Promise<any>;
 }
 
 export interface ICredential{

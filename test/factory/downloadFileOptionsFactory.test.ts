@@ -13,7 +13,7 @@ describe("Convert Glob to Caml Tests", () => {
     
     let globRoot : string = 'path/'
     
-    beforeEach(function() {
+    beforeEach(() => {
         vscode.window.spgo = new AppManager();
         vscode.window.spgo.config = {
             authenticationType : Constants.SECURITY_DIGEST,

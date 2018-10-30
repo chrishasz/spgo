@@ -19,7 +19,7 @@ SPGo was created to make it easier to build SharePoint web and branding solution
 * [Digest (Office365)](/spgo/authentication/adfs-authentication)
 * [Forms](/spgo/authentication/forms-authentication)
 * [NTLM v1 (most on-premise installations)](/spgo/authentication/ntlm-authentication)
-* [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-www-Authentication)
+* [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-with-www-Authentication)
 * [NTLM v2 ](/spgo/authentication/ntlm-v2-authentication)
 * [ADFS](/spgo/authentication/adfs-authentication)
 * [Two-Factor](./spgo/authentication/two-factor-authentication)
@@ -43,6 +43,9 @@ SPGo was created to make it easier to build SharePoint web and branding solution
 * Working with Glob notation
 * [SDLC Best Practices](/spgo/advanced/spgo-and-sdlc)
 * [GitHub integration](/spgo/advanced/github-integration)
+
+### Development
+* [Building SPGo locally](/spgo/development/build-locally)
 
 ## Getting in touch
 Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:

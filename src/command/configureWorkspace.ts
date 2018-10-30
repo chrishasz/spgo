@@ -8,7 +8,7 @@ import { Constants } from './../constants';
 import { UrlHelper } from '../util/urlHelper';
 import initializeConfiguration from './../dao/configurationDao';
 
-export default function configureWorkspace() {
+export default function configureWorkspace() : Promise<any> {
     vscode.window.spgo.statusBarItem.text = 'SPGo: Show Menu';
 
     return getSharePointSiteUrl()
@@ -19,7 +19,7 @@ export default function configureWorkspace() {
         
     
     function getSharePointSiteUrl() {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             initializeConfiguration().then(config => {
                 let options: vscode.InputBoxOptions = {
                     ignoreFocusOut: true,

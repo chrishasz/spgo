@@ -14,7 +14,7 @@
         "o365",
         "ide"
     ],
-    "version": "1.3.2",
+    "version": "1.3.3",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -39,7 +39,18 @@
     ],
     "activationEvents": [
         "workspaceContains:SPGo.json",
-        "onCommand:spgo.configureWorkspace"
+        "onCommand:spgo.checkOutFile",
+        "onCommand:spgo.compareFileWithServer",
+        "onCommand:spgo.configureWorkspace",
+        "onCommand:spgo.deleteFile",
+        "onCommand:spgo.discardCheckOut",
+        "onCommand:spgo.populateWorkspace",
+        "onCommand:spgo.publishWorkspace",
+        "onCommand:spgo.publishMajor",
+        "onCommand:spgo.publishMinor",
+        "onCommand:spgo.reloadConfiguration",
+        "onCommand:spgo.resetCredentials",
+        "onCommand:spgo.retrieveFolder"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -179,20 +190,20 @@
     },
     "devDependencies": {
         "@types/mocha": "^2.2.32",
-        "@types/node": "^6.0.116",
+        "@types/node": "^6.14.0",
         "mocha": "^4.0.1",
         "typescript": "2.5.0"
     },
     "dependencies": {
-        "cpass": "^2.0.4",
+        "cpass": "^2.0.5",
         "fs-extra": "^4.0.3",
-        "node-sp-auth": "^2.5.5",
+        "node-sp-auth": "^2.5.6",
         "parse-glob": "^3.0.4",
         "path": "^0.12.7",
         "sp-request": "^2.1.3",
-        "sppull": "^2.2.7",
+        "sppull": "^2.3.0",
         "spsave": "^3.1.5",
-        "vscode": "^1.1.18",
-        "vscode-uri": "^1.0.5"
+        "vscode": "^1.1.21",
+        "vscode-uri": "^1.0.6"
     }
 }

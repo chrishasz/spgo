@@ -21,12 +21,12 @@ export default function deleteFile(fileUri: vscode.Uri) : Thenable<any> {
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
             let fileName : string = FileHelper.getFileName(fileUri.fsPath);
             let fileService : SPFileService = new SPFileService();
-    
-            Logger.outputMessage(`Deleting file  ${fileUri.fsPath} from server.`, vscode.window.spgo.outputChannel);
             
             return UiHelper.showStatusBarProgress(`Deleting ${fileName}`,
                 AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
                     .then((fileUri) => {
+                        Logger.outputMessage(`Deleting file  ${fileUri.fsPath} from server.`, vscode.window.spgo.outputChannel);
+
                         return vscode.window.showWarningMessage(`Are you sure you want to delete ${fileName} from the server?`, Constants.OPTIONS_YES, Constants.OPTIONS_NO)
                             .then(result => {
                                 if( result == Constants.OPTIONS_YES){
