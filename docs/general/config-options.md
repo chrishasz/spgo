@@ -17,11 +17,11 @@ Options:
 Read more: [Authentication Types](https://github.com/readysitego/spgo/wiki#authentication)
 
 ## authenticationDetails
-When using ADFS Authentication, you will need to specify additional details in this node describing the ADFS url and relaying party.
+When using ADFS Authentication, you will need to specify additional details in this node describing the ADFS url and relying party.
 
 ```json
     "authenticationDetails": {
-        "relayingParty": "[relaying party]",
+        "relyingParty": "[relying party]",
         "adfsUrl": "[ADFS Url]"
     }
 ```
@@ -65,7 +65,7 @@ _note: SPGo can store unique credentials for each site collection you work with.
     "publishWorkspaceGlobPattern" : "/**/*.min.*",
     "authenticationType": "ADFS",
     "authenticationDetails": {
-        "relayingParty": "[relaying party]",
+        "relyingParty": "[relying party]",
         "adfsUrl": "[ADFS Url]"
     },
     "checkInMessage" : "Custom Publishing Message",

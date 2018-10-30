@@ -98,7 +98,7 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
     _A note for ADFS Authentication:_ You will need to add the following JSON node to the root of your your SPGo.json file:
     ```json
     "authenticationDetails": {
-        "relayingParty": "[relaying party]",
+        "relyingParty": "[relying party]",
         "adfsUrl": "[ADFS Url]"
     }
     ```

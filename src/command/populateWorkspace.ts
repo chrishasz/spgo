@@ -21,7 +21,7 @@ export default function populateWorkspace() : Thenable<any> {
 
     function downloadFiles() : Thenable<any> {
         
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             let downloads : Promise<any>[] = [];
 
             if(vscode.window.spgo.config.remoteFolders){
@@ -29,7 +29,7 @@ export default function populateWorkspace() : Thenable<any> {
                     downloads.push(fileService.downloadFiles(folder));
                 }
                 Promise.all(downloads)
-                    .then(function(){
+                    .then(() => {
                         Logger.outputMessage(`file synchronization complete.`, vscode.window.spgo.outputChannel);
                         resolve();
                     })

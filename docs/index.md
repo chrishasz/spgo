@@ -19,7 +19,7 @@ SPGo was created to make it easier to build SharePoint web and branding solution
 * [Digest (Office365)](/spgo/authentication/adfs-authentication)
 * [Forms](/spgo/authentication/forms-authentication)
 * [NTLM v1 (most on-premise installations)](/spgo/authentication/ntlm-authentication)
-* [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-www-Authentication)
+* [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-with-www-Authentication)
 * [NTLM v2 ](/spgo/authentication/ntlm-v2-authentication)
 * [ADFS](/spgo/authentication/adfs-authentication)
 * [Two-Factor](./spgo/authentication/two-factor-authentication)

@@ -23,6 +23,7 @@ export default function publishWorkspace() : Thenable<any> {
         AuthenticationService.verifyCredentials(vscode.window.spgo, publishingInfo)
             .then((publishingInfo) => UiHelper.getPublishingMessage(publishingInfo))
             .then((publishingInfo) => fileService.uploadFilesToServer(publishingInfo))
+            .then(()=>{Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel)})
             .catch(err => ErrorHelper.handleError(err))
     );
 }

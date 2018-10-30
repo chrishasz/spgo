@@ -3,23 +3,26 @@ var sppull = require("sppull").sppull;
 
 import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
-import {ISPRequest} from 'sp-request';
 
-import {ISPFileInformation} from './../spgo'
 import {Logger} from '../util/logger';
+import {ISPFileInformation} from './../spgo'
+import {ISPRequest, IAuthOptions} from 'sp-request';
 import {RequestHelper} from './../util/requestHelper';
+import {ISPPullContext, ISPPullOptions} from 'sppull';
+import {spsave, ICoreOptions, FileOptions} from 'spsave';
+
 export class SPFileGateway{
 
     constructor(){}
 
     public checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
                     return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckOut()", {
                         body: {},
-                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
+                        headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     });
                 })
                 .then( (response) => {
@@ -30,13 +33,13 @@ export class SPFileGateway{
     }
 
     public deleteFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
                     return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')", {
                         body: {},
-                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest, {
+                        headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest, {
                             'X-HTTP-Method':'DELETE',
                             'accept': 'application/json; odata=verbose',
                             'content-type': 'application/json; odata=verbose'
@@ -57,40 +60,46 @@ export class SPFileGateway{
         });
     }
 
-    public downloadFile(context : any, fileOptions : any) : Promise<any>{
-        return new Promise(function (resolve, reject) {
+    public downloadFile(context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
             
-            sppull(context, fileOptions)
-                .then(function(downloadResults) {
-                    if( fileOptions.strictObjects && fileOptions.strictObjects.length > 0){
-                        Logger.outputMessage(`Successfully downloaded ${fileOptions.strictObjects[0]} files to: ${fileOptions.dlRootFolder}`, vscode.window.spgo.outputChannel);
-                    }
-                    resolve(downloadResults);
-                })
-                .catch((err) => reject(err));
-        });
+        return RequestHelper.setNtlmHeader()
+            .then(()=>{
+                return new Promise((resolve,reject) => {
+                    sppull(context, fileOptions)
+                        .then((downloadResults : []) => {
+                            if( fileOptions.strictObjects && fileOptions.strictObjects.length > 0){
+                                Logger.outputMessage(`Successfully downloaded ${fileOptions.strictObjects[0]} files to: ${fileOptions.dlRootFolder}`, vscode.window.spgo.outputChannel);
+                            }
+                            resolve(downloadResults);
+                        })
+                        .catch((err) => reject(err));
+                });
+            });
     }
 
-    public downloadFiles(remoteFolder: string, context : any, fileOptions : any) : Promise<any>{
-        return new Promise(function (resolve, reject) {
-            
-            sppull(context, fileOptions)
-                .then(function(downloadResults) {
-                    Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
-                    resolve(downloadResults);
-                })
-                .catch((err) => reject(err));
-        });
+    public downloadFiles(remoteFolder: string, context : any, fileOptions : ISPPullOptions) : Promise<any>{
+
+        return RequestHelper.setNtlmHeader()
+            .then(()=>{
+                return new Promise((resolve,reject) => {
+                    sppull(context, fileOptions)
+                        .then((downloadResults : []) => {
+                            Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
+                            resolve(downloadResults);
+                        })
+                        .catch((err) => reject(err));
+                });
+            });
     }
 
     public getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>{
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
                         
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
                     return spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
                         body: {},
-                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
+                        headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     })
                     .then( response => {
                         let fileInfo : ISPFileInformation = {
@@ -103,7 +112,7 @@ export class SPFileGateway{
                             // '/_api/web/getfilebyserverrelativeurl(\'' + encodeURI(fileName) + '\')/Checkedoutbyuser?$select=Title,Email';
                             spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckedOutByUser?$select=Title,Email", {
                                 body: {},
-                                headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
+                                headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                             }).then( userInfo => {
                                 fileInfo.checkOutBy = userInfo.body.d.Title;
                                 resolve(fileInfo);
@@ -120,18 +129,34 @@ export class SPFileGateway{
     }
 
     public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
-        return new Promise((resolve, reject) => {            
+        return new Promise((resolve, reject) => {    
+
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
                     return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/undocheckout()", {
                         body: {},
-                        headers: RequestHelper.createHeaders(vscode.window.spgo, digest)
+                        headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     });
                 })
-                .then(function(){
+                .then(() => {
                     resolve();
                 })
                 .catch((err) => reject(err));
         });
     }
+
+    public uploadFiles(coreOptions : ICoreOptions, credentials : IAuthOptions, fileOptions : FileOptions) : Promise<any>{
+        return RequestHelper.setNtlmHeader()
+            .then(()=>{
+                return new Promise((resolve,reject) => {
+                    spsave(coreOptions, credentials, fileOptions)
+                        .then((response) => {
+                            resolve(response);
+                        })
+                        .catch((err) => reject(err));
+                });
+            });
+        
+    }
+
 }

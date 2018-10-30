@@ -19,7 +19,7 @@ export default function configureWorkspace() {
         
     
     function getSharePointSiteUrl() {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             initializeConfiguration().then(config => {
                 let options: vscode.InputBoxOptions = {
                     ignoreFocusOut: true,

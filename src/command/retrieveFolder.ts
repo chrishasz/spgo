@@ -19,7 +19,7 @@ export default function retrieveFolder() : Thenable<any> {
 
     function downloadFiles() : Thenable<any> {
         
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             let options: vscode.InputBoxOptions = {
                 ignoreFocusOut: true,
                 placeHolder: '/site/relative/path/to/folder',
@@ -27,7 +27,8 @@ export default function retrieveFolder() : Thenable<any> {
             };
             vscode.window.showInputBox(options).then(result => {
                 fileService.downloadFiles(result)
-                    .then(function() {
+                    .then(() => {
+                        Logger.outputMessage(`Retrieve folder success.`);
                         resolve();
                     }).catch(err => {
                         reject(err);

@@ -1,11 +1,9 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import {ISPRequest} from 'sp-request';
+import {ISPRequest, IAuthOptions} from 'sp-request';
 
 import Uri from 'vscode-uri'
-import {spsave} from 'spsave';
-import {Logger} from '../util/logger';
 import {ISPPullOptions} from 'sppull';
 import {Constants} from './../constants';
 import {IPublishingAction} from '../spgo';
@@ -14,13 +12,14 @@ import {FileHelper} from './../util/fileHelper';
 import {RequestHelper} from './../util/requestHelper'
 import {SPFileGateway} from './../gateway/spFileGateway';
 import { DownloadFileOptionsFactory } from '../factory/downloadFileOptionsFactory';
+import { ICoreOptions, FileOptions } from 'spsave';
 
 export class SPFileService{
     constructor (){}
 
     public checkOutFile(textDocument: vscode.TextDocument) : Promise<any>{
 
-        let spr = RequestHelper.createRequest(vscode.window.spgo);       
+        let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);       
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
         let fileGateway : SPFileGateway = new SPFileGateway();
         
@@ -29,26 +28,11 @@ export class SPFileService{
 
     public deleteFileFromServer(fileUri: vscode.Uri) : Promise<any> {
         
-        let spr = RequestHelper.createRequest(vscode.window.spgo);       
+        let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);       
         let remoteFileUri : Uri = UrlHelper.getServerRelativeFileUri(fileUri.fsPath);
         let fileGateway : SPFileGateway = new SPFileGateway();
         
         return fileGateway.deleteFile(remoteFileUri, spr);
-
-        //let fileUri : Uri = UrlHelper.getServerRelativeFileUri(fileUri.path);
-        // let fileGateway : SPFileGateway = new SPFileGateway();
-        
-        // var credentials = RequestHelper.createCredentials(vscode.window.spgo);
-        // credentials['siteUrl'] = vscode.window.spgo.config.sharePointSiteUrl;
-
-        // var fileOptions : IOptions = {
-        //     folder : '',
-        //     localBasePath : '',
-        //     localFilePath : '',
-        //     filePath : UrlHelper.getSiteRelativeFileUri(fileUri.fsPath)
-        // };
-
-        // return fileGateway.deleteFile(credentials, fileOptions);
     }
 
     public downloadFiles(remoteFolder : string) : Promise<any>{
@@ -64,11 +48,6 @@ export class SPFileService{
         let options : ISPPullOptions = factory.createFileOptions();
     
         let fileGateway : SPFileGateway = new SPFileGateway();
-
-        //TODO: come up with a more consistent solution for setting headers
-        if( Constants.SECURITY_NTLM == vscode.window.spgo.config.authenticationType){
-            RequestHelper.setNtlmHeader();
-        }
 
         return fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
     }
@@ -120,59 +99,32 @@ export class SPFileService{
         return fileGateway.undoCheckOutFile(fileUri, spr);
     }
     
-    public uploadFileToServer(publishingInfo: IPublishingAction, publishingScope? : string) : Promise<any> { 
-        return new Promise((resolve, reject) => {
-            let localFilePath = vscode.window.spgo.config.workspaceRoot;
-            
-            publishingScope = publishingScope || vscode.window.spgo.config.publishingScope;
+    // public uploadFileToServer(publishingInfo: IPublishingAction, publishingScope? : string) : Promise<any> { 
+    //     let fileGateway : SPFileGateway = new SPFileGateway();
+    //     let localFilePath : string = vscode.window.spgo.config.workspaceRoot;
+    //     let coreOptions : ICoreOptions = this.buildCoreUploadOptions(publishingInfo);
+    //     var credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo);
+    //     var fileOptions : FileOptions = {
+    //         glob : publishingInfo.contentUri,
+    //         base : localFilePath,
+    //         folder: '/'
+    //     };
 
-            let coreOptions : any = this.buildCoreUploadOptions(publishingInfo);
-            
-            var credentials = RequestHelper.createCredentials(vscode.window.spgo);
+    //     return fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
+    // }
 
-            var fileOptions = {
-                glob : publishingInfo.contentUri,
-                base : localFilePath,
-                folder: '/'
-            };
+    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> { 
+        let fileGateway : SPFileGateway = new SPFileGateway();
+        let localFilePath : string = vscode.window.spgo.config.workspaceRoot;
+        let coreOptions : ICoreOptions = this.buildCoreUploadOptions(publishingInfo);
+        var credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo);
+        var fileOptions : FileOptions = {
+            glob : publishingInfo.contentUri,
+            base : localFilePath,
+            folder: '/'
+        };
 
-            //ToDo: come up with a more consistent solution for setting headers
-            if( Constants.SECURITY_NTLM == vscode.window.spgo.config.authenticationType){
-                RequestHelper.setNtlmHeader();
-            }
-
-            spsave(coreOptions, credentials, fileOptions)
-                .then(function(response){
-                    Logger.outputMessage(`file ${publishingInfo.contentUri} successfully saved to server.`, vscode.window.spgo.outputChannel);
-                    resolve(response);
-                })
-                .catch((err) => reject(err));
-        });
-    }
-
-    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
-        return new Promise((resolve, reject) => {
-            let localFilePath = vscode.window.spgo.config.workspaceRoot;
-            var coreOptions = this.buildCoreUploadOptions(publishingInfo);
-            var credentials = RequestHelper.createCredentials(vscode.window.spgo);
-            var fileOptions = {
-                glob : publishingInfo.contentUri,
-                base : localFilePath,
-                folder: '/'
-            };
-
-            //TODO: come up with a more consistent solution for setting headers
-            if( Constants.SECURITY_NTLM == vscode.window.spgo.config.authenticationType){
-                RequestHelper.setNtlmHeader();
-            }
-
-            spsave(coreOptions, credentials, fileOptions)
-                .then((response) => {
-                    Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel);
-                    resolve(response);
-                })
-                .catch((err) => reject(err));
-        });
+        return fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
     }
 
     private buildCoreUploadOptions(publishingInfo : IPublishingAction) : any {

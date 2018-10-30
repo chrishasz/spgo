@@ -42,8 +42,8 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
         return UiHelper.showStatusBarProgress(`Publishing ${publishingScope} file version:  ${fileName}`,
             AuthenticationService.verifyCredentials(vscode.window.spgo, publishingInfo)
                 .then((publishingInfo) => UiHelper.getPublishingMessage(publishingInfo))
-                .then((publishingInfo) => fileService.uploadFileToServer(publishingInfo, publishingScope))
-                .then(function(){
+                .then((publishingInfo) => fileService.uploadFilesToServer(publishingInfo))
+                .then(() => {
                     Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
                 })
                 .catch(err => ErrorHelper.handleError(err))

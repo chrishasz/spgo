@@ -105,10 +105,10 @@ export function activate(context: vscode.ExtensionContext): any {
      //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
      context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
         initializeConfiguration(vscode.window.spgo)
-            .then(function() {
+            .then(() => {
                 Logger.updateStatusBar('Configuration file reloaded', 5);
             })
-            .catch(function(err : SPGo.IError) {
+            .catch((err : SPGo.IError) => {
                 Logger.showError(err.message, err);
             });
     }));
@@ -138,10 +138,10 @@ export function activate(context: vscode.ExtensionContext): any {
             //is this an update to the config? Reload the config.
             else if(textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)){
                 initializeConfiguration(vscode.window.spgo)
-                    .then(function() {
+                    .then(() => {
                         Logger.updateStatusBar('Configuration file reloaded', 5);
                     })
-                    .catch(function(err : SPGo.IError) {
+                    .catch((err : SPGo.IError) => {
                         Logger.showError(err.message, err);
                     });
             }

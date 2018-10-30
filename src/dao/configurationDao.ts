@@ -10,7 +10,7 @@ import {Constants} from './../constants';
 import { UrlHelper } from '../util/urlHelper';
 
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
-	return new Promise(function (resolve, reject) {
+	return new Promise((resolve, reject) => {
 		var self: IAppManager = appManager || vscode.window.spgo;
 		try{
 			
