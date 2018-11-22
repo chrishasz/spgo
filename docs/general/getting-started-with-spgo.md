@@ -3,6 +3,7 @@ layout: page
 title: Getting Started
 ---
 
+## TL;DR, a Video!
 {% include youtubePlayer.html id=de2txBruxfA %}
 
 *SPGo configuration in Visual Studio Code, by [David Warner](https://twitter.com/DavidWarnerII) of [Warner Digital](http://warner.digital/)*
