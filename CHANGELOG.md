@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.3.3 - 2018-11-27
+### Fixed
+- Resolved a security issue with dependencies of the [vscode@1.1.21](https://code.visualstudio.com/blogs/2018/11/26/event-stream) package.
+
 ## 1.3.3 - 2018-10-30
 ### Added
 - Running any SPGo-based command will now activate SPGo, or prompt you to configure a local workspace if no `spgo.json` config file is present. Great UX enhancement idea via email request.
