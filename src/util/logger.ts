@@ -34,10 +34,15 @@ export class Logger {
     }
     
     static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
-        if(error && error.message){
+        if(error){
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
             outputChannel.appendLine('================================     ERROR     ================================\n');
-            outputChannel.appendLine(error.message);
+            if(error.message){
+                outputChannel.appendLine(error.message);
+            }
+            outputChannel.appendLine('Error Detail:');
+            outputChannel.appendLine('----------------------');
+            outputChannel.appendLine(JSON.stringify(error));
             outputChannel.appendLine('===============================================================================\n');
         }
     }

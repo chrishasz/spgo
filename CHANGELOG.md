@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.4.0 - 2018-11-27
+### Added
+- Better documentation for MFA. Updated documentation [here](https://docs.sitego.co/spgo/authentication/two-factor-authentication)
+- Regex Support for all file-based commands, e.g [Retrieve Folder](), [Populate Workspace]().
+### Changed
+- Increased the amount of data logged when an error or exception occurs.
+### Fixed
+- HTML escaped characters in filenames will now be handled properly. example: `Style%20Library` in the `remoteFolders` property will no longer cause a download error.
+
 ## 1.3.3 - 2018-11-27
 ### Fixed
 - Resolved a security issue with dependencies of the [vscode@1.1.21](https://code.visualstudio.com/blogs/2018/11/26/event-stream) package.
@@ -37,7 +46,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
     - Inspiration: [this issue](https://github.com/readysitego/spgo/issues/44) from GitHub.
 ### Fixed
 - [This Issue](https://github.com/readysitego/spgo/issues/46) opened a number of Glob->Caml related issues. I've resolved as many of them as I could find.
-- Continued Improving Unix/Linux support for SPGo. Authoring SP customiations from Ubuntu; what a world we live in!
+- Continued Improving Unix/Linux support for SPGo. Authoring SP customizations from Ubuntu; what a world we live in!
 
 ## 1.2.7 - 2018-5-18
 ### Fixed

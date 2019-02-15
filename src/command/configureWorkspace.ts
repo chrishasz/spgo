@@ -34,7 +34,10 @@ export default function configureWorkspace() : Promise<any> {
                         siteUrl = 'https://' + siteUrl;
                     }
 
+                    //remove trailing slash (if present)
                     config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(siteUrl.toString() || config.sharePointSiteUrl || '');
+					//URL Decode any inputs for site Name
+					config.sharePointSiteUrl = decodeURI(config.sharePointSiteUrl);
 
                     if (!config.sharePointSiteUrl) { 
                         reject('SharePoint site Url is required'); 

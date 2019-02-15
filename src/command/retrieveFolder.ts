@@ -27,7 +27,7 @@ export default function retrieveFolder() : Thenable<any> {
                 prompt: 'Enter a site relative path to the folder or file you would like to download. WARNING: This will overwrite all local files!!',
             };
             vscode.window.showInputBox(options).then(result => {
-                fileService.downloadFiles(result)
+                fileService.downloadFiles(decodeURI(result))
                     .then(() => {
                         Logger.outputMessage(`Retrieve folder success.`);
                         resolve();

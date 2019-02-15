@@ -26,7 +26,7 @@ export default function populateWorkspace() : Thenable<any> {
 
             if(vscode.window.spgo.config.remoteFolders){
                 for (let folder of vscode.window.spgo.config.remoteFolders) {
-                    downloads.push(fileService.downloadFiles(folder));
+                    downloads.push(fileService.downloadFiles(decodeURI(folder)));
                 }
                 Promise.all(downloads)
                     .then(() => {
