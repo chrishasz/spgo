@@ -22,9 +22,9 @@ export class AuthenticationService{
 			if(!appManager.credentials){
 				appManager.credentials = {};
 				return getUserName(appManager)
-					.then(mgr => getPassword(mgr))
-					.then(mgr => verify(mgr))
-					.then(mgr => processNextCommand(mgr));
+					.then((mgr : IAppManager) => getPassword(mgr))
+					.then((mgr : IAppManager) => verify(mgr))
+					.then((mgr : IAppManager) => processNextCommand(mgr));
 			}
 			else{
 				return processNextCommand(appManager);
@@ -36,7 +36,7 @@ export class AuthenticationService{
 		} 
 	
 		// take user's SharePoint username input
-		function getUserName(appManager) {
+		function getUserName(appManager : IAppManager) {
 			return new Promise((resolve, reject) => {
 				let options: vscode.InputBoxOptions = {
 					ignoreFocusOut: true,
@@ -56,7 +56,7 @@ export class AuthenticationService{
 		}
 	
 		// take user's password input
-		function getPassword(appManager) {
+		function getPassword(appManager : IAppManager) {
 			return new Promise((resolve, reject) => {
 				let options: vscode.InputBoxOptions = {
 					ignoreFocusOut: true,
@@ -77,7 +77,7 @@ export class AuthenticationService{
 		}
 	
 		// Test the new credential set to make sure it is valid
-		function verify(appManager){
+		function verify(appManager : IAppManager){
 			return new Promise((resolve, reject) => {
 				
 				let spr = RequestHelper.createRequest(appManager);
@@ -87,7 +87,7 @@ export class AuthenticationService{
 						//store credentials?
 						if(appManager.config.storeCredentials){
 							CredentialDao.setCredentials(vscode.window.spgo.config.sharePointSiteUrl, appManager.credentials);
-							return processNextCommand(appManager);
+							//return processNextCommand(appManager);
 						}
 						resolve(appManager);
 					}, err => {
@@ -97,8 +97,8 @@ export class AuthenticationService{
 			});
 		}
 
-		// Authtntication was successful, process the command provided by the caller.
-		function processNextCommand(appManager) {			
+		// Authentication was successful, process the command provided by the caller.
+		function processNextCommand(appManager : IAppManager) {			
 			return new Promise((resolve, reject) => {
 				if(appManager && appManager.credentials){
 					resolve(payload);

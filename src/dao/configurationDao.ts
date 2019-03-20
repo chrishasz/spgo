@@ -44,7 +44,9 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 					if(self.config.sharePointSiteUrl !== undefined){
 						self.config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(self.config.sharePointSiteUrl);
 					}
-		
+					//URL Decode any inputs for site Name
+					self.config.sharePointSiteUrl = decodeURI(self.config.sharePointSiteUrl);
+
 					resolve(self.config);
 				} 
 				catch (fileErr) {

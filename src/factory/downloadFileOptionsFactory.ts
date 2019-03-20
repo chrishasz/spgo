@@ -6,7 +6,6 @@ import * as parseGlob from 'parse-glob';
 import {Uri, window} from 'vscode';
 import {ISPPullOptions} from 'sppull';
 import {UrlHelper} from './../util/urlHelper';
-import { GlobToCamlConverter } from '../converter/globToCamlConverter';
 
 export class DownloadFileOptionsFactory {
 
@@ -19,7 +18,7 @@ export class DownloadFileOptionsFactory {
     public createFileOptions() : ISPPullOptions{
         let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
         let remoteFolder : string = this.glob.base; //.path.dirname;
-        let camlQuery : string = GlobToCamlConverter.Convert(this.glob, UrlHelper.removeLeadingSlash(sharePointSiteUrl.path));
+        let camlQuery : string = ''; //GlobToCamlConverter.Convert(this.glob, UrlHelper.removeLeadingSlash(sharePointSiteUrl.path));
 
         let options : ISPPullOptions = {
             spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path,
