@@ -1,45 +1,53 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+title: Chris Hasz
+email: chrishasz@gmail.com
+description: >- 
+  I build Enterprise software teams at SAP SalesCloud, and also open source projects. #EnterpriseTwitter
+baseurl: "spgo"
+url: "https://www.chrishasz.com" # the base hostname & protocol for your site, e.g. http://example.com
+favicon: /images/favicon.jpg
+logo: /images/favicon.jpg
 
-# Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-title: SPGo
-email: spgo@sitego.co
-description: >- # this means to ignore newlines until "baseurl:"
-  Documentation for SPGo. The SharePoint IDE for Visual Studio Code.
-baseurl: "/spgo" # the subpath of your site, e.g. /blog
-url: "https://docs.sitego.co" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: readysitego
-github_username: readysitego
+#Social [jekyll-seo-tag]
+social:
+  name: chrishasz
+  links:
+    - https://twitter.com/chrishasz
+    - https://www.linkedin.com/in/chrishasz
+    - https://github.com/chrishasz
+twitter:
+  username: chrishasz
+  card: summary
+
+# Custom Navigation Links
+header_pages:
+  - name : spgo.md
+    title : SPGo
+    url : /spgo
+  - name : glob2caml.md
+    title : Glob2Caml
+    url : /glob2caml
+  - name : yaght.md
+    title : yaght
+    url : https://github.com/chrishasz/yaght
 
 # Blog Config
 show_excerpts: true
 
+#Google Analytis
+google_analytics: UA-138720538-1
+
+# Minima date format
+# refer to http://shopify.github.io/liquid/filters/date/ if you want to customize this
+minima:
+  date_format: "%b %-d, %Y"
+
+  # generate social links in footer
+  social_links:
+    github:  chrishasz
+    linkedin: chrishasz
+    twitter: chrishasz
+    rss: rss
+
 # Build settings
 markdown: kramdown
-#theme: minima
-remote_theme: readysitego/siteGoTheme
-plugins:
-  - jekyll-feed
-
-# Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
+remote_theme: chrishasz/yaght
