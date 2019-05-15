@@ -3,8 +3,8 @@ THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
 Do Not Translate or Localize
 
 SPGo for Visual Studio Code incorporates third party material from the projects listed below. 
-The original copyright notice and the license under which SiteGo received such third party material 
-are set forth below. SiteGo reserves all other rights not expressly granted, whether by implication, 
+The original copyright notice and the license under which Chris Hasz received such third party material 
+are set forth below. Chris Hasz reserves all other rights not expressly granted, whether by implication, 
 estoppel or otherwise. 
 
 1. node-sp-auth     - https://github.com/s-KaiNet/node-sp-auth

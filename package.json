@@ -1,8 +1,8 @@
 {
     "author": {
-        "email": "chris@sitego.co",
+        "email": "spgo@chrishasz.com",
         "name": "Chris Hasz",
-        "url": "https://www.sitego.co"
+        "url": "https://www.chrishasz.com"
     },
     "name": "spgo",
     "displayName": "SPGo",
@@ -21,15 +21,15 @@
         "color": "#007891",
         "theme": "dark"
     },
-    "homepage": "https://github.com/ReadySiteGo/SPGo/blob/master/README.md",
+    "homepage": "https://github.com/chrishasz/SPGo/blob/master/README.md",
     "bugs": {
-        "url": "https://github.com/ReadySiteGo/SPGo/issues",
-        "email": "vscode@sitego.co"
+        "url": "https://github.com/chrishasz/SPGo/issues",
+        "email": "spgo@chrishasz.com"
     },
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/ReadySiteGo/SPGo.git"
+        "url": "https://github.com/chrishasz/SPGo.git"
     },
     "engines": {
         "vscode": "^1.29.0"

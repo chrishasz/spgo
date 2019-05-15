@@ -11,7 +11,7 @@ _note: SPGo can store unique credentials for each site collection you work with.
 ``` json
 {
     "sourceDirectory": "src",
-    "sharePointSiteUrl": "https://sitego.sharepoint.com",
+    "sharePointSiteUrl": "https://tenant.sharepoint.com",
     "publishingScope": "PublishMinor",
     "authenticationType": "Digest",
     "storeCredentials" : true,

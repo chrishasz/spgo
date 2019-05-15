@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.4.0 - 2018-11-27
 ### Added
-- Better documentation for MFA. Updated documentation [here](https://docs.sitego.co/spgo/authentication/two-factor-authentication)
+- Better documentation for MFA. Updated documentation [here](https://www.chrishasz.com/spgo/authentication/two-factor-authentication)
 - Regex Support for all file-based commands, e.g [Retrieve Folder](), [Populate Workspace]().
 ### Changed
 - Increased the amount of data logged when an error or exception occurs.
@@ -21,9 +21,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - Running any SPGo-based command will now activate SPGo, or prompt you to configure a local workspace if no `spgo.json` config file is present. Great UX enhancement idea via email request.
 ### Fixed
-- [This Issue](https://github.com/readysitego/spgo/issues/64) where SPGo *did not* consistently apply the correct auth headers for NTLM + www Auth, which *did* consistently annoying users.
-- [This Other Issue](https://github.com/readysitego/spgo/issues/63) where SPGo was unable to download files outside of folders. Really I didn't do much outside of type "npm update", as the heavy lifting was done by [@koltyakov](https://github.com/koltyakov). THANKS!
-- [This Other, Other, Issue](https://github.com/readysitego/spgo/issues/60) where json files without json extensions did not properly download. Again, thanks to [@koltyakov](https://github.com/koltyakov) for providing a fix via his great [sppull](https://github.com/koltyakov/sppull) library!
+- [This Issue](https://github.com/chrishasz/spgo/issues/64) where SPGo *did not* consistently apply the correct auth headers for NTLM + www Auth, which *did* consistently annoying users.
+- [This Other Issue](https://github.com/chrishasz/spgo/issues/63) where SPGo was unable to download files outside of folders. Really I didn't do much outside of type "npm update", as the heavy lifting was done by [@koltyakov](https://github.com/koltyakov). THANKS!
+- [This Other, Other, Issue](https://github.com/chrishasz/spgo/issues/60) where json files without json extensions did not properly download. Again, thanks to [@koltyakov](https://github.com/koltyakov) for providing a fix via his great [sppull](https://github.com/koltyakov/sppull) library!
 
 ## 1.3.2 - 2018-8-11
 ### Added
@@ -33,19 +33,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.3.1 - 2018-6-7
 ### Added
-- Integrated [cpass](https://www.npmjs.com/package/cpass), allowing users to store credentials for each SharePoint site, removing the need to always reenter creds when launching SPGo. [Issue 47](https://github.com/readysitego/spgo/issues/47)
+- Integrated [cpass](https://www.npmjs.com/package/cpass), allowing users to store credentials for each SharePoint site, removing the need to always reenter creds when launching SPGo. [Issue 47](https://github.com/chrishasz/spgo/issues/47)
 ### Changed
 - The `SPGo> Publish a major version of the current file` and `SPGo> Publish a major version of the current file` commands now works at the folder level. All other context menu items will gracefully fail with a message that they do not yet support operations at the folder-level.
 ### Fixed
-- Found/fixed another Glob issue, related to globstar searches (e.g. `/directory/**/*.*`), hopefully resolving all cases of [Issue 46](https://github.com/readysitego/spgo/issues/46)
-- Better URL concatenation prevents double-slashes when setting a SharePoint site URL ending in a slash, which resolves [Issue 50](https://github.com/readysitego/spgo/issues/50)
+- Found/fixed another Glob issue, related to globstar searches (e.g. `/directory/**/*.*`), hopefully resolving all cases of [Issue 46](https://github.com/chrishasz/spgo/issues/46)
+- Better URL concatenation prevents double-slashes when setting a SharePoint site URL ending in a slash, which resolves [Issue 50](https://github.com/chrishasz/spgo/issues/50)
 
 ## 1.3.0 - 2018-6-1
 ### Added
 - Delete files from SharePoint (plus your local file system) using the `SPGo: Publish local workspace` command.
-    - Inspiration: [this issue](https://github.com/readysitego/spgo/issues/44) from GitHub.
+    - Inspiration: [this issue](https://github.com/chrishasz/spgo/issues/44) from GitHub.
 ### Fixed
-- [This Issue](https://github.com/readysitego/spgo/issues/46) opened a number of Glob->Caml related issues. I've resolved as many of them as I could find.
+- [This Issue](https://github.com/chrishasz/spgo/issues/46) opened a number of Glob->Caml related issues. I've resolved as many of them as I could find.
 - Continued Improving Unix/Linux support for SPGo. Authoring SP customizations from Ubuntu; what a world we live in!
 
 ## 1.2.7 - 2018-5-18
@@ -58,16 +58,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.2.5 - 2018-5-17
 ### Added
-- Unix support! Resoved [This Request](https://github.com/readysitego/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
+- Unix support! Resoved [This Request](https://github.com/chrishasz/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
 ### Changed
 - Better warnings/errors for bad passwords and checked-out files.
 
 ## 1.2.4 - 2018-5-10
 ### Added
-- [This request from Github](https://github.com/readysitego/spgo/issues/35) will now allow you to specify a default check-in message using the `checkInMessage` config property in `SPGo.json`
-- [This other request from Github](https://github.com/readysitego/spgo/issues/34) will now allow you to manually reload config data from `SPGo.json` using the command `SPGO> Reload Configuration` or the shortcut `<alt> + r, <alt> + c`
+- [This request from Github](https://github.com/chrishasz/spgo/issues/35) will now allow you to specify a default check-in message using the `checkInMessage` config property in `SPGo.json`
+- [This other request from Github](https://github.com/chrishasz/spgo/issues/34) will now allow you to manually reload config data from `SPGo.json` using the command `SPGO> Reload Configuration` or the shortcut `<alt> + r, <alt> + c`
 ### Fixed
-- An issue where [Git integration caused unnecessary error messages in the SPGo output file](https://github.com/readysitego/spgo/issues/34)
+- An issue where [Git integration caused unnecessary error messages in the SPGo output file](https://github.com/chrishasz/spgo/issues/34)
 - You will now be prompted to enter a check-in message when you set "Publish a Major|Minor" Version" as your default save action.
 - Refactored our core promise chain to properly, and most-importantly: DRY-ly, handle errors. Errors should consistently log and the progress bar will once again cease its endless spinning.
 
@@ -77,7 +77,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.2.2 - 2018-2-28
 ### Fixed
-- Resolved the final dependency issue, [#27](https://github.com/readysitego/spgo/issues/27) & [#30](https://github.com/readysitego/spgo/issues/30), preventing SPGo from loading. Root cause was an issue with NPM resolving dependencies.
+- Resolved the final dependency issue, [#27](https://github.com/chrishasz/spgo/issues/27) & [#30](https://github.com/chrishasz/spgo/issues/30), preventing SPGo from loading. Root cause was an issue with NPM resolving dependencies.
 
 ## 1.2.1 - 2018-2-26
 ### Added
@@ -89,7 +89,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.2.0 - 2018-2-23
 ### Added
 - Glob file management for uploads using the `SPGo: Publish local workspace` command.
-    - Inspiration: [this issue](https://github.com/readysitego/spgo/issues/24) from GitHub.
+    - Inspiration: [this issue](https://github.com/chrishasz/spgo/issues/24) from GitHub.
 - Unit Tests! They're all the rage these days.
 ### Changed
 - By Popular demand, all folders specified in the `remoteFolders` configuration property now respect glob formatting. If you want to download a folder and all subfolders, make sure to append `**/*.*` to all existing folder entries.
@@ -103,12 +103,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Cleaned up Changelog + Readme visual layouts.
 ### Fixed
-- [This issue from Github](https://github.com/readysitego/spgo/issues/21) which prevented authentication when users specified NTLM.
+- [This issue from Github](https://github.com/chrishasz/spgo/issues/21) which prevented authentication when users specified NTLM.
 
 
 ## 1.0.1 - 2018-1-3
 ### Fixed
-- [This issue from Github](https://github.com/readysitego/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
+- [This issue from Github](https://github.com/chrishasz/spgo/issues/19) which prevented file synchronization on save when users selected "SaveOnly" as the publishing scope.
 
 
 ## 1.0 - 2017-12-31
@@ -128,8 +128,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - You will now receive an error messages when attempting to edit or check out a file that another user has already checked out.
 ### Fixed
-- Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/14) - Better handling for folder casing and managing files in root site collections.
-- Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/16) wherein we handle non-existent folders more gracefully when populating a local workspace.
+- Resolved [This issue from Github](https://github.com/chrishasz/spgo/issues/14) - Better handling for folder casing and managing files in root site collections.
+- Resolved [This other issue from Github](https://github.com/chrishasz/spgo/issues/16) wherein we handle non-existent folders more gracefully when populating a local workspace.
 
 
 ## 0.10.2 - 2017-12-06
@@ -143,9 +143,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Fixed
 - Changelog dates were a month off. And you thought you WERE writing SharePoint code in the future!
 - Better bad credential management. Was bad, now better.
-- Resolved [This issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error (or manual cancellation by the user) occurs during workspace configuration, SPGo will no properly handle an empty config file.
-- Resolved [This other issue from Github](https://github.com/readysitego/spgo/issues/10) - Authentication issues when using Multi Auth Site (NTLM + Forms).
-- Resolved [This other, other issue from Github](https://github.com/readysitego/spgo/issues/9) - When an error or cancellation causes an empty SPGo.json file to be created, SPGo will now properly recreate the json config on a subsequent use of the `>SPGo: Configure Workspace` command.
+- Resolved [This issue from Github](https://github.com/chrishasz/spgo/issues/9) - When an error (or manual cancellation by the user) occurs during workspace configuration, SPGo will no properly handle an empty config file.
+- Resolved [This other issue from Github](https://github.com/chrishasz/spgo/issues/10) - Authentication issues when using Multi Auth Site (NTLM + Forms).
+- Resolved [This other, other issue from Github](https://github.com/chrishasz/spgo/issues/9) - When an error or cancellation causes an empty SPGo.json file to be created, SPGo will now properly recreate the json config on a subsequent use of the `>SPGo: Configure Workspace` command.
 
 
 ## 0.10.1 - 2017-09-11
@@ -155,7 +155,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - Lots of code cleanup.
 ### Fixed
-- [Our first Open Issue on Github!](https://github.com/readysitego/spgo/issues/7) - Consequently our first resolved issue on Github. SPGo will now properly retrieve files from the root Site Collection of a SharePoint Web Application.
+- [Our first Open Issue on Github!](https://github.com/chrishasz/spgo/issues/7) - Consequently our first resolved issue on Github. SPGo will now properly retrieve files from the root Site Collection of a SharePoint Web Application.
 - Entering incorrect credentials will no longer cause the progress spinner to spin endlessly, robbing it of its one joy in life.
 
 

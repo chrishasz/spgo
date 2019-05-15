@@ -1,63 +1,69 @@
 toc:
   - title: General
+    name: general.md
     subfolderitems:
-      - page: Configuration Options
+      - name: config-options.md
+        title: Configuration Options
         url: /spgo/general/config-options
-      - page: Getting Started with SPGo
+      - title: Getting Started with SPGo
         url: /spgo/general/getting-started-with-spgo
-      - page: Synchronizing Files with SharePoint
+      - title: Synchronizing Files with SharePoint
         url: /spgo/general/synchronizing-files-with-sharepoint
-      - page: Store Credentials
+      - title: Store Credentials
         url: /spgo/general/store-credentials
   - title: Authentication
+    name: authentication.md
     subfolderitems:
-      - page: ADFS
+      - title: ADFS
         url: /spgo/authentication/adfs-authentication
-      - page: Digest
+      - title: Digest
         url: /spgo/authentication/digest-authentication
-      - page: Forms
+      - title: Forms
         url: /spgo/authentication/forms-authentication
-      - page: NTLM
+      - title: NTLM
         url: /spgo/authentication/ntlm-authentication
-      - page: NTLM (with WWW)
+      - title: NTLM (with WWW)
         url: /spgo/authentication/ntlm-with-www-authentication
-      - page: NTLM v2
+      - title: NTLM v2
         url: /spgo/authentication/ntlm-v2-authentication
-      - page: Two-Factor
+      - title: Two-Factor
         url: /spgo/authentication/two-factor-authentication
   - title: Commands
+    name: commands.md
     subfolderitems:
-      - page: Check out the Current File
+      - title: Check out the Current File
         url: /spgo/commands/check-out-file
-      - page: Compare File With Server
+      - title: Compare File With Server
         url: /spgo/commands/compare-with-server
-      - page: Configure Workspace
+      - title: Configure Workspace
         url: /spgo/commands/configure-workspace
-      - page: Delete File
+      - title: Delete File
         url: /spgo/commands/delete-file
-      - page: Discard Checkout
+      - title: Discard Checkout
         url: /spgo/commands/discard-checkout
-      - page: Populate Workspace
+      - title: Populate Workspace
         url: /spgo/commands/populate-workspace
-      - page: Publish Major Version
+      - title: Publish Major Version
         url: /spgo/commands/publish-major-file
-      - page: Publish Minor Version
+      - title: Publish Minor Version
         url: /spgo/commands/publish-minor-file
-      - page: Publish Local Workspace
+      - title: Publish Local Workspace
         url: /spgo/commands/publish-workspace
-      - page: Reload Configuration
+      - title: Reload Configuration
         url: /spgo/commands/reload-configuration
-      - page: Reset Credentials
+      - title: Reset Credentials
         url: /spgo/commands/reset-credentials
-      - page: Retrieve Folder
+      - title: Retrieve Folder
         url: /spgo/commands/retrieve-folder
   - title: Advanced Topics
+    name: advancedtopics.md
     subfolderitems:
-      - page: SDLC Best Practices
+      - title: SDLC Best Practices
         url: /spgo/advanced/spgo-and-sdlc
-      - page: GitHub Integration
+      - title: GitHub Integration
         url: /spgo/advanced/github-integration
   - title: Development
+    name: development.md
     subfolderitems:
-      - page: Building SPGo locally
+      - title: Building SPGo locally
         url: /spgo/development/build-locally

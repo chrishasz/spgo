@@ -14,7 +14,7 @@ Options:
 * Forms
 * ADFS
 
-Read more: [Authentication Types](https://github.com/readysitego/spgo/wiki#authentication)
+Read more: [Authentication Types](https://github.com/chrishasz/spgo/wiki#authentication)
 
 ## authenticationDetails
 When using ADFS Authentication, you will need to specify additional details in this node describing the ADFS url and relying party.
@@ -60,7 +60,7 @@ _note: SPGo can store unique credentials for each site collection you work with.
 ``` json
 {
     "sourceDirectory": "src",
-    "sharePointSiteUrl": "https://sitego.sharepoint.com",
+    "sharePointSiteUrl": "https://tenant.sharepoint.com",
     "publishingScope": "PublishMinor",
     "publishWorkspaceGlobPattern" : "/**/*.min.*",
     "authenticationType": "ADFS",

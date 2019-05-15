@@ -9,7 +9,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 * Keep all project configuration in Source Control for easy team integration
 
 ## Learn More
-You can view additional documentation [on our documention site.](https://docs.sitego.co/spgo/)
+You can view additional documentation [on our documention site.](https://www.chrishasz.com/spgo/)
 
 ## Feedback
 We love feedback! Please take a minute to complete our 2-question [Survey](https://forms.office.com/Pages/ResponsePage.aspx?id=DZb1uny9ZkKNWQyYu-wakJzz1QojmH9AnvOnKspXAdtUNFBVUVdYRTFQN00zOEFPQkFMT0EyMEpZUC4u) and help make SPGo better!
@@ -107,15 +107,15 @@ How to get in touch
 ===
 Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:
 
-* Tweet us: [@readysitego](https://twitter.com/ReadySiteGo)
-* Request a feature: [Github/ReadySiteGo](https://github.com/readysitego/spgo/issues)
+* Tweet us: [@chrishasz](https://twitter.com/chrishasz)
+* Request a feature: [Github/chrishasz](https://github.com/chrishasz/spgo/issues)
 * Ask for help on [Stack Overflow](https://stackoverflow.com/): #SPGo
-* Send us an email: [SPGo@sitego.co](mailto:spgo@sitego.co)
+* Send us an email: [SPGo@chrishasz.com](mailto:spgo@chrishasz.com)
 
 
 Issues
 ===
-Please submit any issues or feature requests to [https://github.com/ReadySiteGo/SPGo/issues](https://github.com/ReadySiteGo/SPGo/issues) or, better yet, author a pull request.
+Please submit any issues or feature requests to [https://github.com/chrishasz/SPGo/issues](https://github.com/chrishasz/SPGo/issues) or, better yet, author a pull request.
 
 
 Open Source
@@ -130,8 +130,3 @@ I want to thank the following developers for inspiration and source packages:
 * [Sergey Sergeev](https://github.com/s-KaiNet) : sp-request, spsave author
 * [Andrew Koltyakov](https://github.com/koltyakov) : sppull author
 * [@pkreipke](https://github.com/pkreipke) + [@lafayetteduarte](https://github.com/lafayetteduarte) : Authentication support
-
-
-More about SiteGo
-===
-SiteGo is a content sharing solution for Office 365 that enables you to simply and securely collaborate with partners, vendors and users outside your company. You can learn more here: [https://www.sitego.co](https://www.sitego.co).
