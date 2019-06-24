@@ -46,7 +46,7 @@ export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
                                             vscode.window.showInformationMessage('The server version of this file appears to be different from your local version. Open both files in a compare window?', Constants.OPTIONS_OPEN)
                                                 .then(result => {
                                                     if( result == Constants.OPTIONS_OPEN){
-                                                        Logger.outputMessage(`localPath:  ${localPath} dlFilrUrl: ${remotePath}`, vscode.window.spgo.outputChannel);
+                                                        Logger.outputMessage(`localPath:  ${localPath} dlFileUrl: ${remotePath}`, vscode.window.spgo.outputChannel);
                                                         vscode.commands.executeCommand('vscode.diff', remotePath, localPath, '(Server)  <=====>  (Local)');
                                                     }
                                                 });

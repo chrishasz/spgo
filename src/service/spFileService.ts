@@ -16,24 +16,27 @@ import { ICoreOptions, FileOptions } from 'spsave';
 import { Logger } from '../util/logger';
 
 export class SPFileService{
-    constructor (){}
+
+    _fileGateway : SPFileGateway;
+
+    constructor (){
+        this._fileGateway = new SPFileGateway();
+    }
 
     public checkOutFile(textDocument: vscode.TextDocument) : Promise<any>{
 
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);       
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
-        let fileGateway : SPFileGateway = new SPFileGateway();
         
-        return fileGateway.checkOutFile(fileUri, spr);
+        return this._fileGateway.checkOutFile(fileUri, spr);
     }
 
     public deleteFileFromServer(fileUri: vscode.Uri) : Promise<any> {
         
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);       
         let remoteFileUri : Uri = UrlHelper.getServerRelativeFileUri(fileUri.fsPath);
-        let fileGateway : SPFileGateway = new SPFileGateway();
         
-        return fileGateway.deleteFile(remoteFileUri, spr);
+        return this._fileGateway.deleteFile(remoteFileUri, spr);
     }
 
     public downloadFiles(remoteFolder : string) : Promise<any>{
@@ -47,10 +50,8 @@ export class SPFileService{
         };
     
         let options : ISPPullOptions = factory.createFileOptions();
-    
-        let fileGateway : SPFileGateway = new SPFileGateway();
 
-        return fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
+        return this._fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
     }
 
     public downloadFileMajorVersion(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{
@@ -69,59 +70,41 @@ export class SPFileService{
             strictObjects: [fileUri.path],
             dlRootFolder: downloadFilePath
         };
-        let fileGateway : SPFileGateway = new SPFileGateway();
 
-        return fileGateway.downloadFile(context, options);
+        return this._fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
+        // return this._fileGateway.downloadFile(context, options);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.
     // all status values: https://msdn.microsoft.com/en-us/library/office/dn450841.aspx
     public getFileInformation(textDocument: vscode.TextDocument) : Promise<any>{
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(textDocument.fileName);
-        let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
         
         Logger.outputMessage(`Getting file information for:  ${textDocument.fileName}`, vscode.window.spgo.outputChannel);
         
-        return fileGateway.getFileInformation(fileUri, spr);
+        return this._fileGateway.getFileInformation(fileUri, spr);
     }
 
     public checkoutFile(filePath: vscode.Uri) : Promise<any>{
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath);
-        let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
         
         Logger.outputMessage(`Checking out File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
         
-        return fileGateway.checkOutFile(fileUri, spr);
+        return this._fileGateway.checkOutFile(fileUri, spr);
     }
     
     public undoFileCheckout(filePath: vscode.Uri) : Promise<any>{
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath);
-        let fileGateway : SPFileGateway = new SPFileGateway();
         let spr : ISPRequest = RequestHelper.createRequest(vscode.window.spgo);
         
         Logger.outputMessage(`Discarding Check out for File:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
 
-        return fileGateway.undoCheckOutFile(fileUri, spr);
+        return this._fileGateway.undoCheckOutFile(fileUri, spr);
     }
     
-    // public uploadFileToServer(publishingInfo: IPublishingAction, publishingScope? : string) : Promise<any> { 
-    //     let fileGateway : SPFileGateway = new SPFileGateway();
-    //     let localFilePath : string = vscode.window.spgo.config.workspaceRoot;
-    //     let coreOptions : ICoreOptions = this.buildCoreUploadOptions(publishingInfo);
-    //     var credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo);
-    //     var fileOptions : FileOptions = {
-    //         glob : publishingInfo.contentUri,
-    //         base : localFilePath,
-    //         folder: '/'
-    //     };
-
-    //     return fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
-    // }
-
-    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> { 
-        let fileGateway : SPFileGateway = new SPFileGateway();
+    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
         let localFilePath : string = vscode.window.spgo.config.workspaceRoot;
         let coreOptions : ICoreOptions = this.buildCoreUploadOptions(publishingInfo);
         var credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo);
@@ -133,7 +116,7 @@ export class SPFileService{
         
         Logger.outputMessage(`Saving file:  ${publishingInfo.contentUri}`, vscode.window.spgo.outputChannel);
         
-        return fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
+        return this._fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
     }
 
     private buildCoreUploadOptions(publishingInfo : IPublishingAction) : any {

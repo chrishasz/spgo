@@ -8,4 +8,5 @@ Similar to standard NTLM authentication, NTLM with www-auth authentication is co
 SPGo will automatically create the correct headers to enable www-auth.
 
 ## Additional Configuration
+
 To specify NTLM with www-auth authentication, set the `authenticationType` property to `NTLM` in your `spgo.json` file, or by selecting the "NTLM" option when configuring your local environment with the `SPGO> Configure Workspace` command.
