@@ -5,7 +5,7 @@ title: Getting Started with SPGo
 
 ## TL;DR, a Video!
 
-{% include youTubePlayer.html id="de2txBruxfA" %}
+{% include youtubePlayer.html id="de2txBruxfA" %}
 
 *SPGo configuration in Visual Studio Code, by [David Warner](https://twitter.com/DavidWarnerII) of [Warner Digital](http://warner.digital/)*
 
