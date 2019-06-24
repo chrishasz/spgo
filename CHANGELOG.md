@@ -4,16 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.4.0 - 2018-11-27
+## 1.3.6 - 2019-06-21
 ### Added
-- Better documentation for MFA. Updated documentation [here](https://www.chrishasz.com/spgo/authentication/two-factor-authentication)
-- Regex Support for all file-based commands, e.g [Retrieve Folder](), [Populate Workspace]().
+- Regex Support for all file-based commands, e.g [Retrieve Folder](https://www.chrishasz.com/spgo/commands/retrieve-folder), [Populate Workspace](https://www.chrishasz.com/spgo/commands/populate-workspace).
+### Changed
+- Updated the `Build Locally` [documentation page](https://www.chrishasz.com/spgo/development/build-locally) to include instructions for f5 support in VSCode.
+### Fixed
+- [This issue](https://github.com/chrishasz/spgo/issues/85) by applying a more OS-friendly approach to parsing the `sourceDirectory` property in `spgo.jason`.
+- Multiple bug-fixes from downstream dependencies.
+- Massive code cleanup, spelling mistakes fixed, linting, consistency.
+
+## 1.3.5 - 2019-06-21
+### Added
+- Better documentation for MFA. Updated documentation [here](https://www.chrishasz.com/spgo/authentication/two-factor-authentication).
 ### Changed
 - Increased the amount of data logged when an error or exception occurs.
 ### Fixed
 - HTML escaped characters in filenames will now be handled properly. example: `Style%20Library` in the `remoteFolders` property will no longer cause a download error.
+- [This error](https://github.com/chrishasz/spgo/issues/80) where I was not matching files against the proper root of a site. Also my first [Pull request](https://github.com/koltyakov/sppull/pull/31) to one of the OS packages I depend on to make SPGo work!
 
-## 1.3.3 - 2018-11-27
+## 1.3.4 - 2018-11-27
 ### Fixed
 - Resolved a security issue with dependencies of the [vscode@1.1.21](https://code.visualstudio.com/blogs/2018/11/26/event-stream) package.
 
@@ -58,7 +68,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.2.5 - 2018-5-17
 ### Added
-- Unix support! Resoved [This Request](https://github.com/chrishasz/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
+- Unix support! Resolved [This Request](https://github.com/chrishasz/spgo/issues/42) for Ubuntu support. OK, it sorta sounds like a bug, but really this is the first time I've tried building SharePoint solutions in a Unix environment.
 ### Changed
 - Better warnings/errors for bad passwords and checked-out files.
 

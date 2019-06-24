@@ -5,6 +5,11 @@ import * as vscode from 'vscode';
 import Uri from 'vscode-uri'
 
 export class UrlHelper{
+
+    // make sure we are using the correct OS separator
+	public static ensureCorrectPathSeparator(sourceDirectory: string): string {
+		return sourceDirectory.replace('\\', path.sep).replace('/', path.sep);
+	}
     
     //Make sure there is a leading slash.
     public static ensureLeadingSlash(filePath : string) : string{

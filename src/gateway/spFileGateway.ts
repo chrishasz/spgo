@@ -1,15 +1,17 @@
 'use strict';
-var sppull = require("sppull").sppull;
+
+var SPPull = require("sppull");
 
 import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
+//import * as sppull from 'sppull';
 
 import {Logger} from '../util/logger';
-import {ISPFileInformation} from './../spgo'
+import {ISPFileInformation} from '../spgo'
+import {RequestHelper} from '../util/requestHelper';
 import {ISPRequest, IAuthOptions} from 'sp-request';
-import {RequestHelper} from './../util/requestHelper';
-import {ISPPullContext, ISPPullOptions} from 'sppull';
 import {spsave, ICoreOptions, FileOptions} from 'spsave';
+import { ISPPullContext, ISPPullOptions} from 'sppull';
 
 export class SPFileGateway{
 
@@ -28,7 +30,7 @@ export class SPFileGateway{
                 .then( (response) => {
                     resolve(response);
                 })
-                .catch((err) => reject(err));
+                .catch((err : any) => reject(err));
         });
     }
 
@@ -49,7 +51,7 @@ export class SPFileGateway{
                 .then( (response) => {
                     resolve(response);
                 })
-                .catch((err) => reject(err));
+                .catch((err : any) => reject(err));
 
             // sppurge(credentials, fileOptions)
             //     .then(function(response){
@@ -60,34 +62,18 @@ export class SPFileGateway{
         });
     }
 
-    public downloadFile(context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
-            
-        return RequestHelper.setNtlmHeader()
-            .then(()=>{
-                return new Promise((resolve,reject) => {
-                    sppull(context, fileOptions)
-                        .then((downloadResults : Array<any>) => {
-                            if( fileOptions.strictObjects && fileOptions.strictObjects.length > 0){
-                                Logger.outputMessage(`Successfully downloaded ${fileOptions.strictObjects[0]} files to: ${fileOptions.dlRootFolder}`, vscode.window.spgo.outputChannel);
-                            }
-                            resolve(downloadResults);
-                        })
-                        .catch((err) => reject(err));
-                });
-            });
-    }
-
-    public downloadFiles(remoteFolder: string, context : any, fileOptions : ISPPullOptions) : Promise<any>{
+    public downloadFiles(remoteFolder: string, context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
 
         return RequestHelper.setNtlmHeader()
             .then(()=>{
                 return new Promise((resolve,reject) => {
-                    sppull(context, fileOptions)
+
+                    SPPull.sppull(context, fileOptions)
                         .then((downloadResults : Array<any>) => {
                             Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
                             resolve(downloadResults);
                         })
-                        .catch((err) => reject(err));
+                        .catch((err : any) => reject(err));
                 });
             });
     }
@@ -109,7 +95,7 @@ export class SPFileGateway{
                         }
 
                         if( fileInfo.checkOutType == 0){
-                            // '/_api/web/getfilebyserverrelativeurl(\'' + encodeURI(fileName) + '\')/Checkedoutbyuser?$select=Title,Email';
+                            // '/_api/web/getFileByServerRelativeUrl(\'' + encodeURI(fileName) + '\')/CheckedOutByUser?$select=Title,Email';
                             spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckedOutByUser?$select=Title,Email", {
                                 body: {},
                                 headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
@@ -122,9 +108,9 @@ export class SPFileGateway{
                             resolve(fileInfo);
                         }
                     })
-                    .catch((err) => reject(err));
+                    .catch((err : any) => reject(err));
                 })
-                .catch((err) => reject(err));
+                .catch((err : any) => reject(err));
         })
     }
 
@@ -141,7 +127,7 @@ export class SPFileGateway{
                 .then(() => {
                     resolve();
                 })
-                .catch((err) => reject(err));
+                .catch((err : any) => reject(err));
         });
     }
 
@@ -153,7 +139,7 @@ export class SPFileGateway{
                         .then((response) => {
                             resolve(response);
                         })
-                        .catch((err) => reject(err));
+                        .catch((err : any) => reject(err));
                 });
             });
     }

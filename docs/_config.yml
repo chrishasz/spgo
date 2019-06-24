@@ -33,7 +33,7 @@ header_pages:
 # Blog Config
 show_excerpts: true
 
-#Google Analytis
+#Google Analytics
 google_analytics: UA-138720538-1
 
 # Minima date format

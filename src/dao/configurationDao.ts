@@ -22,13 +22,12 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 			
 			fs.stat(configFilePath, (err) => {
 				try{
-					// file exists!
 					if( err == null){
+						// file exists!
 						self.config = {...self.config || {}, ... fs.readJsonSync(configFilePath)};
-						// this is an internal property only
-						self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
 					}
 					else{
+						//otherwise create an empty config file
 						Logger.outputMessage("Config file does not exist, creating now.\r" + err);
 						//create the file
 						fs.ensureFileSync(configFilePath);
@@ -40,12 +39,19 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 					if (typeof self.config === 'object' && !self.config.sourceDirectory) {
 						self.config.sourceDirectory = 'src';
 					}
+
+					//fix any issues with correct slashes in the src path
+					self.config.sourceDirectory = UrlHelper.ensureCorrectPathSeparator(self.config.sourceDirectory);
+					
 					//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
 					if(self.config.sharePointSiteUrl !== undefined){
 						self.config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(self.config.sharePointSiteUrl);
 					}
 					//URL Decode any inputs for site Name
 					self.config.sharePointSiteUrl = decodeURI(self.config.sharePointSiteUrl);
+
+					// this is an internal property only
+					self.config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${self.config.sourceDirectory}`;
 
 					resolve(self.config);
 				} 
