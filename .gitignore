@@ -11,5 +11,9 @@ node_modules
 #NPM Stuff
 npm-debug.log
 
+#Yarn Stuff
+yarn.lock
+
 #Documentation
 docs/_site
+
