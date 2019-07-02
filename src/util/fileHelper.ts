@@ -11,4 +11,9 @@ export class FileHelper {
         let relativeFilePath = filePath.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
         return relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
     }
+
+    static getSPUrlFromPath(fileFolderPath: string, absolute: boolean = false): string {
+        console.log(`Get ${absolute ? 'absolute' : 'relative'} path of ${fileFolderPath}`);
+        return fileFolderPath;
+    }
 }
