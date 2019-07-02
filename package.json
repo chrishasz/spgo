@@ -192,21 +192,21 @@
                 },
                 {
                     "command": "spgo.copyRelativeUrl",
-                    "title": "Copy Server Relative URL"
+                    "group": "spgo@6"
                 },
                 {
                     "command": "spgo.copyAbsoluteUrl",
-                    "title": "Copy Server Relative URL"
+                    "group": "spgo@7"
                 }
             ],
             "editor/context": [
                 {
                     "command": "spgo.copyRelativeUrl",
-                    "title": "Copy Server Relative URL"
+                    "title": "SPGo: Copy Server Relative URL"
                 },
                 {
                     "command": "spgo.copyAbsoluteUrl",
-                    "title": "Copy Server Relative URL"
+                    "title": "SPGo: Copy Server Relative URL"
                 }
             ]
         }
