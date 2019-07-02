@@ -12,11 +12,6 @@ export class FileHelper {
         return relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
     }
 
-    static getSPUrlFromPath(fileFolderPath: string, absolute: boolean = false): string {
-        console.log(`Get ${absolute ? 'absolute' : 'relative'} path of ${fileFolderPath}`);
-        return fileFolderPath;
-    }
-
     static getActiveFile(workspaces: vscode.WorkspaceFolder[]): vscode.TextDocument | undefined {
         const activeTextEditor = vscode.window.activeTextEditor;
         let file: vscode.TextDocument | undefined;
