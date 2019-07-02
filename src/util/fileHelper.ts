@@ -16,4 +16,16 @@ export class FileHelper {
         console.log(`Get ${absolute ? 'absolute' : 'relative'} path of ${fileFolderPath}`);
         return fileFolderPath;
     }
+
+    static getActiveFile(workspaces: vscode.WorkspaceFolder[]): vscode.TextDocument | undefined {
+        const activeTextEditor = vscode.window.activeTextEditor;
+        let file: vscode.TextDocument | undefined;
+        if (activeTextEditor) {
+            let workspace = vscode.workspace.getWorkspaceFolder(activeTextEditor.document.uri);
+            if (workspace && workspaces.filter(w => w.name == workspace.name).length) {
+                file = activeTextEditor.document;
+            }
+        }
+        return file;
+    }
 }
