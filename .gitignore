@@ -8,8 +8,9 @@ node_modules
 *.vsix
 .vscode-test
 
-#NPM Stuff
+#Node Stuff
 npm-debug.log
+dist
 
 #Documentation
 docs/_site

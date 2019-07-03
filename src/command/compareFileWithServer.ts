@@ -34,10 +34,15 @@ export default function compareFileWithServer(localPath : vscode.Uri) : Thenable
             );
 
             function openFileCompare(localPath : vscode.Uri, dlFileUrl : any){            
-                let remotePath : vscode.Uri = vscode.Uri.parse('file:///' + UrlHelper.removeLeadingSlash(dlFileUrl[0].SavedToLocalPath));
-                Logger.outputMessage(`localPath:  ${localPath} dlFileUrl: ${remotePath}`, vscode.window.spgo.outputChannel);
+                if( dlFileUrl && dlFileUrl.length > 0){
+                    let remotePath : vscode.Uri = vscode.Uri.parse('file:///' + UrlHelper.removeLeadingSlash(dlFileUrl[0].SavedToLocalPath));
+                    Logger.outputMessage(`localPath:  ${localPath} dlFileUrl: ${remotePath}`, vscode.window.spgo.outputChannel);
 
-                vscode.commands.executeCommand('vscode.diff', remotePath, localPath, '(Server)  <=====>  (Local)');
+                    vscode.commands.executeCommand('vscode.diff', remotePath, localPath, '(Server)  <=====>  (Local)');
+                }
+                else{
+                    Logger.outputMessage('Could not download file for compare');
+                }
             }
         }
     }

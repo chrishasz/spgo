@@ -72,7 +72,6 @@ export class SPFileService{
         };
 
         return this._fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
-        // return this._fileGateway.downloadFile(context, options);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.
