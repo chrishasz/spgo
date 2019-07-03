@@ -50,7 +50,9 @@
         "onCommand:spgo.publishMinor",
         "onCommand:spgo.reloadConfiguration",
         "onCommand:spgo.resetCredentials",
-        "onCommand:spgo.retrieveFolder"
+        "onCommand:spgo.retrieveFolder",
+        "onCommand:spgo.copyRelativeUrl",
+        "onCommand:spgo.copyAbsoluteUrl"
     ],
     "main": "./out/src/extension",
     "contributes": {
@@ -114,6 +116,16 @@
                 "command": "spgo.retrieveFolder",
                 "title": "SPGo: Retrieve folder",
                 "description": "Download the contents of a SharePoint folder (and subfolders) to your local workspace."
+            },
+            {
+                "command": "spgo.copyRelativeUrl",
+                "title": "SPGo: Copy Server Relative URL",
+                "description": "Copy the server relative path of the relevant folder or file."
+            },
+            {
+                "command": "spgo.copyAbsoluteUrl",
+                "title": "SPGo: Copy Server Absolute URL",
+                "description": "Copy the server absolute path of the relevant folder or file."
             }
         ],
         "keybindings": [
@@ -177,6 +189,24 @@
                 {
                     "command": "spgo.deleteFile",
                     "group": "spgo@5"
+                },
+                {
+                    "command": "spgo.copyRelativeUrl",
+                    "group": "spgo@6"
+                },
+                {
+                    "command": "spgo.copyAbsoluteUrl",
+                    "group": "spgo@7"
+                }
+            ],
+            "editor/context": [
+                {
+                    "command": "spgo.copyRelativeUrl",
+                    "title": "SPGo: Copy Server Relative URL"
+                },
+                {
+                    "command": "spgo.copyAbsoluteUrl",
+                    "title": "SPGo: Copy Server Relative URL"
                 }
             ]
         }

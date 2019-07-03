@@ -12,7 +12,8 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "noImplicitThis": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true
     },
     "include": [
         "src/**/*",
@@ -23,6 +24,3 @@
         ".vscode-test"
     ]
 }
-
-
-
