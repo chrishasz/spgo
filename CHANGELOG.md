@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.4.1 - 2019-06-21
 ### Added
+- [Command] `SPGO> Copy Absolute Url` - Copies the absolute URL of the file on the server.
+- [Command] `SPGO> Copy Relative Url` - Copies the relative URL of the file on the server.
+- *Big thank you to [CPritch](https://github.com/CPritch) for developing both of these commands for SPGo and being SPGo's first community submission!*
+### Changed
 - Started [bundling](https://code.visualstudio.com/api/working-with-extensions/bundling-extension) SPGo for better performance.
 ### Fixed
 - Resolved [this issue](https://github.com/chrishasz/spgo/issues/91) with file comparison not working.

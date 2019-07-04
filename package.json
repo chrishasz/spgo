@@ -206,7 +206,7 @@
                 },
                 {
                     "command": "spgo.copyAbsoluteUrl",
-                    "title": "SPGo: Copy Server Relative URL"
+                    "title": "SPGo: Copy Server Absolute URL"
                 }
             ]
         }
