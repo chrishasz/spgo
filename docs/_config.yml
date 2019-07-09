@@ -2,7 +2,7 @@ title: Chris Hasz
 email: chrishasz@gmail.com
 description: >- 
   I build Enterprise software teams at SAP SalesCloud, and also open source projects. #EnterpriseTwitter
-baseurl: "spgo"
+baseurl: "/spgo"
 url: "https://www.chrishasz.com" # the base hostname & protocol for your site, e.g. http://example.com
 favicon: /images/favicon.jpg
 logo: /images/favicon.jpg

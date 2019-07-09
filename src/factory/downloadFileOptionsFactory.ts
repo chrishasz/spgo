@@ -18,15 +18,15 @@ export class DownloadFileOptionsFactory {
 
     public createFileOptions() : ISPPullOptions{
         let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
-
         let options : ISPPullOptions = {
-            spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path,
+            spBaseFolder : UrlHelper.ensureLeadingWebSlash(sharePointSiteUrl.path),
             dlRootFolder: window.spgo.config.workspaceRoot
         }
+        let globPattern : string = options.spBaseFolder === '/' ? this.glob.orig : options.spBaseFolder + this.glob.orig;
 
         if(this.glob.is.glob){
             options.spRootFolder = this.glob.base.replace('/**/','/');
-            options.fileRegExp = globToRegExp(options.spBaseFolder + this.glob.orig, { flags: 'i', globstar : this.glob.is.globstar, extended : this.glob.orig.indexOf('|') >= 0 });
+            options.fileRegExp = globToRegExp(globPattern, { flags: 'i', globstar : this.glob.is.globstar, extended : this.glob.orig.indexOf('|') >= 0 });
         }
         else{
             options.spRootFolder = UrlHelper.formatWebFolder(this.glob.orig);

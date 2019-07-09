@@ -14,14 +14,14 @@
         "o365",
         "ide"
     ],
-    "version": "1.4.1",
+    "version": "1.4.3",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
         "color": "#007891",
         "theme": "dark"
     },
-    "homepage": "https://github.com/chrishasz/SPGo/blob/master/README.md",
+    "homepage": "https://www.chrishasz.com/spgo",
     "bugs": {
         "url": "https://github.com/chrishasz/SPGo/issues",
         "email": "spgo@chrishasz.com"
@@ -54,7 +54,7 @@
         "onCommand:spgo.copyRelativeUrl",
         "onCommand:spgo.copyAbsoluteUrl"
     ],
-    "main": "./out/src/extension",
+    "main": "./dist/extension",
     "contributes": {
         "commands": [
             {
@@ -213,22 +213,23 @@
     },
     "scripts": {
         "vscode:prepublish": "webpack --mode production",
-        "compile": "webpack --mode none",
+        "compile": "tsc -p ./",
         "watch": "webpack --mode none --watch",
         "postinstall": "node ./node_modules/vscode/bin/install",
-        "test": "node ./node_modules/vscode/bin/test"
+        "test-compile": "tsc -p ./"
     },
     "devDependencies": {
         "@types/mocha": "^2.2.32",
         "@types/node": "^6.14.6",
         "mocha": "^6.1.4",
         "ts-loader": "^6.0.4",
-        "typescript": "2.5.0",
+        "typescript": "^3.5.3",
         "vscode": "^1.1.34",
         "webpack": "^4.35.0",
         "webpack-cli": "^3.3.5"
     },
     "dependencies": {
+        "@types/bluebird": "^3.5.27",
         "cpass": "^2.1.1",
         "fs-extra": "^4.0.3",
         "glob-to-regexp": "^0.4.1",

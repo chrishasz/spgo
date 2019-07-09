@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.4.3 - 2019-07-09
+### Changed
+- Re-enabled bundling. Extension should load more quickly.
+### Fixed
+- [These](https://github.com/chrishasz/spgo/issues/94) [issues](https://github.com/chrishasz/spgo/issues/93) which prevented users from successfully working with the SP root web in the root site collection.
+
+
+## 1.4.2 - 2019-07-04
+### Fixed
+- Summoned the spirit of 1776 to free SPGo from VSCode Packaging and dependency errors.
+
 ## 1.4.1 - 2019-06-21
 ### Added
 - [Command] `SPGO> Copy Absolute Url` - Copies the absolute URL of the file on the server.

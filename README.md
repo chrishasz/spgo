@@ -19,7 +19,8 @@ We love feedback! Please take a minute to complete our 2-question [Survey](https
 
 ### Features
 
-* All of the great code authoring and management features of Visual Studio Code, plus the ability to...
+All of the great code authoring and management features of Visual Studio Code, plus the ability to...
+
 * Check out files from SharePoint
   * Check out current file using command `>SPGo: Check Out the current file`
   * Check out current file with the hotkey combo: `Alt+Shift+C`
