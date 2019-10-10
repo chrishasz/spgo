@@ -55,7 +55,7 @@ export class SPFileService{
     }
 
     public downloadFileMajorVersion(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{
-        let remoteFolder : string = FileHelper.getFolderFromPath(filePath.fsPath);
+        let remoteFolder : string = FileHelper.getFolderFromPath(filePath);
         let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath);
         

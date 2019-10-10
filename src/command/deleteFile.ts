@@ -19,7 +19,7 @@ export default function deleteFile(fileUri: vscode.Uri) : Thenable<any> {
     }
     else{
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-            let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+            let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService();
             
             return UiHelper.showStatusBarProgress(`Deleting ${fileName}`,

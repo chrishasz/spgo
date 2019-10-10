@@ -20,7 +20,7 @@ export default function compareFileWithServer(localPath : vscode.Uri) : Thenable
     }
     else{
         if( localPath.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-            let fileName : string = FileHelper.getFileName(localPath.fsPath);
+            let fileName : string = FileHelper.getFileName(localPath);
             let fileService : SPFileService = new SPFileService();
             let downloadPath : string = os.tmpdir() + path.sep + Constants.TEMP_FOLDER;
 

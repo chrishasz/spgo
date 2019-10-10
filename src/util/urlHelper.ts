@@ -5,11 +5,6 @@ import * as vscode from 'vscode';
 import Uri from 'vscode-uri'
 
 export class UrlHelper{
-
-    // make sure we are using the correct OS separator
-	public static ensureCorrectPathSeparator(sourceDirectory: string): string {
-		return sourceDirectory.replace('\\', path.sep).replace('/', path.sep);
-	}
     
     //Make sure there is a leading slash.
     public static ensureLeadingSlash(filePath : string) : string{
@@ -27,25 +22,38 @@ export class UrlHelper{
         return filePath;
     }
 
-    //get the file path relative to the current SharePoint site.
-    public static getSiteRelativeFileUri(fileName : string) : string {
-        return fileName.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
-    }
-
+    // return the filename from a uri-style string. returns the final token after the last os-specific slash
     public static getFileName(filePath : string) : string{
        return filePath.substring(filePath.lastIndexOf(path.sep)+1);
     }
 
-    // Format a server relative url based on local file uri.
-    public static getServerRelativeFileUri(fileName : string) : Uri {
-        let relativeFilePath : string = this.getSiteRelativeFileUri(fileName);
-        let remoteFolder = relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
-        let remoteFileName = this.getFileName(relativeFilePath);//relativeFilePath.substring(relativeFilePath.lastIndexOf(path.sep)+1);
-        let remoteFileUrl = UrlHelper.formatWebFolder(remoteFolder) + remoteFileName; 
-    
-        return Uri.parse(this.removeTrailingSlash(vscode.window.spgo.config.sharePointSiteUrl) + remoteFileUrl);
+    //get the file path relative to the current SharePoint site.
+    public static getSiteRelativeFilePath(fileName : string) : string {
+        return fileName.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
     }
 
+    //get the file path relative to the current SharePoint site as a Uri.
+    public static getSiteRelativeFileUri(fileName : string) : Uri {
+        return Uri.parse(this.getSiteRelativeFilePath(fileName));
+    }
+
+    // Format a server relative url based on local file uri.
+    public static getServerRelativeFilePath(fileName : string) : string {
+        let relativeFilePath : string = this.getSiteRelativeFilePath(fileName);
+        let remoteFolder = relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
+        let remoteFileName = this.getFileName(relativeFilePath);
+        let remoteFileUrl = UrlHelper.formatWebFolder(remoteFolder) + remoteFileName; 
+    
+        return this.removeTrailingSlash(vscode.window.spgo.config.sharePointSiteUrl) + remoteFileUrl;
+    }
+
+    // Format a server relative url based on local file uri.
+    public static getServerRelativeFileUri(fileName : string) : Uri {
+    
+        return Uri.parse(this.getServerRelativeFilePath(fileName));
+    }
+
+    // replaces all non-alphanumeric characters with the '_' character.
     public static formatUriAsFileName(uri : string){
         return uri.replace(/[^a-zA-Z0-9]/g,'_');
     }
@@ -60,6 +68,10 @@ export class UrlHelper{
         }
         return filePath;
     } 
+
+    static normalizeSlashes(filePath : string) : string{
+        return filePath.replace(/\\/g, "/");
+    }
 
     // make our glob processor os aware.
     // this is also for cross-platform compatibility, but much less hacky.

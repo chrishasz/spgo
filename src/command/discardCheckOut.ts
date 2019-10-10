@@ -19,7 +19,7 @@ export default function discardCheckOut(fileUri: vscode.Uri) : Thenable<any> {
     // undo the checkout.
     else{
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-            let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+            let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService();
             
             return UiHelper.showStatusBarProgress(`Discarding Check out for:  ${fileName}`,

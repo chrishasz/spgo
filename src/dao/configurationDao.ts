@@ -8,14 +8,15 @@ import {IAppManager} from './../spgo';
 import {Logger} from '../util/logger';
 import {Constants} from './../constants';
 import {UrlHelper} from '../util/urlHelper';
+import {FileHelper} from '../util/fileHelper';
 
 export default function initializeConfiguration(appManager?: IAppManager): Promise<IConfig> {
 	return new Promise((resolve, reject) => {
 		var self: IAppManager = appManager || vscode.window.spgo;
 		try{
 			
-			if (!vscode.workspace.rootPath) {
-				throw { message: 'You must open a folder with VSCode' }
+			if (!vscode.workspace.workspaceFolders) {
+				throw { message: 'In order to use SPGo, please create a local folder to use as the solution workspace. See https://www.chrishasz.com/spgo/general/getting-started-with-spgo for more info.' }
 			}
 
 			var configFilePath = vscode.workspace.rootPath + path.sep + Constants.CONFIG_FILE_NAME;
@@ -41,7 +42,7 @@ export default function initializeConfiguration(appManager?: IAppManager): Promi
 					}
 
 					//fix any issues with correct slashes in the src path
-					self.config.sourceDirectory = UrlHelper.ensureCorrectPathSeparator(self.config.sourceDirectory);
+					self.config.sourceDirectory = FileHelper.ensureCorrectPathSeparator(self.config.sourceDirectory);
 					
 					//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
 					if(self.config.sharePointSiteUrl !== undefined){

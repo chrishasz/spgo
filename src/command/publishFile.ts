@@ -19,7 +19,7 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
     if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
         let publishingInfo : IPublishingAction = null;
         let fileService : SPFileService = new SPFileService();
-        let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+        let fileName : string = FileHelper.getFileName(fileUri);
 
         //is this a directory?
         if(fs.lstatSync(fileUri.fsPath).isDirectory()){

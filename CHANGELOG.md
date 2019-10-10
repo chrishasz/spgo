@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.4.4 - 2019-10-09
+### Added
+- [Command] Get Server Version. A context menu command and shortcut to automatically get the server version of a file. Keyboard shortcut: `alt+shift+g`. Great idea [mesh7](https://github.com/mesh7s) and [mlung1](https://github.com/mlung1)
+### Changed
+- started refactoring the urlHelper class to be more internally consistent, and cleaned up packaging in `package.json`. Refactoring is good for the soul.
+- updated the `ThirdPartyNotices.txt` file with new OS dependencies.
+
+### Fixed
+- [This](https://github.com/chrishasz/spgo/issues/98) issue where special characters were not URL decoded correctly, because I apparently still fail CS 101 after 20 years in the industry.
+
+
+
 ## 1.4.3 - 2019-07-09
 ### Changed
 - Re-enabled bundling. Extension should load more quickly.

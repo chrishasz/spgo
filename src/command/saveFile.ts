@@ -13,7 +13,7 @@ import { AuthenticationService } from './../service/authenticationService';
 export default function saveFile(fileUri: vscode.Uri) : Thenable<any> { 
 
     if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
-        let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+        let fileName : string = FileHelper.getFileName(fileUri);
         let fileService : SPFileService = new SPFileService();
         
         let publishAction : IPublishingAction = {

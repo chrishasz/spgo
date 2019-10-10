@@ -13,6 +13,7 @@ import publishFile from './command/publishFile';
 import checkOutFile from './command/checkOutFile';
 import retrieveFolder from './command/retrieveFolder';
 import discardCheckOut from './command/discardCheckOut';
+import getServerVersion from './command/getServerVersion';
 import publishWorkspace from './command/publishWorkspace';
 import resetCredentials from './command/resetCredentials';
 import populateWorkspace from './command/populateWorkspace';
@@ -61,6 +62,22 @@ export function activate(context: vscode.ExtensionContext): any {
         configureWorkspace();
     }));
 
+    //add Copy URL Commands
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: vscode.Uri) => {
+        if (vscode.window.spgo.config
+            && selectedResource
+            && selectedResource.fsPath.includes(vscode.window.spgo.config.workspaceRoot) ) {
+                vscode.window.spgo.initialize().then(() => copySPUrl(selectedResource))
+        }
+    }));
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: vscode.Uri) => {
+        if (vscode.window.spgo.config
+            && selectedResource
+            && selectedResource.fsPath.includes(vscode.window.spgo.config.workspaceRoot) ) {
+                vscode.window.spgo.initialize().then(() => copySPUrl(selectedResource, true))
+        }
+    }));
+
     //Delete the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: vscode.Uri) => {
         vscode.window.spgo.initialize()
@@ -82,6 +99,19 @@ export function activate(context: vscode.ExtensionContext): any {
                     discardCheckOut(selectedResource)
                 } else {
                     discardCheckOut(vscode.window.activeTextEditor.document.uri);
+                }
+            });
+    }));
+
+    //Delete the current file.
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.getServerVersion', (selectedResource?: vscode.Uri) => {
+        vscode.window.spgo.initialize()
+            .then(() => {
+                if (selectedResource && selectedResource.path) {
+                    getServerVersion(selectedResource);
+                }
+                else {
+                    getServerVersion(vscode.window.activeTextEditor.document.uri);
                 }
             });
     }));
@@ -179,25 +209,9 @@ export function activate(context: vscode.ExtensionContext): any {
         if (vscode.window.spgo.config
             && textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)
             && !textDocument.fileName.endsWith('.git')) {
-            vscode.window.spgo.initialize()
-                .then(() => getCurrentFileInformation(textDocument));
+                vscode.window.spgo.initialize()
+                    .then(() => getCurrentFileInformation(textDocument));
         }
-    }));
-
-    //add Copy URL Commands
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: vscode.Uri) => {
-        vscode.window.spgo.initialize().then(() => {
-            if (vscode.window.spgo.config) {
-                vscode.window.spgo.initialize().then(() => copySPUrl(selectedResource))
-            }
-        })
-    }));
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: vscode.Uri) => {
-        vscode.window.spgo.initialize().then(() => {
-            if (vscode.window.spgo.config) {
-                vscode.window.spgo.initialize().then(() => copySPUrl(selectedResource, true))
-            }
-        })
     }));
 }
 

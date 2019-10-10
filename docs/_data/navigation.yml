@@ -41,6 +41,8 @@ toc:
         url: /commands/delete-file
       - title: Discard Checkout
         url: /commands/discard-checkout
+      - title: Get Server Version
+        url: /commands/get-server-version
       - title: Populate Workspace
         url: /commands/populate-workspace
       - title: Publish Major Version

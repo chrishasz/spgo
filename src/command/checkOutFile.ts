@@ -21,7 +21,7 @@ export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
     else{
         if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
             let downloadPath : string = os.tmpdir() + path.sep + Constants.TEMP_FOLDER;
-            let fileName : string = FileHelper.getFileName(fileUri.fsPath);
+            let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService();
 
             return UiHelper.showStatusBarProgress(`Checking out File:  ${fileName}`,

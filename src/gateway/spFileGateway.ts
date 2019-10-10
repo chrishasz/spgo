@@ -4,7 +4,6 @@ var SPPull = require("sppull");
 
 import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
-//import * as sppull from 'sppull';
 
 import {Logger} from '../util/logger';
 import {ISPFileInformation} from '../spgo'
@@ -22,7 +21,7 @@ export class SPFileGateway{
             
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
-                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckOut()", {
+                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckOut()", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     });
@@ -39,7 +38,7 @@ export class SPFileGateway{
             
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
-                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')", {
+                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest, {
                             'X-HTTP-Method':'DELETE',
@@ -70,6 +69,7 @@ export class SPFileGateway{
 
                     SPPull.sppull(context, fileOptions)
                         .then((downloadResults : Array<any>) => {
+                            //TODO: format slashes properly in this output Message
                             Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
                             resolve(downloadResults);
                         })
@@ -83,7 +83,7 @@ export class SPFileGateway{
                         
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
-                    return spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
+                    return spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     })
@@ -96,7 +96,7 @@ export class SPFileGateway{
 
                         if( fileInfo.checkOutType == 0){
                             // '/_api/web/getFileByServerRelativeUrl(\'' + encodeURI(fileName) + '\')/CheckedOutByUser?$select=Title,Email';
-                            spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/CheckedOutByUser?$select=Title,Email", {
+                            spr.get(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckedOutByUser?$select=Title,Email", {
                                 body: {},
                                 headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                             }).then( userInfo => {
@@ -119,7 +119,7 @@ export class SPFileGateway{
 
             spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
                 .then(digest => {
-                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + fileUri.path +"')/undocheckout()", {
+                    return spr.post(vscode.window.spgo.config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/undocheckout()", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(vscode.window.spgo, digest)
                     });

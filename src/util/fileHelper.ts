@@ -1,15 +1,39 @@
 'use strict';
+
+import { Uri } from 'vscode';
 import * as path from 'path';
 import * as vscode from 'vscode';
 
 export class FileHelper {
-    static getFileName(filePath: string): string {
-        return filePath.substring(filePath.lastIndexOf(path.sep) + 1);
+
+    // make sure we are using the correct OS separator
+	public static ensureCorrectPathSeparator(sourceDirectory: string): string {
+		return sourceDirectory.replace('\\', path.sep).replace('/', path.sep);
+    }
+    
+    // NOTE: There is always the possibility that this may error if the user tries to get a path with a final folder with containing the '.' character.
+    static isPathFile(filePath : Uri) : boolean{
+        let finalNode : string = filePath.fsPath.split(path.sep).pop();
+
+        return finalNode.indexOf('.') >= 0;
     }
 
-    static getFolderFromPath(filePath: string): string {
-        let relativeFilePath = filePath.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
+    static getExtensionRelativeFilePath( filePath : Uri ){
+        return filePath.fsPath.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
+    }
+
+    static getFileName(filePath: Uri): string {
+        return filePath.fsPath.substring(filePath.fsPath.lastIndexOf(path.sep) + 1);
+    }
+
+    static getFolderFromPath(filePath: Uri): string {
+        let relativeFilePath = this.getExtensionRelativeFilePath( filePath );
         return relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
+
+        // let relativeFilePath : string = filePath.replace(vscode.window.spgo.config.workspaceRoot + path.sep, '');
+        // let finalNode : string = relativeFilePath.split(path.sep).pop();
+
+        // return finalNode.indexOf('.') >= 0 ? relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep)) : relativeFilePath;
     }
 
     static getActiveFile(workspaces: vscode.WorkspaceFolder[]): vscode.TextDocument | undefined {
