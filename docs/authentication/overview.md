@@ -1,4 +1,4 @@
-### Authentication
+# Authentication
 
 SPGo supports the following authentication schemes.
 
