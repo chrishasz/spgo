@@ -11,16 +11,18 @@ The `authenticationType` parameter lets you specify which type of authentication
 
 Options:
 
-* Digest
-* NTLM V1
-* Forms
 * ADFS
+* Digest
+* Forms
+* NTLM V1
+* NTLM V2
+* Two-Factor
 
-Read more: [Authentication Types](https://github.com/chrishasz/spgo/wiki#authentication)
+Read more: [Authentication Types](https://www.chrishasz.com/spgo/authentication/overview)
 
 ## authenticationDetails
 
-When using ADFS Authentication, you will need to specify additional details in this node describing the ADFS url and relying party.
+When using ADFS Authentication outside of Office 365, you will need to specify additional details in this node describing the ADFS url and relying party.
 
 ```json
     "authenticationDetails": {
