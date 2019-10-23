@@ -87,7 +87,6 @@ export class AuthenticationService{
 						//store credentials?
 						if(appManager.config.storeCredentials){
 							CredentialDao.setCredentials(vscode.window.spgo.config.sharePointSiteUrl, appManager.credentials);
-							//return processNextCommand(appManager);
 						}
 						resolve(appManager);
 					}, err => {

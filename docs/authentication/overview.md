@@ -1,4 +1,7 @@
-# Authentication
+---
+layout: page
+title: Authentication
+---
 
 SPGo supports the following authentication schemes.
 

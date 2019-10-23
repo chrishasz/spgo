@@ -10,10 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Changed
 - started refactoring the urlHelper class to be more internally consistent, and cleaned up packaging in `package.json`. Refactoring is good for the soul.
 - updated the `ThirdPartyNotices.txt` file with new OS dependencies.
-
 ### Fixed
-- [This](https://github.com/chrishasz/spgo/issues/98) issue where special characters were not URL decoded correctly, because I apparently still fail CS 101 after 20 years in the industry.
-
+- [This](https://github.com/chrishasz/spgo/issues/98) issue where special characters were not URL decoded correctly, because I apparently still fail CS 101 after 20 years of doing this.
 
 
 ## 1.4.3 - 2019-07-09

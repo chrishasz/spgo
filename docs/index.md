@@ -3,7 +3,9 @@ layout: project
 title: SPGo Home
 ---
 
-SPGo was created to make it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
+SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) that makes it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
+
+[Get the Extension](https://marketplace.visualstudio.com/items?itemName=SiteGo.spgo){:.button .medium .center target="_blank"}
 
 [Getting Started with SPGo](/spgo/general/getting-started-with-spgo)
 
