@@ -5,10 +5,20 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 
 export class FileHelper {
+    
+    // make sure we are using the correct OS separator
+    public static convertToForwardSlash(sourceDirectory: string): string {
+        return sourceDirectory.replace(/\//g, '\\');
+    }
+
+    // make sure we are using the correct OS separator
+    public static convertToBackSlash(sourceDirectory: string): string {
+        return sourceDirectory.replace(/\\/g, '/');
+    }
 
     // make sure we are using the correct OS separator
 	public static ensureCorrectPathSeparator(sourceDirectory: string): string {
-		return sourceDirectory.replace('\\', path.sep).replace('/', path.sep);
+		return sourceDirectory.replace(/\\/g, path.sep).replace(/\//g, path.sep);
     }
     
     // NOTE: There is always the possibility that this may error if the user tries to get a path with a final folder with containing the '.' character.

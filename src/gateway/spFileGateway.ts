@@ -5,12 +5,13 @@ var SPPull = require("sppull");
 import Uri from 'vscode-uri';
 import * as vscode from 'vscode';
 
-import {Logger} from '../util/logger';
-import {ISPFileInformation} from '../spgo'
-import {RequestHelper} from '../util/requestHelper';
-import {ISPRequest, IAuthOptions} from 'sp-request';
-import {spsave, ICoreOptions, FileOptions} from 'spsave';
-import { ISPPullContext, ISPPullOptions} from 'sppull';
+import { Logger } from '../util/logger';
+import { ISPFileInformation } from '../spgo'
+// import { FileHelper } from '../util/fileHelper';
+import { RequestHelper } from '../util/requestHelper';
+import { ISPRequest, IAuthOptions } from 'sp-request';
+import { spsave, ICoreOptions, FileOptions } from 'spsave';
+import { ISPPullContext, ISPPullOptions } from 'sppull';
 
 export class SPFileGateway{
 
@@ -61,16 +62,16 @@ export class SPFileGateway{
         });
     }
 
-    public downloadFiles(remoteFolder: string, context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
+    public downloadFiles(localFolder: string, context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
 
         return RequestHelper.setNtlmHeader()
-            .then(()=>{
+            .then( ()=>{
                 return new Promise((resolve,reject) => {
 
                     SPPull.sppull(context, fileOptions)
                         .then((downloadResults : Array<any>) => {
                             //TODO: format slashes properly in this output Message
-                            Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${vscode.window.spgo.config.sourceDirectory + remoteFolder}`, vscode.window.spgo.outputChannel);
+                            Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${localFolder}`, vscode.window.spgo.outputChannel);
                             resolve(downloadResults);
                         })
                         .catch((err : any) => reject(err));

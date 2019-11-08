@@ -3,10 +3,12 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 
 // import {Constants} from './../constants';
-import {AppManager} from '../../src/appManager';
-import {DownloadFileOptionsFactory} from './../../src/factory/downloadFileOptionsFactory';
-import {Constants} from '../../src/constants';
+import { Uri } from 'vscode';
+import { AppManager } from '../../src/appManager';
+import { DownloadFileOptionsFactory } from './../../src/factory/downloadFileOptionsFactory';
+import { Constants } from '../../src/constants';
 import { ISPPullOptions } from 'sppull/dist/interfaces';
+
 
 
 describe("Convert Glob to Caml Tests", () => {
@@ -39,8 +41,9 @@ describe("Convert Glob to Caml Tests", () => {
 
     it("Should detect when a folder structure has a globstar", () => {
         let globString : string = 'siteassets/**';
+        let siteUrl : Uri = Uri.parse('https://company.sitego.co/sites/spgo/siteassets/**');
         let converter : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(globString);
-        let options : ISPPullOptions = converter.createFileOptions();
+        let options : ISPPullOptions = converter.createFileOptions(siteUrl);
 
         assert.equal(converter.glob.is.globstar, true);
         assert.equal(options.recursive, true);
@@ -49,8 +52,9 @@ describe("Convert Glob to Caml Tests", () => {
 
     it("Should detect when a folder structure does not have a globstar", () => {
         let globString : string = 'siteassets';
+        let siteUrl : Uri = Uri.parse('https://company.sitego.co/sites/spgo/siteassets/**');
         let converter : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(globString);
-        let options : ISPPullOptions = converter.createFileOptions();
+        let options : ISPPullOptions = converter.createFileOptions(siteUrl);
 
         assert.equal(converter.glob.is.globstar, false);
         assert.equal(options.recursive, false);

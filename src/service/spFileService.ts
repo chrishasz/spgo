@@ -39,19 +39,20 @@ export class SPFileService{
         return this._fileGateway.deleteFile(remoteFileUri, spr);
     }
 
-    public downloadFiles(remoteFolder : string) : Promise<any>{
+    public downloadFiles(siteUrl: vscode.Uri, remoteFolder : string) : Promise<any>{
         //format the remote folder to /<folder structure>/  
         remoteFolder = UrlHelper.ensureLeadingWebSlash(remoteFolder);
         let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     
         let context : any = {
-            siteUrl : vscode.window.spgo.config.sharePointSiteUrl,
+            siteUrl : siteUrl.toString(),
             creds : RequestHelper.createCredentials(vscode.window.spgo)
         };
     
-        let options : ISPPullOptions = factory.createFileOptions();
+        let options : ISPPullOptions = factory.createFileOptions(siteUrl);
+        let localFolder : string = options.dlRootFolder + FileHelper.convertToForwardSlash(options.spRootFolder);
 
-        return this._fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
+        return this._fileGateway.downloadFiles(localFolder, context, options);
     }
 
     public downloadFileMajorVersion(filePath : vscode.Uri, downloadFilePath? : string) : Promise<any>{
@@ -70,8 +71,9 @@ export class SPFileService{
             strictObjects: [fileUri.path],
             dlRootFolder: downloadFilePath
         };
+        let localFolder : string = options.dlRootFolder + FileHelper.convertToForwardSlash(options.spRootFolder);
 
-        return this._fileGateway.downloadFiles(options.spDocLibUrl || options.spRootFolder, context, options);
+        return this._fileGateway.downloadFiles(localFolder, context, options);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.

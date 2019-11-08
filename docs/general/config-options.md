@@ -69,6 +69,22 @@ Default Value: `true`
 _note: all credentials are hashed and saved to your OS' local temp folder using [CPass](https://www.npmjs.com/package/cpass), providing a modicum of security.
 _note: SPGo can store unique credentials for each site collection you work with._
 
+## subSites
+
+documentation on subSites config here.
+
+``` json
+{
+    "subSites": [{
+        "sharePointSiteUrl" : "https://sitego.sharepoint.com/sites/spgo/subsite",
+        "remoteFolders": [
+            "/SiteAssets/**/*",
+            "/_catalogs/wp/"
+        ]
+    }]
+}
+```
+
 ## Example Complete spgo.json file
 
 ``` json

@@ -1,11 +1,12 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import {Logger} from '../util/logger';
-import {UiHelper} from './../util/uiHelper';
+import { Uri } from 'vscode';
+import { Logger } from '../util/logger';
+import { UiHelper } from './../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
-import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationService';
+import { SPFileService } from './../service/spFileService';
+import { AuthenticationService } from './../service/authenticationService';
 
 export default function retrieveFolder() : Thenable<any> {
     let fileService : SPFileService = new SPFileService();
@@ -27,7 +28,7 @@ export default function retrieveFolder() : Thenable<any> {
                 prompt: 'Enter a site relative path to the folder or file you would like to download. WARNING: This will overwrite all local files!!',
             };
             vscode.window.showInputBox(options).then(result => {
-                fileService.downloadFiles(decodeURI(result))
+                fileService.downloadFiles(Uri.parse(vscode.window.spgo.config.workspaceRoot), decodeURI(result))
                     .then(() => {
                         Logger.outputMessage(`Retrieve folder success.`);
                         resolve();

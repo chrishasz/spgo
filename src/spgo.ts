@@ -17,9 +17,9 @@ export interface IAppManager{
 }
 
 export interface ICredential{
-    username? : string;
     domain? : string;
     password? : string;
+    username? : string;
 }
 
 export interface IConfig{
@@ -32,11 +32,18 @@ export interface IConfig{
     sharePointSiteUrl? : string;
     sourceDirectory? : string;      // The relative directory structure underneath the VSCode local workspace root directory
     storeCredentials? : Boolean;
+    subSites? : ISubSite[];
     workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root + sourceDirectory)
 }
 
 export interface IError {
     message: string;
+}
+
+export interface IPublishingAction{
+    contentUri: string;
+    scope : string;
+    message : string;
 }
 
 export interface ISPFileInformation{
@@ -46,8 +53,7 @@ export interface ISPFileInformation{
     timeLastModified : Date;
 }
 
-export interface IPublishingAction{
-    contentUri: string;
-    scope : string;
-    message : string;
+export interface ISubSite {
+    remoteFolders? : string[];
+    sharePointSiteUrl : string;
 }

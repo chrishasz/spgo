@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.5.0 - 2019-10-22
+### Added
+- Support for managing files from any SubSite within a Site Collection in a single workspace. Please see [the documentation](https://www.chrishasz.com/spgo/advanced/working-with-subsites) for more 
+
 ## 1.4.5 - 2019-10-22
 ### Changed
 - Updated sppull from 2.4.1 to 2.5.1 to resolve download issues. *Thanks [tknaller](https://github.com/tknaller) for the [PR](https://github.com/chrishasz/spgo/pull/101)!*

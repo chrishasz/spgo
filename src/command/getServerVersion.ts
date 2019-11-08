@@ -2,13 +2,14 @@
 
 import * as vscode from 'vscode';
 
-import {Logger} from '../util/logger';
-import {UiHelper} from './../util/uiHelper';
-import {UrlHelper} from './../util/urlHelper';
-import {FileHelper} from './../util/fileHelper';
-import {ErrorHelper} from './../util/errorHelper';
-import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationService';
+import { Uri } from 'vscode';
+import { Logger } from '../util/logger';
+import { UiHelper } from './../util/uiHelper';
+import { UrlHelper } from './../util/urlHelper';
+import { FileHelper } from './../util/fileHelper';
+import { ErrorHelper } from './../util/errorHelper';
+import { SPFileService } from './../service/spFileService';
+import { AuthenticationService } from './../service/authenticationService';
 
 export default function getServerVersion(fileUri: vscode.Uri) : Thenable<any> {
 
@@ -31,7 +32,7 @@ export default function getServerVersion(fileUri: vscode.Uri) : Thenable<any> {
             let folderPath : string = FileHelper.getExtensionRelativeFilePath(fileUri);
             folderPath = UrlHelper.normalizeSlashes(folderPath);
             //return fileService.downloadFiles('/siteassets/subfolder/**/*');
-            return fileService.downloadFiles(folderPath + '/**/*');//path.sep + '**' + path.sep + '*');
+            return fileService.downloadFiles(Uri.parse(vscode.window.spgo.config.workspaceRoot), folderPath + '/**/*');//path.sep + '**' + path.sep + '*');
         }
     }
 }

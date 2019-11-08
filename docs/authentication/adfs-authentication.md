@@ -17,3 +17,9 @@ When using ADFS Authentication outside of Office 365, you will need to specify a
         "adfsUrl": "[ADFS Url]"
     }
 ```
+
+### Properties
+
+Get-SPTrustedIdentityTokenIssuer
+
+SPGo uses the excellent [node-sp-auth](https://github.com/s-KaiNet/node-sp-auth/) library under the covers. The author has detailed documentation on ADFS authentication setup [here](https://github.com/s-KaiNet/node-sp-auth/wiki/ADFS%20user%20credentials%20authentication).

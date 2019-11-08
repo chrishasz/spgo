@@ -70,8 +70,7 @@ Entering a [Glob](https://en.wikipedia.org/wiki/Glob_(programming)) pattern into
 
 #### Populating Remote Files
 
-When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `>SPGo: Populate Workspace`.
-Note: This WILL overwrite all local files.
+When you specify an array of remote folders in a node called `remoteFolders`, SPGo will recursively download the remote folder contents to your local workspace when you issue the Synchronize Files command `>SPGo: Populate Workspace`. Note: This **WILL** overwrite all local files.
 
 #### Example Config json
 
@@ -117,7 +116,7 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
 
 Write an email, create an issue on git, @ us on twitter or request support via Stack Overflow. Any way you choose, we embrace feedback and want to hear from you. Here's how to get a hold of us:
 
-* Tweet us: [@chrishasz](https://twitter.com/chrishasz)
+* Tweet: [@chrishasz](https://twitter.com/chrishasz)
 * Request a feature: [Github/chrishasz](https://github.com/chrishasz/spgo/issues)
 * Ask for help on [Stack Overflow](https://stackoverflow.com/): #SPGo
 * Send us an email: [SPGo@chrishasz.com](mailto:spgo@chrishasz.com)

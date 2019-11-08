@@ -4,9 +4,10 @@ import * as vscode from 'vscode';
 import * as parseGlob from 'parse-glob';
 import * as globToRegExp from 'glob-to-regexp';
 
-import {Uri, window} from 'vscode';
-import {ISPPullOptions} from 'sppull';
-import {UrlHelper} from './../util/urlHelper';
+import { Uri } from 'vscode';
+import { ISPPullOptions } from 'sppull';
+import { UrlHelper } from './../util/urlHelper';
+import { FileHelper } from './../util/fileHelper';
 
 export class DownloadFileOptionsFactory {
 
@@ -16,11 +17,13 @@ export class DownloadFileOptionsFactory {
         this.glob = parseGlob(path);
     }
 
-    public createFileOptions() : ISPPullOptions{
-        let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+    public createFileOptions(siteUrl: Uri) : ISPPullOptions{
+        //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+        let dlRootFolder : string = FileHelper.ensureCorrectPathSeparator(
+            vscode.window.spgo.config.workspaceRoot + siteUrl.toString().replace(vscode.window.spgo.config.sharePointSiteUrl, ''));
         let options : ISPPullOptions = {
-            spBaseFolder : UrlHelper.ensureLeadingWebSlash(sharePointSiteUrl.path),
-            dlRootFolder: window.spgo.config.workspaceRoot
+            spBaseFolder : UrlHelper.ensureLeadingWebSlash(siteUrl.path),
+            dlRootFolder: dlRootFolder
         }
         let globPattern : string = options.spBaseFolder === '/' ? this.glob.orig : options.spBaseFolder + this.glob.orig;
 
