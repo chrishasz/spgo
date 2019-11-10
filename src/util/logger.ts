@@ -25,26 +25,31 @@ export class Logger {
 
     static outputMessage(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-        outputChannel.appendLine(message);
+        this.formatOutputMessage(message, outputChannel);
     }
 
     static outputWarning(message: string, outputChannel?: vscode.OutputChannel) {
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-        outputChannel.appendLine(message);
+        this.formatOutputMessage(message, outputChannel);
     }
     
     static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
         if(error){
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
-            outputChannel.appendLine('================================     ERROR     ================================\n');
+            this.formatOutputMessage('================================     ERROR     ================================\n', outputChannel);
             if(error.message){
-                outputChannel.appendLine(error.message);
+                this.formatOutputMessage(error.message, outputChannel);
             }
-            outputChannel.appendLine('Error Detail:');
-            outputChannel.appendLine('----------------------');
-            outputChannel.appendLine(JSON.stringify(error));
-            outputChannel.appendLine('===============================================================================\n');
+            this.formatOutputMessage('Error Detail:', outputChannel);
+            this.formatOutputMessage('----------------------', outputChannel);
+            this.formatOutputMessage(JSON.stringify(error), outputChannel);
+            this.formatOutputMessage('===============================================================================\n', outputChannel);
         }
+    }
+
+    static formatOutputMessage(message : string, outputChannel?: vscode.OutputChannel) : void{
+        //TODO: implement this as [DateTime]: + message
+        outputChannel.appendLine(`[${ new Date(Date.now()).toLocaleString() }] ${message}`); //`Successfully downloaded ${downloadResults.length} 
     }
 
     static updateStatusBar(message: string, duration? : number) : void{
