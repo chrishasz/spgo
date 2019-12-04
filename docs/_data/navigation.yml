@@ -60,6 +60,8 @@ toc:
   - title: Advanced Topics
     name: advancedtopics.md
     subfolderitems:
+      - title: Working with Multiple Workspaces
+        url: /spgo/advanced/multiple-workspaces
       - title: SDLC Best Practices
         url: /advanced/spgo-and-sdlc
       - title: GitHub Integration

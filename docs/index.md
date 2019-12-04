@@ -56,6 +56,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 
 * Upload only specific files
 * Working with Glob notation
+* [Working with Multiple Workspaces](/spgo/advanced/multiple-workspaces)
 * [SDLC Best Practices](/spgo/advanced/spgo-and-sdlc)
 * [GitHub integration](/spgo/advanced/github-integration)
 
