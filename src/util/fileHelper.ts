@@ -1,8 +1,11 @@
 'use strict';
-
-import { Uri } from 'vscode';
 import * as path from 'path';
 import * as vscode from 'vscode';
+
+import { Uri } from 'vscode';
+import { IConfig } from '../spgo';
+import { TextDocument } from 'vscode';
+import { WorkspaceFolder } from 'vscode';
 
 export class FileHelper {
     
@@ -17,6 +20,11 @@ export class FileHelper {
     }
 
     // make sure we are using the correct OS separator
+    public static convertToUri(uriString: string): Uri {
+        return Uri.file(uriString.replace(/\\/g, '/'));
+    }
+
+    // make sure we are using the correct OS separator
 	public static ensureCorrectPathSeparator(sourceDirectory: string): string {
 		return sourceDirectory.replace(/\\/g, path.sep).replace(/\//g, path.sep);
     }
@@ -28,27 +36,22 @@ export class FileHelper {
         return finalNode.indexOf('.') >= 0;
     }
 
-    static getExtensionRelativeFilePath( filePath : Uri ){
-        return filePath.fsPath.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
+    static getExtensionRelativeFilePath(filePath : Uri, config : IConfig){
+        return filePath.fsPath.split(config.workspaceRoot + path.sep)[1].toString();
     }
 
     static getFileName(filePath: Uri): string {
         return filePath.fsPath.substring(filePath.fsPath.lastIndexOf(path.sep) + 1);
     }
 
-    static getFolderFromPath(filePath: Uri): string {
-        let relativeFilePath = this.getExtensionRelativeFilePath( filePath );
+    static getFolderFromPath(filePath: Uri, config : IConfig ): string {
+        let relativeFilePath = this.getExtensionRelativeFilePath( filePath, config );
         return relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
-
-        // let relativeFilePath : string = filePath.replace(vscode.window.spgo.config.workspaceRoot + path.sep, '');
-        // let finalNode : string = relativeFilePath.split(path.sep).pop();
-
-        // return finalNode.indexOf('.') >= 0 ? relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep)) : relativeFilePath;
     }
 
-    static getActiveFile(workspaces: vscode.WorkspaceFolder[]): vscode.TextDocument | undefined {
+    static getActiveFile(workspaces: WorkspaceFolder[]): TextDocument | undefined {
         const activeTextEditor = vscode.window.activeTextEditor;
-        let file: vscode.TextDocument | undefined;
+        let file: TextDocument | undefined;
         if (activeTextEditor) {
             let workspace = vscode.workspace.getWorkspaceFolder(activeTextEditor.document.uri);
             if (workspace && workspaces.filter(w => w.name == workspace.name).length) {

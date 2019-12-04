@@ -1,13 +1,13 @@
 'use strict';
 
-import * as vscode from 'vscode';
 import * as parseGlob from 'parse-glob';
 import * as globToRegExp from 'glob-to-regexp';
 
 import { Uri } from 'vscode';
+import { IConfig } from '../spgo';
+import { UrlHelper } from '../util/urlHelper';
+import { FileHelper } from '../util/fileHelper';
 import { ISPPullOptions } from 'sppull';
-import { UrlHelper } from './../util/urlHelper';
-import { FileHelper } from './../util/fileHelper';
 
 export class DownloadFileOptionsFactory {
 
@@ -17,10 +17,10 @@ export class DownloadFileOptionsFactory {
         this.glob = parseGlob(path);
     }
 
-    public createFileOptions(siteUrl: Uri) : ISPPullOptions{
-        //let sharePointSiteUrl : Uri = Uri.parse(vscode.window.spgo.config.sharePointSiteUrl);
+    public createFileOptions(siteUrl: Uri, config : IConfig) : ISPPullOptions{
+        
         let dlRootFolder : string = FileHelper.ensureCorrectPathSeparator(
-            vscode.window.spgo.config.workspaceRoot + siteUrl.toString().replace(vscode.window.spgo.config.sharePointSiteUrl, ''));
+            config.workspaceRoot + siteUrl.toString().replace(config.sharePointSiteUrl, ''));
         let options : ISPPullOptions = {
             spBaseFolder : UrlHelper.ensureLeadingWebSlash(siteUrl.path),
             dlRootFolder: dlRootFolder

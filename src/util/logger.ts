@@ -5,11 +5,13 @@ import * as SPGo from './../spgo';
 export class Logger {
     
     static showError(message : string, error ?: SPGo.IError){
+        
         vscode.window.showErrorMessage(message);
         this.outputError(error);
     }
     
     static showInfo(message : string, error?: SPGo.IError){
+        
         vscode.window.showInformationMessage(message);
         if(error){
             this.outputMessage(error.message);
@@ -17,6 +19,7 @@ export class Logger {
     }
     
     static showWarning(message : string, error?: SPGo.IError){
+        
         vscode.window.showWarningMessage(message);
         if(error){
             this.outputWarning(error.message);
@@ -24,16 +27,19 @@ export class Logger {
     }
 
     static outputMessage(message: string, outputChannel?: vscode.OutputChannel) {
+        
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
         this.formatOutputMessage(message, outputChannel);
     }
 
     static outputWarning(message: string, outputChannel?: vscode.OutputChannel) {
+        
         outputChannel = outputChannel || vscode.window.spgo.outputChannel;
         this.formatOutputMessage(message, outputChannel);
     }
     
     static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
+        
         if(error){
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
             this.formatOutputMessage('================================     ERROR     ================================\n', outputChannel);
@@ -48,8 +54,8 @@ export class Logger {
     }
 
     static formatOutputMessage(message : string, outputChannel?: vscode.OutputChannel) : void{
-        //TODO: implement this as [DateTime]: + message
-        outputChannel.appendLine(`[${ new Date(Date.now()).toLocaleString() }] ${message}`); //`Successfully downloaded ${downloadResults.length} 
+        
+        outputChannel.appendLine(`[${ new Date(Date.now()).toLocaleString() }] ${message}`);
     }
 
     static updateStatusBar(message: string, duration? : number) : void{

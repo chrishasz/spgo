@@ -1,19 +1,24 @@
 'use strict';
 import * as vscode from 'vscode';
 
+import { IConfig } from '../spgo';
 import { ErrorHelper } from '../util/errorHelper';
-import { AuthenticationService } from './../service/authenticationService';
 import { CredentialDao } from '../dao/credentialDao';
+import { AuthenticationService } from '../service/authenticationService';
 
 //Reset the Current user's Credentials.
-export default function resetCredentials() : Promise<any> {
+export default async function resetCredentials(config : IConfig) : Promise<any> {
     vscode.window.spgo.credentials = null;
 
     //clear stored credentials
-    if(vscode.window.spgo.config.storeCredentials){
-        CredentialDao.deleteCredentials(vscode.window.spgo.config.sharePointSiteUrl);
+    if(config.storeCredentials){
+        CredentialDao.deleteCredentials(config.sharePointSiteUrl);
     }
 
-    return AuthenticationService.verifyCredentials(vscode.window.spgo)
-        .catch(err => ErrorHelper.handleError(err));
+    try {
+        return AuthenticationService.verifyCredentials(vscode.window.spgo, config);
+    }
+    catch (err) {
+        return ErrorHelper.handleError(err);
+    }
 }

@@ -2,19 +2,19 @@
 import * as vscode from 'vscode';
 
 import {Logger} from '../util/logger';
-import {ISPFileInformation} from './../spgo';
-import {UiHelper} from './../util/uiHelper';
+import {UiHelper} from '../util/uiHelper';
 import { ErrorHelper } from '../util/errorHelper';
-import {SPFileService} from './../service/spFileService';
-import {AuthenticationService} from './../service/authenticationService';
+import {ISPFileInformation, IConfig} from '../spgo';
+import {SPFileService} from '../service/spFileService';
+import {AuthenticationService} from '../service/authenticationService';
 
-export default function saveFile(textDocument: vscode.TextDocument) : Thenable<any> { 
+export default function saveFile(textDocument: vscode.TextDocument, config : IConfig) : Thenable<any> { 
 
-    if( textDocument.fileName.includes(vscode.window.spgo.config.workspaceRoot)){
-        let fileService : SPFileService = new SPFileService();
+    if( textDocument.fileName.includes(config.workspaceRoot)){
+        let fileService : SPFileService = new SPFileService(config);
 
         return UiHelper.showStatusBarProgress('',
-            AuthenticationService.verifyCredentials(vscode.window.spgo, textDocument)
+            AuthenticationService.verifyCredentials(vscode.window.spgo, config, textDocument)
                 .then((textDocument) => fileService.getFileInformation(textDocument))
                 .then((fileInfo) => showFileInformation(fileInfo))
                 .catch(err => ErrorHelper.handleError(err, true))

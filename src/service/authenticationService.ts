@@ -1,7 +1,7 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import { IAppManager } from '../spgo';
+import { IAppManager, IConfig } from '../spgo';
 import { Logger } from '../util/logger';
 import { CredentialDao } from '../dao/credentialDao';
 import { RequestHelper } from '../util/requestHelper'
@@ -15,9 +15,10 @@ export class AuthenticationService{
 	// 2b. Validate User credentials
 	// 2c. Fail if new credentials are valid
 	// 3. Continue to execute the promise object provided.
-	static verifyCredentials(appManager : IAppManager, payload? : any): Promise<any> {
+	static verifyCredentials(appManager : IAppManager, config : IConfig, payload? : any): Promise<any> {
 		appManager = appManager || vscode.window.spgo;
-	
+		//let config : IConfig = workspaceConfig;
+
 		try {
 			if(!appManager.credentials){
 				appManager.credentials = {};
@@ -80,13 +81,13 @@ export class AuthenticationService{
 		function verify(appManager : IAppManager){
 			return new Promise((resolve, reject) => {
 				
-				let spr = RequestHelper.createRequest(appManager);
+				let spr = RequestHelper.createRequest(appManager, config);
 
-				spr.requestDigest(vscode.window.spgo.config.sharePointSiteUrl)
+				spr.requestDigest(config.sharePointSiteUrl)
 					.then(() => { //response => {
 						//store credentials?
-						if(appManager.config.storeCredentials){
-							CredentialDao.setCredentials(vscode.window.spgo.config.sharePointSiteUrl, appManager.credentials);
+						if(config.storeCredentials){
+							CredentialDao.setCredentials(config.sharePointSiteUrl, appManager.credentials);
 						}
 						resolve(appManager);
 					}, err => {

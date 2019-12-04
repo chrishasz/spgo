@@ -1,6 +1,5 @@
 'use strict';
 
-import * as vscode from 'vscode';
 import * as spRequest from 'sp-request';
 import {
     IUserCredentials,
@@ -9,19 +8,19 @@ import {
     IAdfsUserCredentials
   } from 'node-sp-auth';
 
-import {IAppManager} from './../spgo';
+import {IAppManager, IConfig} from './../spgo';
 import {Constants} from './../constants';
 
 export class RequestHelper {
 
-    static createCredentials(appManager : IAppManager) : any {
-        switch(appManager.config.authenticationType){
+    static createCredentials(appManager : IAppManager, config : IConfig) : any {
+        switch(config.authenticationType){
             case Constants.SECURITY_ADFS:{
                 let credentials : IAdfsUserCredentials = {
                     password: appManager.credentials.password,
                     username: appManager.credentials.username,
-                    relyingParty: appManager.config.authenticationDetails.relyingParty,
-                    adfsUrl: appManager.config.authenticationDetails.adfsUrl
+                    relyingParty: config.authenticationDetails.relyingParty,
+                    adfsUrl: config.authenticationDetails.adfsUrl
                 };
                 
                 return credentials;
@@ -67,32 +66,32 @@ export class RequestHelper {
         }
     }
 
-    static createAuthHeaders(appManager : IAppManager, digest : string, additionalHeaders? : any) : any { 
+    static createAuthHeaders(config : IConfig, digest : string, additionalHeaders? : any) : any { 
 
         let headers : any = additionalHeaders || {};
 
-        if( Constants.SECURITY_NTLM == appManager.config.authenticationType || Constants.SECURITY_DIGEST == appManager.config.authenticationType){
+        if( Constants.SECURITY_NTLM == config.authenticationType || Constants.SECURITY_DIGEST == config.authenticationType){
             headers['X-RequestDigest'] = digest
         }
 
         return headers;
     }
 
-    static createRequest(appManager : IAppManager) : spRequest.ISPRequest {
-        if( Constants.SECURITY_NTLM == appManager.config.authenticationType){
+    static createRequest(appManager : IAppManager, config : IConfig) : spRequest.ISPRequest {
+        if( Constants.SECURITY_NTLM == config.authenticationType){
             process.env['_sp_request_headers'] = JSON.stringify({
                 'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
             });
         }
 
-        return spRequest.create(this.createCredentials(appManager));
+        return spRequest.create(this.createCredentials(appManager, config));
     }
 
-    static setNtlmHeader(payload? : any){
+    static setNtlmHeader(config : IConfig, payload? : any){
         return new Promise((resolve) => {
-            let appManager : IAppManager = vscode.window.spgo;
+            //let appManager : IAppManager = vscode.window.spgo;
 
-            if( Constants.SECURITY_NTLM == appManager.config.authenticationType){
+            if( Constants.SECURITY_NTLM == config.authenticationType){
                 process.env['_sp_request_headers'] = JSON.stringify({
                     'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
                 });

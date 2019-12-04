@@ -4,21 +4,21 @@ import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
 import { Logger } from '../util/logger';
-import { Constants } from './../constants';
-import { IPublishingAction } from './../spgo';
-import { UiHelper } from './../util/uiHelper';
+import { Constants } from '../constants';
+import { UiHelper } from '../util/uiHelper';
 import { UrlHelper } from '../util/urlHelper';
-import { FileHelper } from './../util/fileHelper';
-import { ErrorHelper } from './../util/errorHelper';
-import { SPFileService } from './../service/spFileService';
-import { AuthenticationService } from './../service/authenticationService';
+import { FileHelper } from '../util/fileHelper';
+import { ErrorHelper } from '../util/errorHelper';
+import { IPublishingAction, IConfig } from '../spgo';
+import { SPFileService } from '../service/spFileService';
+import { AuthenticationService } from '../service/authenticationService';
 
 
-export default function publishFile(fileUri: vscode.Uri, publishingScope : string) : Thenable<any> {
+export default function publishFile(fileUri: vscode.Uri, publishingScope : string, config : IConfig) : Thenable<any> {
 
-    if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
+    if( fileUri.fsPath.includes(config.workspaceRoot)){
         let publishingInfo : IPublishingAction = null;
-        let fileService : SPFileService = new SPFileService();
+        let fileService : SPFileService = new SPFileService(config);
         let fileName : string = FileHelper.getFileName(fileUri);
 
         //is this a directory?
@@ -26,21 +26,21 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
             publishingInfo = {
                 contentUri : fileUri.fsPath + path.sep + UrlHelper.osAwareGlobStar(),
                 scope : publishingScope,
-                message : vscode.window.spgo.config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
+                message : config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
             }
         }
         else{
             publishingInfo = {
                 contentUri : fileUri.fsPath,
                 scope : publishingScope,
-                message : vscode.window.spgo.config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
+                message : config.checkInMessage || Constants.PUBLISHING_DEFAULT_MESSAGE
             }
         }
         
         Logger.outputMessage(`Publishing ${publishingScope} file version:  ${fileUri.fsPath}`, vscode.window.spgo.outputChannel);
         
         return UiHelper.showStatusBarProgress(`Publishing ${publishingScope} file version:  ${fileName}`,
-            AuthenticationService.verifyCredentials(vscode.window.spgo, publishingInfo)
+            AuthenticationService.verifyCredentials(vscode.window.spgo, config, publishingInfo)
                 .then((publishingInfo) => UiHelper.getPublishingMessage(publishingInfo))
                 .then((publishingInfo) => fileService.uploadFilesToServer(publishingInfo))
                 .then(() => {

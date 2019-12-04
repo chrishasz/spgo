@@ -4,9 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.5.0 - 2019-10-22
+## 1.5.0 - 2019-12-03
 ### Added
-- Support for managing files from any SubSite within a Site Collection in a single workspace. Please see [the documentation](https://www.chrishasz.com/spgo/advanced/working-with-subsites) for more 
+- Support for multi-root workspaces. This involved a major change to the SPGo architecture for managing configuration and will allow me to support working with Sites under the Site Collection Root in the next release. Please see [the documentation](https://www.chrishasz.com/spgo/advanced/multiple-workspaces) for more.
 
 ## 1.4.5 - 2019-10-22
 ### Changed

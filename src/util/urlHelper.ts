@@ -1,8 +1,8 @@
 'use strict';
 import * as path from 'path';
-import * as vscode from 'vscode';
 
-import Uri from 'vscode-uri'
+import { Uri } from 'vscode'
+import { IConfig } from '../spgo';
 
 export class UrlHelper{
     
@@ -28,29 +28,29 @@ export class UrlHelper{
     }
 
     //get the file path relative to the current SharePoint site.
-    public static getSiteRelativeFilePath(fileName : string) : string {
-        return fileName.split(vscode.window.spgo.config.workspaceRoot + path.sep)[1].toString();
+    public static getSiteRelativeFilePath(fileName : string, config : IConfig) : string {
+        return fileName.split(config.workspaceRoot + path.sep)[1].toString();
     }
 
     //get the file path relative to the current SharePoint site as a Uri.
-    public static getSiteRelativeFileUri(fileName : string) : Uri {
-        return Uri.parse(this.getSiteRelativeFilePath(fileName));
+    public static getSiteRelativeFileUri(fileName : string, config : IConfig) : Uri {
+        return Uri.parse(this.getSiteRelativeFilePath(fileName, config));
     }
 
     // Format a server relative url based on local file uri.
-    public static getServerRelativeFilePath(fileName : string) : string {
-        let relativeFilePath : string = this.getSiteRelativeFilePath(fileName);
+    public static getServerRelativeFilePath(fileName : string, config : IConfig) : string {
+        let relativeFilePath : string = this.getSiteRelativeFilePath(fileName, config);
         let remoteFolder = relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
         let remoteFileName = this.getFileName(relativeFilePath);
         let remoteFileUrl = UrlHelper.formatWebFolder(remoteFolder) + remoteFileName; 
     
-        return this.removeTrailingSlash(vscode.window.spgo.config.sharePointSiteUrl) + remoteFileUrl;
+        return this.removeTrailingSlash(config.sharePointSiteUrl) + remoteFileUrl;
     }
 
     // Format a server relative url based on local file uri.
-    public static getServerRelativeFileUri(fileName : string) : Uri {
+    public static getServerRelativeFileUri(fileName : string, config : IConfig) : Uri {
     
-        return Uri.parse(this.getServerRelativeFilePath(fileName));
+        return Uri.parse(this.getServerRelativeFilePath(fileName, config));
     }
 
     // replaces all non-alphanumeric characters with the '_' character.

@@ -4,28 +4,29 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
+import { IConfig } from '../spgo';
 import { Logger } from '../util/logger';
-import { Constants } from './../constants';
-import { UiHelper } from './../util/uiHelper';
-import { FileHelper } from './../util/fileHelper';
-import { SPFileService } from './../service/spFileService';
-import { AuthenticationService } from './../service/authenticationService';
+import { Constants } from '../constants';
+import { UiHelper } from '../util/uiHelper';
+import { FileHelper } from '../util/fileHelper';
 import { ErrorHelper } from '../util/errorHelper';
+import { SPFileService } from '../service/spFileService';
+import { AuthenticationService } from '../service/authenticationService';
 
-export default function checkOutFile(fileUri: vscode.Uri) : Thenable<any> {
+export default function checkOutFile(fileUri: vscode.Uri, config : IConfig) : Thenable<any> {
 
     //is this a directory?
     if(fs.lstatSync(fileUri.fsPath).isDirectory()){
         Logger.showWarning('The check-out file command only works for single files at this time.')
     }
     else{
-        if( fileUri.fsPath.includes(vscode.window.spgo.config.workspaceRoot)){
+        if( fileUri.fsPath.includes(config.workspaceRoot)){
             let downloadPath : string = os.tmpdir() + path.sep + Constants.TEMP_FOLDER;
             let fileName : string = FileHelper.getFileName(fileUri);
-            let fileService : SPFileService = new SPFileService();
+            let fileService : SPFileService = new SPFileService(config);
 
             return UiHelper.showStatusBarProgress(`Checking out File:  ${fileName}`,
-                 AuthenticationService.verifyCredentials(vscode.window.spgo, fileUri)
+                 AuthenticationService.verifyCredentials(vscode.window.spgo, config, fileUri)
                     .then((filePath) => fileService.checkoutFile(filePath))
                     .then(() => downloadFileAndCompare(fileUri, downloadPath))
                     .catch(err => ErrorHelper.handleError(err))

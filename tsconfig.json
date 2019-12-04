@@ -2,9 +2,9 @@
     "compilerOptions": {
         "module": "commonjs",
         "target": "es6",
-        "outDir": "out",
+        "outDir": "dist",
         "sourceMap": true,
-        "removeComments": false,
+        "removeComments": true,
         "lib": [
             "es6"
         ],
@@ -13,14 +13,16 @@
         "noUnusedLocals": true,
         "noImplicitThis": true,
         "forceConsistentCasingInFileNames": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "moduleResolution": "node"
     },
     "include": [
-        "src/**/*",
+		"src/**/*.ts",
+		"./node_modules/vscode/vscode.d.ts",
+		"./node_modules/vscode/lib/*",
         "test/**/*"
     ],
     "exclude": [
-        "node_modules",
         ".vscode-test"
     ]
 }

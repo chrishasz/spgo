@@ -2,40 +2,47 @@
 import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
-import { ErrorHelper } from '../util/errorHelper';
 
-import { Constants } from './../constants';
+import { Uri } from 'vscode';
+import { Constants } from '../constants';
 import { UrlHelper } from '../util/urlHelper';
-import initializeConfiguration from './../dao/configurationDao';
+import { ErrorHelper } from '../util/errorHelper';
+import { ConfigurationDao } from '../dao/configurationDao';
+import { IConfig } from '../spgo';
 
-export default function configureWorkspace() : Promise<any> {
+export default function configureWorkspace(contextPath : Uri) : Promise<any> {
+
     vscode.window.spgo.statusBarItem.text = 'SPGo: Show Menu';
+    let rootPath : Uri = vscode.workspace.getWorkspaceFolder(contextPath).uri;
 
     return getSharePointSiteUrl()
         .then((cfg) => getPublishingScope(cfg))
         .then((cfg) => getAuthenticationType(cfg))
         .then((cfg) => finished(cfg))
-        .catch(err => ErrorHelper.handleError(err));
+        .catch((err) => ErrorHelper.handleError(err));
         
     
     function getSharePointSiteUrl() {
         return new Promise((resolve, reject) => {
-            initializeConfiguration().then(config => {
+
+            let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
+
+            ConfigurationDao.initializeConfiguration(configFilePath).then(config => {
                 let options: vscode.InputBoxOptions = {
                     ignoreFocusOut: true,
                     placeHolder: 'http[s]://domain.com',
                     value: config.sharePointSiteUrl || '',
                     prompt: 'Please enter the SharePoint site Url',
                 };
-                vscode.window.showInputBox(options).then(result => {
-                    let siteUrl : String = result;
+                vscode.window.showInputBox(options).then((result) => {
+                    let siteUrl : string = result;
                     
                     if(siteUrl.indexOf('http') != 0){
                         siteUrl = 'https://' + siteUrl;
                     }
 
                     //remove trailing slash (if present)
-                    config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(siteUrl.toString() || config.sharePointSiteUrl || '');
+                    config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(siteUrl || config.sharePointSiteUrl || '');
 					//URL Decode any inputs for site Name
 					config.sharePointSiteUrl = decodeURI(config.sharePointSiteUrl);
 
@@ -49,7 +56,7 @@ export default function configureWorkspace() : Promise<any> {
         });
     }
 
-    function getPublishingScope(config) {
+    function getPublishingScope(config : IConfig) {
         let quickPickOptions: vscode.QuickPickOptions = {
             ignoreFocusOut: true
         };
@@ -77,7 +84,7 @@ export default function configureWorkspace() : Promise<any> {
         });
     }
 
-    function getAuthenticationType(config) {
+    function getAuthenticationType(config : IConfig) {
         let quickPickOptions: vscode.QuickPickOptions = {
             ignoreFocusOut: true
         };
@@ -105,14 +112,14 @@ export default function configureWorkspace() : Promise<any> {
         });
     }
 
-    function finished(config) {
+    function finished(config : IConfig) {
         const defaultOptions: {} = {};
         // prevent the sourceDirectory property from being written to disk
         // this is an internal property only
         delete config.workspaceRoot;
-        fs.outputFile(vscode.workspace.rootPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
+        fs.outputFile(rootPath.fsPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
         
-		config.workspaceRoot = `${vscode.workspace.rootPath}${path.sep}${config.sourceDirectory}`;
+		config.workspaceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
         
         return config;
     }

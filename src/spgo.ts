@@ -1,4 +1,6 @@
 'use strict';
+
+import { Uri } from 'vscode';
 import * as vscode from 'vscode';
 
 declare module 'vscode' {
@@ -9,11 +11,11 @@ declare module 'vscode' {
 
 export interface IAppManager{  
     credentials? : ICredential;
-    config? : IConfig;
+    configSet? : Map<string, IConfig>; //TODO: Reenable this if you need performance optimization.
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
 
-    initialize() : Promise<any>;
+    initialize(contextPath : Uri) : Promise<any>;
 }
 
 export interface ICredential{

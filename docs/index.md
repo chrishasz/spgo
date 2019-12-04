@@ -5,11 +5,20 @@ title: SPGo Home
 
 SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) that makes it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
 
+SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Now you can build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
+
+* Publish files on save
+* Use VSCode compare tools to diff local changes against the server
+* Pull down remote folders to your local workspace
+* No more editors messing with your markup
+* Support for: Windows, OSX, and Unix
+* Keep all project configuration in Source Control for easy team integration
+
 [Get the Extension](https://marketplace.visualstudio.com/items?itemName=SiteGo.spgo){:.button .medium .center target="_blank"}
 
-[Getting Started with SPGo](/spgo/general/getting-started-with-spgo)
-
 ## Help Topics
+
+[Getting Started with SPGo](/spgo/general/getting-started-with-spgo)
 
 ### General
 
@@ -19,12 +28,13 @@ SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) 
 
 ### Authentication
 
+* [ADFS](/spgo/authentication/adfs-authentication)
+* [Application Password](/spgo/authentication/app-password-authentication)
 * [Digest (Office365)](/spgo/authentication/adfs-authentication)
 * [Forms](/spgo/authentication/forms-authentication)
 * [NTLM v1 (most on-premise installations)](/spgo/authentication/ntlm-authentication)
 * [NTLM v1 + wwwAuth](/spgo/authentication/ntlm-with-www-authentication)
 * [NTLM v2](/spgo/authentication/ntlm-v2-authentication)
-* [ADFS](/spgo/authentication/adfs-authentication)
 * [Two-Factor](/spgo/authentication/two-factor-authentication)
 
 ### Commands
