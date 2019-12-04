@@ -44,7 +44,12 @@ export class Logger {
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
             this.formatOutputMessage('================================     ERROR     ================================\n', outputChannel);
             if(error.message){
-                this.formatOutputMessage(error.message, outputChannel);
+                if( typeof error.message === 'string'){
+                    this.formatOutputMessage(error.message, outputChannel);
+                }
+                else{
+                    this.formatOutputMessage(JSON.stringify(error.message), outputChannel);
+                }
             }
             this.formatOutputMessage('Error Detail:', outputChannel);
             this.formatOutputMessage('----------------------', outputChannel);

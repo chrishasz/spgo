@@ -27,13 +27,15 @@ export default function getServerVersion(fileUri: vscode.Uri, config : IConfig) 
 
     function getServerFiles(fileUri: vscode.Uri) : Promise<any>{
         if( FileHelper.isPathFile(fileUri)){
+            // Get a single file
             return fileService.downloadFileMajorVersion(fileUri, config.workspaceRoot)
         }
         else{
+            // User wants to download a full folder.
             let folderPath : string = FileHelper.getExtensionRelativeFilePath(fileUri, config);
             folderPath = UrlHelper.normalizeSlashes(folderPath);
             
-            return fileService.downloadFiles(Uri.parse(config.workspaceRoot), folderPath + '/**/*');
+            return fileService.downloadFiles(Uri.parse(config.sharePointSiteUrl), folderPath + '/**/*');
         }
     }
 }

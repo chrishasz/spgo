@@ -27,7 +27,7 @@ export class ErrorHelper{
                 }
                 // log sharepoint errors
                 else if(err.error && err.error.error ){
-                    Logger.showError(err.error.error.message.value, err);
+                    Logger.showError(err.error.error.message.value, err.error.error);
                 }
                 else{
                     Logger.outputError(err, vscode.window.spgo.outputChannel);
