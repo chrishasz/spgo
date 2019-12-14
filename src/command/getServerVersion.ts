@@ -11,8 +11,9 @@ import { FileHelper } from '../util/fileHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import { SPFileService } from '../service/spFileService';
 import { AuthenticationService } from '../service/authenticationService';
+import { WorkspaceHelper } from '../util/workspaceHelper';
 
-export default function getServerVersion(fileUri: vscode.Uri, config : IConfig) : Thenable<any> {
+export default function getServerVersion(fileUri: Uri, config : IConfig) : Thenable<any> {
 
     let fileService : SPFileService = new SPFileService(config);
     let fileName : string = FileHelper.getFileName(fileUri);
@@ -21,21 +22,24 @@ export default function getServerVersion(fileUri: vscode.Uri, config : IConfig) 
 
     return UiHelper.showStatusBarProgress(`Getting server version for:  ${fileName}`,
         AuthenticationService.verifyCredentials(vscode.window.spgo, config, fileUri)
-            .then((fileUri : vscode.Uri) => getServerFiles(fileUri))
+            .then((fileUri : Uri) => getServerFiles(fileUri))
             .catch(err => ErrorHelper.handleError(err))
     );
 
-    function getServerFiles(fileUri: vscode.Uri) : Promise<any>{
+    function getServerFiles(fileUri: Uri) : Promise<any>{
+
+        let sharePointFileUri : Uri = UrlHelper.getServerRelativeFileUri(fileUri.fsPath, config);
+        let siteUri : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(sharePointFileUri.toString(), config);
         if( FileHelper.isPathFile(fileUri)){
             // Get a single file
             return fileService.downloadFileMajorVersion(fileUri, config.workspaceRoot)
         }
         else{
             // User wants to download a full folder.
-            let folderPath : string = FileHelper.getExtensionRelativeFilePath(fileUri, config);
+            let folderPath : string = sharePointFileUri.toString().replace(siteUri.toString(), '');
             folderPath = UrlHelper.normalizeSlashes(folderPath);
             
-            return fileService.downloadFiles(Uri.parse(config.sharePointSiteUrl), folderPath + '/**/*');
+            return fileService.downloadFiles(siteUri, folderPath + '/**/*');
         }
     }
 }

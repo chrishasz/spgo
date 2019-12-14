@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.5.1 - 2019-12-
+### Added
+- Support for retrieving and working with files from any level in a site collection (e.g. Root Site Collection, and SubSites). See [here](https://www.chrishasz.com/spgo/advanced/working-with-subsites) for more details.
+### Fixed
+- Fixed an issue where error detail was not being correctly written to the SPGo output logs for a certain class of SharePoint errors.
+- [This issue](https://github.com/chrishasz/spgo/issues/106) where the `Publish File` and `Configure Workspace` commands would fail under certain conditions.
+
 ## 1.5.0 - 2019-12-03
 ### Added
 - Support for multi-root workspaces. This involved a major change to the SPGo architecture for managing configuration and will allow me to support working with Sites under the Site Collection Root in the next release. Please see [the documentation](https://www.chrishasz.com/spgo/advanced/multiple-workspaces) for more.

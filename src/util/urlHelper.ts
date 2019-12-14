@@ -42,7 +42,7 @@ export class UrlHelper{
         let relativeFilePath : string = this.getSiteRelativeFilePath(fileName, config);
         let remoteFolder = relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
         let remoteFileName = this.getFileName(relativeFilePath);
-        let remoteFileUrl = UrlHelper.formatWebFolder(remoteFolder) + remoteFileName; 
+        let remoteFileUrl = this.normalizeSlashes(UrlHelper.formatWebFolder(remoteFolder) + remoteFileName); 
     
         return this.removeTrailingSlash(config.sharePointSiteUrl) + remoteFileUrl;
     }

@@ -10,6 +10,7 @@ import { ISPFileInformation, IConfig } from '../spgo';
 import { RequestHelper } from '../util/requestHelper';
 import { ISPRequest, IAuthOptions } from 'sp-request';
 import { ISPPullContext, ISPPullOptions } from 'sppull';
+import { WorkspaceHelper } from '../util/workspaceHelper';
 import { spsave, ICoreOptions, FileOptions } from 'spsave';
 
 export class SPFileGateway{
@@ -21,11 +22,13 @@ export class SPFileGateway{
     }
 
     public checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+        
         return new Promise((resolve, reject) => {
+            let sharePointSiteUrl : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(fileUri.toString(), this._config);
             
-            spr.requestDigest(this._config.sharePointSiteUrl)
+            spr.requestDigest(sharePointSiteUrl.toString())
                 .then(digest => {
-                    return spr.post(this._config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckOut()", {
+                    return spr.post(sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckOut()", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(this._config, digest)
                     });
@@ -38,11 +41,13 @@ export class SPFileGateway{
     }
 
     public deleteFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+        
         return new Promise((resolve, reject) => {
+            let sharePointSiteUrl : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(this._config.sharePointSiteUrl + fileUri, this._config);
             
-            spr.requestDigest(this._config.sharePointSiteUrl)
+            spr.requestDigest(sharePointSiteUrl.toString())
                 .then(digest => {
-                    return spr.post(this._config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')", {
+                    return spr.post(sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(this._config, digest, {
                             'X-HTTP-Method':'DELETE',
@@ -82,12 +87,16 @@ export class SPFileGateway{
             });
     }
 
+    // CheckOutType: Online = 0; Offline = 1; None = 2.
+    // all status values: https://msdn.microsoft.com/en-us/library/office/dn450841.aspx
     public getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+
         return new Promise((resolve, reject) => {
-                        
-            spr.requestDigest(this._config.sharePointSiteUrl)
+            let sharePointSiteUrl : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(this._config.sharePointSiteUrl + fileUri, this._config);
+            
+            spr.requestDigest(sharePointSiteUrl.toString())
                 .then(digest => {
-                    return spr.get(this._config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
+                    return spr.get(sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/?$select=Name,ServerRelativeUrl,CheckOutType,TimeLastModified,CheckedOutByUser", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(this._config, digest)
                     })
@@ -98,9 +107,10 @@ export class SPFileGateway{
                             timeLastModified : response.body.d.TimeLastModified
                         }
 
-                        if( fileInfo.checkOutType == 0){
+                        // File is checked out
+                        if( fileInfo.checkOutType == 0 || fileInfo.checkOutType == 1){
                             // '/_api/web/getFileByServerRelativeUrl(\'' + encodeURI(fileName) + '\')/CheckedOutByUser?$select=Title,Email';
-                            spr.get(this._config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckedOutByUser?$select=Title,Email", {
+                            spr.get(sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/CheckedOutByUser?$select=Title,Email", {
                                 body: {},
                                 headers: RequestHelper.createAuthHeaders(this._config, digest)
                             }).then( userInfo => {
@@ -119,11 +129,13 @@ export class SPFileGateway{
     }
 
     public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
-        return new Promise((resolve, reject) => {    
 
-            spr.requestDigest(this._config.sharePointSiteUrl)
+        return new Promise((resolve, reject) => {    
+            let sharePointSiteUrl : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(this._config.sharePointSiteUrl + fileUri, this._config);
+
+            spr.requestDigest(sharePointSiteUrl.toString())
                 .then(digest => {
-                    return spr.post(this._config.sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/undocheckout()", {
+                    return spr.post(sharePointSiteUrl + "/_api/web/GetFileByServerRelativeUrl('" + encodeURI(fileUri.path) +"')/undocheckout()", {
                         body: {},
                         headers: RequestHelper.createAuthHeaders(this._config, digest)
                     });
@@ -136,6 +148,7 @@ export class SPFileGateway{
     }
 
     public uploadFiles(coreOptions : ICoreOptions, credentials : IAuthOptions, fileOptions : FileOptions) : Promise<any>{
+
         return RequestHelper.setNtlmHeader(this._config)
             .then(()=>{
                 return new Promise((resolve,reject) => {

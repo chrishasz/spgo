@@ -24,6 +24,7 @@ import populateWorkspace from './command/populateWorkspace';
 import configureWorkspace from './command/configureWorkspace';
 import compareFileWithServer from './command/compareFileWithServer';
 import getCurrentFileInformation from './command/getCurrentFileInformation';
+import { Uri } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext): any {
 
@@ -34,7 +35,7 @@ export function activate(context: vscode.ExtensionContext): any {
     Logger.outputMessage('SPGo enabled.', vscode.window.spgo.outputChannel);
 
     //Check out the current file.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -48,7 +49,7 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Compare the selected file with it's latest version on the server.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -71,7 +72,7 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //add Copy URL Commands
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
@@ -82,7 +83,7 @@ export function activate(context: vscode.ExtensionContext): any {
         });
     }));
 
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
@@ -94,7 +95,7 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Delete the current file.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -108,7 +109,7 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Discard the checkout of the current file.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: Uri) => {
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -121,7 +122,7 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Delete the current file.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.getServerVersion', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.getServerVersion', (selectedResource?: Uri) => {
 
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -155,31 +156,37 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     //Publish the current file to the server.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: Uri) => {
         
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
+        let activeTextEditorUri : Uri = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.document.uri : null;
+        selectedResource = selectedResource || activeTextEditorUri;
+
+        if( selectedResource && selectedResource.scheme !== 'output'){
+            vscode.window.spgo.initialize(selectedResource)
+                .then((config : IConfig) => {
                     publishFile(selectedResource, Constants.PUBLISHING_MAJOR, config);
-                }
-                else {
-                    publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MAJOR, config);
-                }
-            });
+                });
+        }
+        else{
+            Logger.showError('Cannot Publish file: No file selected.');
+        }
     }));
 
     //Publish the current file to the server.
-    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: vscode.Uri) => {
+    context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: Uri) => {
         
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
+        let activeTextEditorUri : Uri = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.document.uri : null;
+        selectedResource = selectedResource || activeTextEditorUri;
+
+        if( selectedResource && selectedResource.scheme !== 'output'){
+            vscode.window.spgo.initialize(selectedResource)
+                .then((config : IConfig) => {
                     publishFile(selectedResource, Constants.PUBLISHING_MINOR, config);
-                }
-                else {
-                    publishFile(vscode.window.activeTextEditor.document.uri, Constants.PUBLISHING_MINOR, config);
-                }
-            });
+                });
+        }
+        else{
+            Logger.showError('Cannot Publish file: No file selected.');
+        }
     }));
 
     //TODO: Figure out how to do this multi-root.

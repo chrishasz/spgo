@@ -31,7 +31,7 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
                 let options: vscode.InputBoxOptions = {
                     ignoreFocusOut: true,
                     placeHolder: 'http[s]://domain.com',
-                    value: config.sharePointSiteUrl || '',
+                    value: config.sharePointSiteUrl || 'http[s]://domain.com',
                     prompt: 'Please enter the SharePoint site Url',
                 };
                 vscode.window.showInputBox(options).then((result) => {

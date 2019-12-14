@@ -25,9 +25,8 @@ export default function saveFile(textDocument: vscode.TextDocument, config : ICo
 
         Logger.outputMessage(fileInfo.checkOutBy ? 'Check out Type: ' + fileInfo.checkOutType + ' by user: ' + fileInfo.checkOutBy : 'Check out Type: ' + fileInfo.checkOutType);
         
-        if( fileInfo.checkOutType == 0){
+        if( fileInfo.checkOutType == 0 || fileInfo.checkOutType == 1){
             let message : string = `File Checked out to user: ${fileInfo.checkOutBy}`;
-            Logger.outputWarning(message);
             Logger.updateStatusBar(message, 5);
         }
         else{

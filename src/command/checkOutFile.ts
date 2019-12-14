@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
+import { Uri } from 'vscode';
 import { IConfig } from '../spgo';
 import { Logger } from '../util/logger';
 import { Constants } from '../constants';
@@ -13,7 +14,7 @@ import { ErrorHelper } from '../util/errorHelper';
 import { SPFileService } from '../service/spFileService';
 import { AuthenticationService } from '../service/authenticationService';
 
-export default function checkOutFile(fileUri: vscode.Uri, config : IConfig) : Thenable<any> {
+export default function checkOutFile(fileUri: Uri, config : IConfig) : Thenable<any> {
 
     //is this a directory?
     if(fs.lstatSync(fileUri.fsPath).isDirectory()){
@@ -32,14 +33,14 @@ export default function checkOutFile(fileUri: vscode.Uri, config : IConfig) : Th
                     .catch(err => ErrorHelper.handleError(err))
             );
             
-            function downloadFileAndCompare(localPath : vscode.Uri, downloadPath : any){
+            function downloadFileAndCompare(localPath : Uri, downloadPath : any){
 
                 fileService.downloadFileMajorVersion(localPath, downloadPath)
                     .then((dlFileUrl) => {
                         //open files - a bit messy, but necessary for working with async objects
                         vscode.workspace.openTextDocument(localPath)
                             .then((doc1) => {
-                                let remotePath : vscode.Uri = vscode.Uri.parse('file:///' + dlFileUrl[0].SavedToLocalPath);
+                                let remotePath : vscode.Uri = vscode.Uri.file(dlFileUrl[0].SavedToLocalPath);
                                 
                                 vscode.workspace.openTextDocument(remotePath)
                                     .then((doc2) => {
