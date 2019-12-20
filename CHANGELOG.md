@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.5.1 - 2019-12-
+## 1.5.2 - 2019-12-19
+### Added
+- Better documentation for working with [multiple workspaces](https://www.chrishasz.com/spgo/advanced/multiple-workspaces).
+- Better documentation for working with [SubSites](https://www.chrishasz.com/spgo/advanced/working-with-subsites).
+### Fixed
+- Fixed an issue where running commands from the palette were not working for many file-scoped commands.
+
+## 1.5.1 - 2019-12-14
 ### Added
 - Support for retrieving and working with files from any level in a site collection (e.g. Root Site Collection, and SubSites). See [here](https://www.chrishasz.com/spgo/advanced/working-with-subsites) for more details.
 ### Fixed

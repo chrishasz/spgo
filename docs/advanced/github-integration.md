@@ -43,7 +43,7 @@ If the SPGo project has already been initialized, you should have a basic folder
 }
 ```
 
-_note: `publishingScope` can be set to `PublishMajor` or `PublishMinor` for any site with Publishing enabled, allowing non-administrator users to view changes._
+_note: `publishingScope` can be set to `Major` or `Minor` for any site with Publishing enabled, allowing non-administrator users to view changes._
 
 ## Collaborating in a Shared Environment
 
@@ -70,7 +70,7 @@ If the SPGo project has already been initialized, you should have a basic folder
 {
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tennant.sharepoint.com",
-    "publishingScope": "PublishMajor",
+    "publishingScope": "Major",
     "authenticationType": "Digest",
     "remoteFolders": [
         "/siteassets/**/*",

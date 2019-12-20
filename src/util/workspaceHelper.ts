@@ -7,6 +7,18 @@ import { FileHelper } from '../util/fileHelper';
 
 export class WorkspaceHelper{
 
+
+    static getActiveFile() : Uri {
+     
+        let selectedResource : Uri = Uri.parse('');
+
+        if( vscode.window.activeTextEditor && vscode.window.activeTextEditor.document && vscode.window.activeTextEditor.document.uri.scheme !== 'output'){
+            selectedResource = vscode.window.activeTextEditor.document ? vscode.window.activeTextEditor.document.uri : Uri.parse('');
+        }
+
+        return selectedResource;
+    }
+
     // Get the URI of the currently active VSCode workspace
     static getActiveWorkspaceUri() : Promise<Uri> {
         return new Promise((resolve, reject) => {

@@ -18,7 +18,7 @@ Options:
 * NTLM V2
 * Two-Factor
 
-Read more: [Authentication Types](https://www.chrishasz.com/spgo/authentication/overview)
+Read more: [Authentication Types](/spgo/authentication/overview)
 
 ## authenticationDetails
 
@@ -66,20 +66,21 @@ You will be prompted to enter credentials the first time you connect to SharePoi
 
 Default Value: `true`
 
-_note: all credentials are hashed and saved to your OS' local temp folder using [CPass](https://www.npmjs.com/package/cpass), providing a modicum of security.
+_note: all credentials are hashed and saved to your OS' local temp folder using [CPass](https://www.npmjs.com/package/cpass){:target="_blank"}, providing a modicum of security.
 _note: SPGo can store unique credentials for each site collection you work with._
 
 ## subSites
 
-documentation on subSites config here.
+If you share code and resources between a root site and multiple child sites, you can map multiple subsites to your source tree using the `subSites` node in `SPGo.json`.
+
+You can find more detailed documentation on subSites config [here](/spgo/advanced/working-with-subsites).
 
 ``` json
 {
     "subSites": [{
-        "sharePointSiteUrl" : "https://sitego.sharepoint.com/sites/spgo/subsite",
+        "sharePointSiteUrl" : "https://tenant.sharepoint.com/sites/spgo/subsite",
         "remoteFolders": [
-            "/SiteAssets/**/*",
-            "/_catalogs/wp/"
+            "/SiteAssets/**/*"
         ]
     }]
 }
@@ -91,7 +92,7 @@ documentation on subSites config here.
 {
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tenant.sharepoint.com",
-    "publishingScope": "PublishMinor",
+    "publishingScope": "Minor",
     "publishWorkspaceGlobPattern" : "/**/*.min.*",
     "authenticationType": "ADFS",
     "authenticationDetails": {
@@ -101,8 +102,19 @@ documentation on subSites config here.
     "checkInMessage" : "Custom Publishing Message",
     "storeCredentials" : true,
     "remoteFolders": [
-        "/siteAssets/"
-    ]
+        "/siteAssets/*"
+    ],
+    "subSites": [{
+        "sharePointSiteUrl" : "https://tenant.sharepoint.com/sites/site/subsite1",
+        "remoteFolders": [
+            "/SiteAssets/**/*"
+        ]
+    },{
+        "sharePointSiteUrl" : "https://tenant.sharepoint.com/sites/site/subsite2",
+        "remoteFolders": [
+            "/Style Library/**/*"
+        ]
+    }]
 }
 ```
 
@@ -117,7 +129,9 @@ export interface IConfig{
     publishWorkspaceGlobPattern? : string;
     remoteFolders? : string[];
     sharePointSiteUrl? : string;
+    sourceDirectory? : string;
     storeCredentials? : Boolean;
+    subSites? : ISubSite[];
     workspaceRoot? : string;
 }
 ```

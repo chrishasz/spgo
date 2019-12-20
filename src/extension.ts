@@ -36,6 +36,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Check out the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -50,6 +52,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Compare the selected file with it's latest version on the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -73,6 +77,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //add Copy URL Commands
     context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
@@ -84,6 +90,8 @@ export function activate(context: vscode.ExtensionContext): any {
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
@@ -96,6 +104,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Delete the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -110,6 +120,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Discard the checkout of the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
         
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {
@@ -123,6 +135,8 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //Delete the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.getServerVersion', (selectedResource?: Uri) => {
+
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
 
         vscode.window.spgo.initialize(selectedResource)
             .then((config : IConfig) => {

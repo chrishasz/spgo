@@ -12,7 +12,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 * Pull down remote folders to your local workspace
 * No more editors messing with your markup
 * Support for: Windows, OSX, and Unix
-* Keep all project configuration in Source Control for easy team integration
+* Keep all project configuration in Source Control for [easy team integration](/spgo/advanced/github-integration)
 
 [Get the Extension](https://marketplace.visualstudio.com/items?itemName=SiteGo.spgo){:.button .medium .center target="_blank"}
 
@@ -54,8 +54,8 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 
 ### Advanced Topics
 
-* Upload only specific files
-* Working with Glob notation
+* [Advanced Publishing](/spgo/advanced/publishing-workspace)
+* [Working with Subsites](/spgo/advanced/working-with-subsites)
 * [Working with Multiple Workspaces](/spgo/advanced/multiple-workspaces)
 * [SDLC Best Practices](/spgo/advanced/spgo-and-sdlc)
 * [GitHub integration](/spgo/advanced/github-integration)
