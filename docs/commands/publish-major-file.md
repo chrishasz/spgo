@@ -16,7 +16,7 @@ Publish a major version of the current file to SharePoint. This command will per
 - A major version of the file will be published to the server, including the user-entered publishing message
 - The file will be checked-in to SharePoint
 
-_note: A default publishing message can be set using the `checkInMessage` parameter defined in the `spgo.json` [configuration file](/spgo/general/config-options)._
+_note: A default publishing message can be set using the `checkInMessage` parameter defined in the `spgo.json` [configuration file](/spgo/general/config-options#checkInMessage)._
 
 ### Advanced Usage
 

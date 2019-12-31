@@ -13,7 +13,7 @@ Working with subsites requires a single root node be added to your `spgo.json` c
 
 ### Configuration Element
 
-The `subsite` node is a root element in the `spgo.json` file. It supports an array of SubSite objects, each of which has a required `sharePointSiteUrl` property and an optional array of `remoteFolders`. There is an example of a full `spgo.json` config file at the bottom of the [SPGo.json configuration options](/spgo/general/config-options) page.
+The `subsite` node is a root element in the `spgo.json` file. It supports an array of SubSite objects, each of which has a required `sharePointSiteUrl` property and an optional array of `remoteFolders`. There is an example of a full `spgo.json` config file at the bottom of the [SPGo.json configuration options](/spgo/general/config-options#example) page.
 
 This example below shows how to map a single SubSite. See here
 
