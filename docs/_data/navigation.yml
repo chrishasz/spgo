@@ -62,6 +62,10 @@ toc:
     subfolderitems:
       - title: Working with Multiple Workspaces
         url: /spgo/advanced/multiple-workspaces
+      - title: Working with SubSites
+        url: /spgo/advanced/working-with-subsites
+      - title: Advanced Publishing
+        url: /spgo/advanced/publishing-workspace
       - title: SDLC Best Practices
         url: /advanced/spgo-and-sdlc
       - title: GitHub Integration
