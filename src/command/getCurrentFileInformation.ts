@@ -10,7 +10,7 @@ import {AuthenticationService} from '../service/authenticationService';
 
 export default function saveFile(textDocument: vscode.TextDocument, config : IConfig) : Thenable<any> { 
 
-    if( textDocument.fileName.includes(config.workspaceRoot)){
+    if( textDocument.fileName.includes(config.sourceRoot)){
         let fileService : SPFileService = new SPFileService(config);
 
         return UiHelper.showStatusBarProgress('',

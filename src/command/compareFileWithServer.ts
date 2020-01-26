@@ -20,7 +20,7 @@ export default function compareFileWithServer(localPath : vscode.Uri, config : I
         Logger.showWarning('The compare file with server command only works for single files at this time.')
     }
     else{
-        if( localPath.fsPath.includes(config.workspaceRoot)){
+        if( localPath.fsPath.includes(config.sourceRoot)){
             let fileName : string = FileHelper.getFileName(localPath);
             let fileService : SPFileService = new SPFileService(config);
             let downloadPath : string = os.tmpdir() + path.sep + Constants.TEMP_FOLDER;

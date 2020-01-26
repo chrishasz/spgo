@@ -1,11 +1,10 @@
 'use strict';
 
 import * as vscode from 'vscode';
-import * as path from 'path';
 
 import { Uri } from 'vscode';
-import { ISPPullOptions } from 'sppull';
 import { Logger } from '../util/logger';
+import { ISPPullOptions } from 'sppull';
 import { Constants } from '../constants';
 import { UrlHelper } from '../util/urlHelper';
 import { FileHelper } from '../util/fileHelper';
@@ -44,17 +43,18 @@ export class SPFileService{
     }
 
     public downloadFiles(siteUrl: vscode.Uri, remoteFolder : string) : Promise<any>{
+
         //format the remote folder to /<folder structure>/  
         remoteFolder = UrlHelper.ensureLeadingWebSlash(remoteFolder);
         let factory : DownloadFileOptionsFactory = new DownloadFileOptionsFactory(remoteFolder);
     
         let context : any = {
             siteUrl : siteUrl.toString(),
-            creds : RequestHelper.createCredentials(vscode.window.spgo, this._config)
+            creds   : RequestHelper.createCredentials(vscode.window.spgo, this._config)
         };
     
         let options : ISPPullOptions = factory.createFileOptions(siteUrl, this._config);
-        let localFolder : string = options.dlRootFolder + FileHelper.convertToForwardSlash(options.spRootFolder);
+        let localFolder : string = options.dlRootFolder + UrlHelper.removeLeadingSlash(FileHelper.convertToForwardSlash(options.spRootFolder));
 
         return this._fileGateway.downloadFiles(localFolder, context, options);
     }
@@ -67,16 +67,16 @@ export class SPFileService{
         
         let context : any = {
             siteUrl : sharePointSiteUrl.toString(),
-            creds : RequestHelper.createCredentials(vscode.window.spgo, this._config)
+            creds   : RequestHelper.createCredentials(vscode.window.spgo, this._config)
         };
     
         let options : any = {
-            spBaseFolder : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
-            spRootFolder : UrlHelper.normalizeSlashes(remoteFolder),
-            strictObjects: [remoteFileUri.path],
-            dlRootFolder: downloadFilePath
+            spBaseFolder    : sharePointSiteUrl.path === '' ? '/' : sharePointSiteUrl.path, 
+            spRootFolder    : UrlHelper.normalizeSlashes(remoteFolder),
+            strictObjects   : [remoteFileUri.path],
+            dlRootFolder    : downloadFilePath
         };
-        let localFolder : string = options.dlRootFolder + path.sep +  FileHelper.convertToForwardSlash(options.spRootFolder);
+        let localFolder : string = options.dlRootFolder + UrlHelper.removeLeadingSlash(FileHelper.convertToForwardSlash(options.spRootFolder));
 
         return this._fileGateway.downloadFiles(localFolder, context, options);
     }
@@ -100,6 +100,24 @@ export class SPFileService{
         
         return this._fileGateway.checkOutFile(fileUri, spr);
     }
+
+    //TODO: Test this function to work with custom publishWorkspaceOptions props.
+    public publishWorkspace(publishingInfo : IPublishingAction) : Promise<any> {
+        
+        //let publishingOptions : IPublishWorkspaceOptions = this.buildPublishingOptions(this._config.publishWorkspaceOptions);
+        let credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo, this._config);
+        let remoteFileUri : Uri = Uri.parse(`${this._config.sharePointSiteUrl}${this._config.publishWorkspaceOptions.destinationFolder}`);//UrlHelper.getServerRelativeFileUri(publishingOptions.globPattern, this._config);
+        let coreOptions : ICoreOptions = this.buildCoreUploadOptions(remoteFileUri, publishingInfo);
+        let fileOptions : FileOptions = {
+            glob    : this._config.publishWorkspaceOptions.globPattern,
+            folder  : this._config.publishWorkspaceOptions.destinationFolder,
+            base    : this._config.publishWorkspaceOptions.localRoot
+        };
+        
+        Logger.outputMessage(`publishing files:  ${this._config.publishWorkspaceOptions.globPattern}`, vscode.window.spgo.outputChannel);
+        
+        return this._fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
+    }
     
     public undoFileCheckout(filePath: vscode.Uri) : Promise<any>{
         let fileUri : Uri = UrlHelper.getServerRelativeFileUri(filePath.fsPath, this._config);
@@ -110,16 +128,16 @@ export class SPFileService{
         return this._fileGateway.undoCheckOutFile(fileUri, spr);
     }
     
-    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<vscode.TextDocument> {
+    public uploadFilesToServer(publishingInfo : IPublishingAction) : Promise<any> {
         
+        let credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo, this._config);
         let remoteFileUri : Uri = UrlHelper.getServerRelativeFileUri(publishingInfo.contentUri, this._config);
         let coreOptions : ICoreOptions = this.buildCoreUploadOptions(remoteFileUri, publishingInfo);
-        var credentials : IAuthOptions = RequestHelper.createCredentials(vscode.window.spgo, this._config);
         let localFilePath : string = this.calculateBaseFolder(coreOptions);
-        var fileOptions : FileOptions = {
-            glob : publishingInfo.contentUri,
-            base : localFilePath,
-            folder: '/'
+        let fileOptions : FileOptions = {
+            glob    : publishingInfo.contentUri,
+            base    : localFilePath,
+            folder  : '/'
         };
         
         Logger.outputMessage(`Uploading file:  ${publishingInfo.contentUri}`, vscode.window.spgo.outputChannel);
@@ -129,9 +147,9 @@ export class SPFileService{
 
     private buildCoreUploadOptions(remoteFileUri : Uri, publishingInfo : IPublishingAction) : any {
         var coreOptions : ICoreOptions = {
-            siteUrl : WorkspaceHelper.getSiteUriForActiveWorkspace(remoteFileUri.toString(), this._config).toString(),
-            checkinMessage : encodeURI(publishingInfo.message),
-            checkin : false
+            siteUrl         : WorkspaceHelper.getSiteUriForActiveWorkspace(remoteFileUri.toString(), this._config).toString(),
+            checkinMessage  : encodeURI(publishingInfo.message),
+            checkin         : false
         };
     
         if(publishingInfo.scope === Constants.PUBLISHING_MAJOR){
@@ -146,11 +164,11 @@ export class SPFileService{
         return coreOptions;
     }
 
-    // helper for sppush integration - need to append the subsite root to the 'local folder' path otherwise you get duplicate tokens in path
+    // helper for SPPush integration - need to append the SubSite root to the 'local folder' path otherwise you get duplicate tokens in path
     // e.g. test.js successfully uploaded to 'https://<server>/sites/site/subsite/subsite/Style Library'
     private calculateBaseFolder(coreOptions : ICoreOptions){
         
         let subSiteUrl : string = coreOptions.siteUrl.split(this._config.sharePointSiteUrl)[1];
-        return this._config.workspaceRoot + FileHelper.convertToForwardSlash(subSiteUrl);
+        return this._config.sourceRoot + FileHelper.convertToForwardSlash(subSiteUrl);
     }
 }

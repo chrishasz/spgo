@@ -5,7 +5,9 @@ title: SPGo Home
 
 SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) that makes it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
 
-SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Now you can build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
+SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
+
+### Features include
 
 * Publish files on save
 * Use VSCode compare tools to diff local changes against the server

@@ -19,7 +19,7 @@ export default function discardCheckOut(fileUri: vscode.Uri, config : IConfig) :
     }
     // undo the checkout.
     else{
-        if( fileUri.fsPath.includes(config.workspaceRoot)){
+        if( fileUri.fsPath.includes(config.sourceRoot)){
             let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService(config);
             

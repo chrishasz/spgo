@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.6.0 - 2020-01-3
+### Added
+- The ability to publish files from any directory in the local Workspace, not just from `src`. [Documentation here](https://www.chrishasz.com/spgo/advanced/publishing-workspaces). Thanks to everyone for the great feedback in [this issue](https://github.com/chrishasz/spgo/issues/57).
+### Changed
+- Performance Enhancement: `spgo.json` configuration files are now cached by workspace folder. No need to reload from disk every time.
+
 ## 1.5.2 - 2019-12-19
 ### Added
 - Better documentation for working with [multiple workspaces](https://www.chrishasz.com/spgo/advanced/multiple-workspaces).

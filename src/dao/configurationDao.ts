@@ -27,7 +27,7 @@ export class ConfigurationDao{
 				fs.stat(configFilePath, (err : any) => {
 					try{
 						if( err == null){
-							// file exists!
+							//file exists!
 							config = {...config || {}, ... fs.readJsonSync(configFilePath)};
 						}
 						else{
@@ -35,7 +35,7 @@ export class ConfigurationDao{
 							Logger.outputMessage("Config file does not exist, creating now.\r" + err);
 							//create the file
 							fs.ensureFileSync(configFilePath);
-							// hydrate self.config
+							//hydrate self.config
 							config = config || {};
 						}
 
@@ -47,15 +47,37 @@ export class ConfigurationDao{
 						//fix any issues with correct slashes in the src path
 						config.sourceDirectory = FileHelper.ensureCorrectPathSeparator(config.sourceDirectory);
 						
-						//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
+						//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/s
 						if(config.sharePointSiteUrl !== undefined){
 							config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(config.sharePointSiteUrl);
 						}
 						//URL Decode any inputs for site Name
 						config.sharePointSiteUrl = decodeURI(config.sharePointSiteUrl);
 
-						// this is an internal property only
-						config.workspaceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
+						//Set up internal workspace and source roots
+						config.workspaceRoot = `${rootPath.fsPath}`;
+						config.sourceRoot = `${config.workspaceRoot}${path.sep}${config.sourceDirectory}`;
+
+						//set up workspace publishing options
+						if( config.publishWorkspaceGlobPattern )
+						{
+							//this property is deprecated
+							Logger.outputMessage('The publishWorkspaceGlobPattern property has been deprecated. Please use publishWorkspaceOptions instead: https://www.chrishasz.com/spgo/general/config-options#publishWorkspaceOptions');
+						}
+						
+						//set up the publish workspace options
+						if( !config.publishWorkspaceOptions ){
+							config.publishWorkspaceOptions = {
+								destinationFolder : '/',
+								globPattern : config.publishWorkspaceGlobPattern ? config.sourceRoot + UrlHelper.ensureLeadingSlash(config.publishWorkspaceGlobPattern) : config.sourceRoot + UrlHelper.osAwareGlobStar(),
+								localRoot : config.sourceRoot
+							};
+						}
+						else{
+							config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
+							config.publishWorkspaceOptions.localRoot = config.publishWorkspaceOptions.localRoot ? config.workspaceRoot + config.publishWorkspaceOptions.localRoot : config.sourceRoot;
+							config.publishWorkspaceOptions.globPattern = config.publishWorkspaceOptions.globPattern ? config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(config.publishWorkspaceOptions.globPattern) : config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
+						}
 
 						resolve(config);
 					} 

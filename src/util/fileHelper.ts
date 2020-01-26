@@ -37,7 +37,7 @@ export class FileHelper {
     }
 
     static getExtensionRelativeFilePath(filePath : Uri, config : IConfig){
-        return filePath.fsPath.split(config.workspaceRoot + path.sep)[1].toString();
+        return filePath.fsPath.split(config.sourceRoot + path.sep)[1].toString();
     }
 
     static getFileName(filePath: Uri): string {

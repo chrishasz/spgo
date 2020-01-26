@@ -33,8 +33,7 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
                 }
 
                 if(config.subSites && config.subSites.length > 0){
-                    // add all files from the specified SubSites to the downloads collection
-                    
+                    // add all files from the specified SubSites to the downloads collection                    
                     for (let subSite of config.subSites){                    
                         for (let folder of subSite.remoteFolders) {
                             downloads.push(fileService.downloadFiles(Uri.parse(subSite.sharePointSiteUrl), decodeURI(folder)));

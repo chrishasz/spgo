@@ -17,7 +17,7 @@ export default async function copySPUrl(activeResource : vscode.Uri, absolute : 
     //define the active file or folder
     let editorFile = FileHelper.getActiveFile(vscode.workspace.workspaceFolders);
     let filePath = activeResource && activeResource.fsPath || editorFile && editorFile.fileName;
-    let serverRelativePath = filePath.replace(config.workspaceRoot, "").replace(/\\/g, "/");
+    let serverRelativePath = filePath.replace(config.sourceRoot, "").replace(/\\/g, "/");
 
     //copy to clipboard and emit message
     vscode.env.clipboard.writeText(absolute ? config.sharePointSiteUrl + serverRelativePath : serverRelativePath);

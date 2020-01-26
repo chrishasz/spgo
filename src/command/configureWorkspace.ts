@@ -116,10 +116,10 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
         const defaultOptions: {} = {};
         // prevent the sourceDirectory property from being written to disk
         // this is an internal property only
-        delete config.workspaceRoot;
+        delete config.sourceRoot;
         fs.outputFile(rootPath.fsPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
         
-		config.workspaceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
+		config.sourceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
         
         return config;
     }

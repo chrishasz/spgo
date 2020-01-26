@@ -19,7 +19,6 @@ export default function retrieveFolder(config : IConfig) : Thenable<any> {
             .catch(err => ErrorHelper.handleError(err))
     );
 
-    //TODO: Make this work for multi-workspaces
     function downloadFiles() : Thenable<any> {
         
         Logger.outputMessage('Starting folder download...', vscode.window.spgo.outputChannel);

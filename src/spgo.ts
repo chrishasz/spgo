@@ -29,13 +29,15 @@ export interface IConfig{
     authenticationDetails? : any;
     checkInMessage? : string,
     publishingScope? : string;
+    publishWorkspaceOptions? : IPublishWorkspaceOptions;
     publishWorkspaceGlobPattern? : string;
     remoteFolders? : string[];
     sharePointSiteUrl? : string;
     sourceDirectory? : string;      // The relative directory structure underneath the VSCode local workspace root directory
+    sourceRoot? : string;           // (internal) The full path to the local source directory root (VS Workspace root + sourceDirectory)
     storeCredentials? : Boolean;
     subSites? : ISubSite[];
-    workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root + sourceDirectory)
+    workspaceRoot? : string;        // (internal) The full path to the local workspace root (VS Workspace root)
 }
 
 export interface IError {
@@ -43,9 +45,15 @@ export interface IError {
 }
 
 export interface IPublishingAction{
-    contentUri: string;
+    contentUri : string;
     scope : string;
     message : string;
+}
+
+export interface IPublishWorkspaceOptions{
+    destinationFolder? : string;
+    globPattern? : string;
+    localRoot? : string;
 }
 
 export interface ISPFileInformation{

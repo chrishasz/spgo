@@ -6,7 +6,7 @@
     },
     "name": "spgo",
     "displayName": "SPGo",
-    "description": "SharePoint web development tools for Visual Studio Code.",
+    "description": "A Lightweight, Open Source, SharePoint IDE for Visual Studio Code.",
     "keywords": [
         "SharePoint",
         "SharePoint Online",
@@ -15,7 +15,7 @@
         "ide",
         "multi-root ready"
     ],
-    "version": "1.5.2",
+    "version": "1.6.0",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {

@@ -16,7 +16,7 @@ import { AuthenticationService } from '../service/authenticationService';
 
 export default function publishFile(fileUri: vscode.Uri, publishingScope : string, config : IConfig) : Thenable<any> {
 
-    if( fileUri.fsPath.includes(config.workspaceRoot)){
+    if( fileUri.fsPath.includes(config.sourceRoot)){
         let publishingInfo : IPublishingAction = null;
         let fileService : SPFileService = new SPFileService(config);
         let fileName : string = FileHelper.getFileName(fileUri);

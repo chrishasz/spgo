@@ -20,7 +20,7 @@ export class DownloadFileOptionsFactory {
     public createFileOptions(siteUrl: Uri, config : IConfig) : ISPPullOptions{
         
         let dlRootFolder : string = FileHelper.ensureCorrectPathSeparator(
-            config.workspaceRoot + siteUrl.toString().replace(config.sharePointSiteUrl, ''));
+            config.sourceRoot + siteUrl.toString().replace(config.sharePointSiteUrl, ''));
         let options : ISPPullOptions = {
             spBaseFolder : UrlHelper.ensureLeadingWebSlash(siteUrl.path),
             dlRootFolder: dlRootFolder

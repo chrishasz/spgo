@@ -12,7 +12,7 @@ import { AuthenticationService } from '../service/authenticationService';
 
 export default function saveFile(fileUri: vscode.Uri, config : IConfig) : Thenable<any> { 
 
-    if( fileUri.fsPath.includes(config.workspaceRoot)){
+    if( fileUri.fsPath.includes(config.sourceRoot)){
         let fileName : string = FileHelper.getFileName(fileUri);
         let fileService : SPFileService = new SPFileService(config);
         

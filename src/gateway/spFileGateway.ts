@@ -6,8 +6,8 @@ import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
 import { Logger } from '../util/logger';
-import { ISPFileInformation, IConfig } from '../spgo';
 import { RequestHelper } from '../util/requestHelper';
+import { ISPFileInformation, IConfig } from '../spgo';
 import { ISPRequest, IAuthOptions } from 'sp-request';
 import { ISPPullContext, ISPPullOptions } from 'sppull';
 import { WorkspaceHelper } from '../util/workspaceHelper';

@@ -27,6 +27,6 @@ Using [glob notation](https://en.wikipedia.org/wiki/Glob_(programming)){:target=
 
 ```json
     "publishWorkspaceOptions": {
-        "destination" : "/SiteAssets/project",
+        "destinationFolder" : "/SiteAssets/project",
     }
 ```

@@ -19,7 +19,7 @@ export default function deleteFile(fileUri: vscode.Uri, config : IConfig) : Then
         Logger.showWarning('The delete file command only works for single files at this time.')
     }
     else{
-        if( fileUri.fsPath.includes(config.workspaceRoot)){
+        if( fileUri.fsPath.includes(config.sourceRoot)){
             let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService(config);
             

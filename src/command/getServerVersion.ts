@@ -32,7 +32,7 @@ export default function getServerVersion(fileUri: Uri, config : IConfig) : Thena
         let siteUri : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(sharePointFileUri.toString(), config);
         if( FileHelper.isPathFile(fileUri)){
             // Get a single file
-            return fileService.downloadFileMajorVersion(fileUri, config.workspaceRoot)
+            return fileService.downloadFileMajorVersion(fileUri, config.sourceRoot)
         }
         else{
             // User wants to download a full folder.

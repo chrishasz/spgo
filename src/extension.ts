@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as SPGo from './spgo';
 import * as vscode from 'vscode';
 
+import { Uri } from 'vscode';
 import { IConfig } from './spgo';
 import { Logger } from './util/logger';
 import { Constants } from './constants';
@@ -24,7 +25,6 @@ import populateWorkspace from './command/populateWorkspace';
 import configureWorkspace from './command/configureWorkspace';
 import compareFileWithServer from './command/compareFileWithServer';
 import getCurrentFileInformation from './command/getCurrentFileInformation';
-import { Uri } from 'vscode';
 
 export function activate(context: vscode.ExtensionContext): any {
 
@@ -65,7 +65,6 @@ export function activate(context: vscode.ExtensionContext): any {
                 });
     }));
 
-    //TODO: Figure out how to make this multi-root aware.
     //Create the base configuration for this SharePoint workspace
     context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
 
@@ -83,7 +82,7 @@ export function activate(context: vscode.ExtensionContext): any {
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
                 && selectedResource
-                && selectedResource.fsPath.includes(config.workspaceRoot) ) {
+                && selectedResource.fsPath.includes(config.sourceRoot) ) {
                     copySPUrl(selectedResource, false, config);
             }
         });
@@ -96,7 +95,7 @@ export function activate(context: vscode.ExtensionContext): any {
         vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
             if (config
                 && selectedResource
-                && selectedResource.fsPath.includes(config.workspaceRoot) ) {
+                && selectedResource.fsPath.includes(config.sourceRoot) ) {
                     copySPUrl(selectedResource, true, config);
             }
         });
@@ -203,7 +202,6 @@ export function activate(context: vscode.ExtensionContext): any {
         }
     }));
 
-    //TODO: Figure out how to do this multi-root.
     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.reloadConfiguration', () => {
 
@@ -237,7 +235,7 @@ export function activate(context: vscode.ExtensionContext): any {
             .then((config : IConfig) => {
                 if (config) {
                     //is the file in the source folder? Save to the server.
-                    if (textDocument.fileName.includes(config.workspaceRoot) && Constants.PUBLISHING_NONE != config.publishingScope) {
+                    if (textDocument.fileName.includes(config.sourceRoot) && Constants.PUBLISHING_NONE != config.publishingScope) {
                         if (Constants.PUBLISHING_MAJOR == config.publishingScope || Constants.PUBLISHING_MINOR == config.publishingScope) {
                             publishFile(textDocument.uri, config.publishingScope, config);
                         }
@@ -264,7 +262,7 @@ export function activate(context: vscode.ExtensionContext): any {
         
         vscode.window.spgo.initialize(textDocument.uri).then((config : IConfig) =>{
             if (config
-                && textDocument.fileName.includes(config.workspaceRoot)
+                && textDocument.fileName.includes(config.sourceRoot)
                 && !textDocument.fileName.endsWith('.git')) {
                     getCurrentFileInformation(textDocument, config);
             }

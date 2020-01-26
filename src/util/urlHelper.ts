@@ -29,7 +29,7 @@ export class UrlHelper{
 
     //get the file path relative to the current SharePoint site.
     public static getSiteRelativeFilePath(fileName : string, config : IConfig) : string {
-        return fileName.split(config.workspaceRoot + path.sep)[1].toString();
+        return fileName.split(config.sourceRoot + path.sep)[1].toString();
     }
 
     //get the file path relative to the current SharePoint site as a Uri.

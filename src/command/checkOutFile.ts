@@ -21,7 +21,7 @@ export default function checkOutFile(fileUri: Uri, config : IConfig) : Thenable<
         Logger.showWarning('The check-out file command only works for single files at this time.')
     }
     else{
-        if( fileUri.fsPath.includes(config.workspaceRoot)){
+        if( fileUri.fsPath.includes(config.sourceRoot)){
             let downloadPath : string = os.tmpdir() + path.sep + Constants.TEMP_FOLDER;
             let fileName : string = FileHelper.getFileName(fileUri);
             let fileService : SPFileService = new SPFileService(config);
