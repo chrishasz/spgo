@@ -29,7 +29,7 @@ import getCurrentFileInformation from './command/getCurrentFileInformation';
 export function activate(context: vscode.ExtensionContext): any {
 
     //Initialize the global application manager
-    vscode.window.spgo = new AppManager();
+    vscode.window.spgo = new AppManager(context.workspaceState);
 
     // Extension activated.
     Logger.outputMessage('SPGo enabled.', vscode.window.spgo.outputChannel);

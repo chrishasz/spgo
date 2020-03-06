@@ -1,7 +1,9 @@
 'use strict';
 
-import { Uri } from 'vscode';
 import * as vscode from 'vscode';
+
+import { Uri } from 'vscode';
+import { LocalStorageService } from './service/localStorageService';
 
 declare module 'vscode' {
     export namespace window {
@@ -12,6 +14,7 @@ declare module 'vscode' {
 export interface IAppManager{  
     credentials? : ICredential;
     configSet? : Map<string, IConfig>; //TODO: Reenable this if you need performance optimization.
+    localStore : LocalStorageService;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
 

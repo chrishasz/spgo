@@ -3,23 +3,26 @@
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
-import { Uri } from 'vscode';
 import { IConfig } from './spgo';
+import { Memento, Uri } from 'vscode';
 import { Logger } from './util/logger';
 import { Constants } from './constants';
+import { LocalStorageService } from './service/localStorageService';
 import { IAppManager, ICredential } from './spgo';
 import { CredentialDao } from './dao/credentialDao';
 import { ConfigurationDao } from './dao/configurationDao';
 import configureWorkspace from './command/configureWorkspace';
 
 export class AppManager implements IAppManager {
-    //public configSet : Map<string, IConfig>;
+    public configSet : Map<string, IConfig>;
     public credentials : ICredential;
+    public localStore : LocalStorageService;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
     
-    constructor() {
+    constructor( storageContext : Memento) {
         this.credentials = null;
+        this.localStore = new LocalStorageService(storageContext);
         this.outputChannel = vscode.window.createOutputChannel(Constants.OUTPUT_CHANNEL_NAME);
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
     }
@@ -33,8 +36,7 @@ export class AppManager implements IAppManager {
             else{
                 let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
 
-                //TODO: Reenable once I have config caching implemented.
-                //if( this.configSet === undefined){
+                if( this.configSet === undefined){
                     //initialize Configuration file
                     fs.stat(configFilePath.fsPath, (err : any) => {
                         // config file exists!
@@ -74,11 +76,11 @@ export class AppManager implements IAppManager {
                             });
                         }
                     });
+                }
+                else{
+                    resolve();
+                }   
             }
-            // }
-            // else{
-            //     resolve();
-            // }
         });
     }
 }
