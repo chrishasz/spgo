@@ -21,6 +21,7 @@ export class AppManager implements IAppManager {
     statusBarItem: vscode.StatusBarItem;
     
     constructor( storageContext : Memento) {
+        this.configSet = new Map<string, IConfig>();
         this.credentials = null;
         this.localStore = new LocalStorageService(storageContext);
         this.outputChannel = vscode.window.createOutputChannel(Constants.OUTPUT_CHANNEL_NAME);
@@ -33,53 +34,59 @@ export class AppManager implements IAppManager {
             if(!workspaceFolder){
                 reject('No active workspace selected');
             }
+            
+            let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
+
+            if(this.configSet.has(workspaceFolder.fsPath)){
+                resolve(this.configSet.get(workspaceFolder.fsPath));
+            }
             else{
-                let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
+                //initialize Configuration file
+                fs.stat(configFilePath.fsPath, (err : any) => {
+                    // config file exists!
+                    if( err == null){
+                        ConfigurationDao.initializeConfiguration(configFilePath).then((config : IConfig)=> {
+                            //stored credentials?
+                            if(config.storeCredentials){
+                                vscode.window.spgo.credentials = CredentialDao.getCredentials(config.sharePointSiteUrl);
+                            }
+                            vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
+                            vscode.window.spgo.statusBarItem.show();
 
-                if( this.configSet === undefined){
-                    //initialize Configuration file
-                    fs.stat(configFilePath.fsPath, (err : any) => {
-                        // config file exists!
-                        if( err == null){
-                            ConfigurationDao.initializeConfiguration(configFilePath).then((config : IConfig)=> {
-                                //stored credentials?
-                                if(config.storeCredentials){
-                                    vscode.window.spgo.credentials = CredentialDao.getCredentials(config.sharePointSiteUrl);
-                                }
-                                vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
-                                vscode.window.spgo.statusBarItem.show();
+                            //cache config
+                            this.configSet.set(workspaceFolder.fsPath, config);
 
-                                resolve(config);
+                            resolve(config);
 
-                            }).catch(err => {
-                                Logger.showError('SPGo: Missing Configuration');
-                                Logger.outputError(err);
-                                reject();
-                            });
-                        }
-                        else{
-                            // run config
-                            vscode.window.showWarningMessage('SPGo has not been configured for this project. Would you like to configure your workspace now?', Constants.OPTIONS_YES, Constants.OPTIONS_NO)
-                            .then(result => {
-                                if( result == Constants.OPTIONS_NO){
-                                    reject('SPGo initialization cancelled by user.');
-                                }
-                                else{
-                                    configureWorkspace(contextPath)
-                                        .then(() => 
-                                        {
-                                            vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
-                                            vscode.window.spgo.statusBarItem.show();
-                                            resolve(contextPath);
-                                        });
-                                }
-                            });
-                        }
-                    });
-                }
-                else{
-                    resolve();
-                }   
+                        }).catch(err => {
+                            Logger.showError('SPGo: Missing Configuration');
+                            Logger.outputError(err);
+                            reject();
+                        });
+                    }
+                    else{
+                        // run config
+                        vscode.window.showWarningMessage('SPGo has not been configured for this project. Would you like to configure your workspace now?', Constants.OPTIONS_YES, Constants.OPTIONS_NO)
+                        .then(result => {
+                            if( result == Constants.OPTIONS_NO){
+                                reject('SPGo initialization cancelled by user.');
+                            }
+                            else{
+                                configureWorkspace(contextPath)
+                                    .then((config : IConfig) => 
+                                    {
+                                        vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
+                                        vscode.window.spgo.statusBarItem.show();
+                                        
+                                        //cache config
+                                        this.configSet.set(workspaceFolder.fsPath, config);
+
+                                        resolve(config);
+                                    });
+                            }
+                        });
+                    }
+                });
             }
         });
     }

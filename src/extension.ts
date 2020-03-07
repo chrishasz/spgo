@@ -246,7 +246,9 @@ export function activate(context: vscode.ExtensionContext): any {
                     //is this an update to the config? Reload the config.
                     else if (textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)) {
                         ConfigurationDao.initializeConfiguration(textDocument.uri)
-                            .then(() => {
+                            .then((config : IConfig) => {
+                                const workspaceFolder : Uri = vscode.workspace.getWorkspaceFolder(textDocument.uri).uri;
+                                vscode.window.spgo.configSet.set(workspaceFolder.fsPath, config);
                                 Logger.updateStatusBar('Configuration file reloaded', 5);
                             })
                             .catch((err: SPGo.IError) => {
