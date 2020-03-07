@@ -4,7 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.6.1 - 2020-01-
+## 1.6.1 - 2020-03-07
+### Added
+- the [Populate Workspace](https://www.chrishasz.com/spgo/commands/populate-workspace) command now accepts individual files as parameters. 
 ### Changed
 - Performance Enhancement: `spgo.json` configuration files are now cached by workspace folder. No need to reload from disk every time.
 - To resolve [this issue](https://github.com/chrishasz/spgo/issues/71), I have adopted the `context.workspaceState` object for storing credential data locally (and still securely).

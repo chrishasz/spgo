@@ -84,6 +84,17 @@ An example of this would be to specify a glob pattern such that only minified fi
 ## remoteFolders [#](#remoteFolders){:name="remoteFolders"}
 
 Define a set of folders to download to your local workspace any time the `SPGo> Populate local workspace` [command](/spgo/commands/populate-workspace) is used. Each entry in this array can use Glob formatting to further refine which files are downloaded to your local workspace.
+**Example:**
+
+```json
+{
+    "remoteFolders": [
+        "/siteAssets/**/*",
+        "/Style Library/main.css"
+    ],
+}
+```
+
 
 ## sharePointSiteUrl [#](#sharePointSiteUrl){:name="sharePointSiteUrl"}
 
