@@ -5,6 +5,7 @@ import { Uri } from 'vscode';
 import { Logger } from '../util/logger';
 import { IError, IConfig } from '../spgo';
 import { UiHelper } from '../util/uiHelper';
+import { UrlHelper } from '../util/urlHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import { SPFileService } from '../service/spFileService';
 import { AuthenticationService } from '../service/authenticationService';
@@ -28,8 +29,13 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
                 // add all files from the Root Site to the downloads collection
                 let downloads : Promise<any>[] = [];
 
-                for (let folder of config.remoteFolders) {
-                    downloads.push(fileService.downloadFiles(Uri.parse(config.sharePointSiteUrl), decodeURI(folder)));
+                for (let path of config.remoteFolders) {
+                    if(UrlHelper.isFile(path)){
+                        downloads.push(fileService.downloadFileMajorVersion(Uri.file(config.sourceRoot + UrlHelper.normalizeSlashes(path)), config.sourceRoot));
+                    }
+                    else{
+                        downloads.push(fileService.downloadFiles(Uri.parse(config.sharePointSiteUrl), decodeURI(path)));
+                    }
                 }
 
                 if(config.subSites && config.subSites.length > 0){

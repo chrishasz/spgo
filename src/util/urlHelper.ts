@@ -21,10 +21,26 @@ export class UrlHelper{
         }
         return filePath;
     }
+    
+    // replaces all non-alphanumeric characters with the '_' character.
+    public static formatUriAsFileName(uri : string) : string {
+        return uri.replace(/[^a-zA-Z0-9]/g,'_');
+    }
 
+    // properly append leading and trailing '/'s to a folder path.
+    public static formatWebFolder(filePath : string) : string {
+        if(!filePath.startsWith('/')){
+            filePath = '/' + filePath;
+        }
+        if(!filePath.endsWith('/')){
+            filePath = filePath + '/';
+        }
+        return filePath;
+    } 
+    
     // return the filename from a uri-style string. returns the final token after the last os-specific slash
     public static getFileName(filePath : string) : string{
-       return filePath.substring(filePath.lastIndexOf(path.sep)+1);
+       return filePath.split('\\').pop().split('/').pop(); //filePath.substring(filePath.lastIndexOf(path.sep)+1);
     }
 
     //get the file path relative to the current SharePoint site.
@@ -53,21 +69,10 @@ export class UrlHelper{
         return Uri.parse(this.getServerRelativeFilePath(fileName, config));
     }
 
-    // replaces all non-alphanumeric characters with the '_' character.
-    public static formatUriAsFileName(uri : string){
-        return uri.replace(/[^a-zA-Z0-9]/g,'_');
+    // gets the file from a path: ex: path/to/the/filename.ext => filename.ext
+    public static isFile(uri : string) : boolean {
+        return this.getFileName(uri).includes('.');
     }
-
-    // properly append leading and trailing '/'s to a folder path.
-    public static formatWebFolder(filePath : string) : string {
-        if(!filePath.startsWith('/')){
-            filePath = '/' + filePath;
-        }
-        if(!filePath.endsWith('/')){
-            filePath = filePath + '/';
-        }
-        return filePath;
-    } 
 
     static normalizeSlashes(filePath : string) : string{
         return filePath.replace(/\\/g, "/");
@@ -75,7 +80,7 @@ export class UrlHelper{
 
     // make our glob processor os aware.
     // this is also for cross-platform compatibility, but much less hacky.
-    public static osAwareGlobStar(){
+    public static osAwareGlobStar() : string {
         return path.sep + '**' + path.sep + '*.*';
     }
 
