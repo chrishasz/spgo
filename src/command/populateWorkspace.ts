@@ -25,6 +25,7 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
 
             Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
 
+            //TODO: refactor to support subsites with remoteFolders property even if no remoteFolders property exists on the parent site
             if(config.remoteFolders){
                 // add all files from the Root Site to the downloads collection
                 let downloads : Promise<any>[] = [];

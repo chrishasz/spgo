@@ -71,7 +71,9 @@ export class UrlHelper{
 
     // gets the file from a path: ex: path/to/the/filename.ext => filename.ext
     public static isFile(uri : string) : boolean {
-        return this.getFileName(uri).includes('.');
+        const fileName : string = this.getFileName(uri);
+        
+        return fileName.includes('.') && fileName != '.';
     }
 
     static normalizeSlashes(filePath : string) : string{

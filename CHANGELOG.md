@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## 1.6.1 - 2020-03-07
+### Fixed
+- [This issue](https://github.com/chrishasz/spgo/issues/112) which caused an error populating the local workspace when specifying a glob pattern ending with `.` in the `remoteFolders` property.
+
+## 1.6.1 - 2020-03-07
 ### Added
 - the [Populate Workspace](https://www.chrishasz.com/spgo/commands/populate-workspace) command now accepts individual files as parameters. 
 ### Changed

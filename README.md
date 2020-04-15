@@ -82,7 +82,7 @@ When you specify an array of remote folders in a node called `remoteFolders`, SP
     "publishingScope": "SaveOnly",
     "publishWorkspaceGlobPattern": "/**/*.min.*",
     "remoteFolders": [
-        "/SiteAssets/**/*.*",
+        "/SiteAssets/**/*",
         "/_catalogs/wp/",
         "/_catalogs/masterpage/"
     ]

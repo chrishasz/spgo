@@ -74,7 +74,6 @@ For more information about using `publishingWorkspaceOptions`, please see
 
 ## publishWorkspaceGlobPattern (Deprecated) [#](#publishWorkspaceGlobPattern){:name="publishWorkspaceGlobPattern"}
 
-
 _This configuration option has been deprecated, but supported for backwards compatibility. Please use the `publishWorkspaceOptions` described above._
 
 Provide an optional Glob pattern to SPGo to fine tune which files are published to SharePoint when the `SPGo> Publish Workspace` command is issued.
@@ -83,7 +82,14 @@ An example of this would be to specify a glob pattern such that only minified fi
 
 ## remoteFolders [#](#remoteFolders){:name="remoteFolders"}
 
-Define a set of folders to download to your local workspace any time the `SPGo> Populate local workspace` [command](/spgo/commands/populate-workspace) is used. Each entry in this array can use Glob formatting to further refine which files are downloaded to your local workspace.
+Define a set of folders to download to your local workspace any time the `SPGo> Populate local workspace` [command](/spgo/commands/populate-workspace) is used. Each entry in this array can use Glob formatting to further refine which files are downloaded to your local workspace. All remote Folder parameters must be relative paths to the file from the SharePoint site root.
+
+### Inputs Accepted
+
+* A relative folder url
+* A glob pattern defining multiple files or folders
+* a specific file url
+
 **Example:**
 
 ```json
@@ -94,7 +100,6 @@ Define a set of folders to download to your local workspace any time the `SPGo> 
     ],
 }
 ```
-
 
 ## sharePointSiteUrl [#](#sharePointSiteUrl){:name="sharePointSiteUrl"}
 

@@ -33,7 +33,7 @@ export class FileHelper {
     static isPathFile(filePath : Uri) : boolean{
         let finalNode : string = filePath.fsPath.split(path.sep).pop();
 
-        return finalNode.indexOf('.') >= 0;
+        return finalNode.indexOf('.') >= 0 && finalNode != '.';
     }
 
     static getExtensionRelativeFilePath(filePath : Uri, config : IConfig){
