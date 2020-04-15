@@ -49,7 +49,7 @@ export class FileHelper {
         return relativeFilePath.substring(0, relativeFilePath.lastIndexOf(path.sep));
     }
 
-    static getActiveFile(workspaces: WorkspaceFolder[]): TextDocument | undefined {
+    static getActiveFile(workspaces: readonly WorkspaceFolder[]): TextDocument | undefined {
         const activeTextEditor = vscode.window.activeTextEditor;
         let file: TextDocument | undefined;
         if (activeTextEditor) {
