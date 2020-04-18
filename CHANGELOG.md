@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.6.1 - 2020-03-07
+## 1.6.3 - 2020-04-15
+### Fixed
+- I found (and fixed) another corner-case for [This issue](https://github.com/chrishasz/spgo/issues/112).
+
+## 1.6.2 - 2020-04-14
 ### Fixed
 - [This issue](https://github.com/chrishasz/spgo/issues/112) which caused an error populating the local workspace when specifying a glob pattern ending with `.` in the `remoteFolders` property.
 
@@ -18,7 +22,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 1.6.0 - 2020-01-25
 ### Added
 - The ability to publish files from any directory in the local Workspace, not just from `src`. [Documentation here](https://www.chrishasz.com/spgo/advanced/publishing-workspaces). Thanks to everyone for the great feedback in [this issue](https://github.com/chrishasz/spgo/issues/57).
-
 
 ## 1.5.2 - 2019-12-19
 ### Added

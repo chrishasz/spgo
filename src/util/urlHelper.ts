@@ -39,8 +39,9 @@ export class UrlHelper{
     } 
     
     // return the filename from a uri-style string. returns the final token after the last os-specific slash
+    // ex: path/to/the/filename.ext => filename.ext
     public static getFileName(filePath : string) : string{
-       return filePath.split('\\').pop().split('/').pop(); //filePath.substring(filePath.lastIndexOf(path.sep)+1);
+       return filePath.split('\\').pop().split('/').pop();
     }
 
     //get the file path relative to the current SharePoint site.
@@ -69,11 +70,12 @@ export class UrlHelper{
         return Uri.parse(this.getServerRelativeFilePath(fileName, config));
     }
 
-    // gets the file from a path: ex: path/to/the/filename.ext => filename.ext
+    // determines if the string provided is a file or folder.
+    // determination method => string includes a '.', but is not just '.' and does not contain a Glob wildcard '*'
     public static isFile(uri : string) : boolean {
         const fileName : string = this.getFileName(uri);
-        
-        return fileName.includes('.') && fileName != '.';
+
+        return fileName.includes('.') && fileName != '.' && fileName.indexOf('*') < 0;
     }
 
     static normalizeSlashes(filePath : string) : string{

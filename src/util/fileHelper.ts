@@ -29,11 +29,13 @@ export class FileHelper {
 		return sourceDirectory.replace(/\\/g, path.sep).replace(/\//g, path.sep);
     }
     
-    // NOTE: There is always the possibility that this may error if the user tries to get a path with a final folder with containing the '.' character.
+    
+    // determines if the path string provided is a file or folder.
+    // determination method => string includes a '.', but is not just '.' and does not contain a Glob wildcard '*'
     static isPathFile(filePath : Uri) : boolean{
         let finalNode : string = filePath.fsPath.split(path.sep).pop();
 
-        return finalNode.indexOf('.') >= 0 && finalNode != '.';
+        return finalNode.indexOf('.') >= 0 && finalNode != '.' && finalNode.indexOf('*') < 0;
     }
 
     static getExtensionRelativeFilePath(filePath : Uri, config : IConfig){
