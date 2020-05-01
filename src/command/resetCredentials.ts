@@ -18,7 +18,10 @@ export default async function resetCredentials(config : IConfig) : Promise<any> 
 
     try {
         return AuthenticationService.verifyCredentials(vscode.window.spgo, config)
-            .then(()=>{Logger.outputMessage('User Credentials Reset.', vscode.window.spgo.outputChannel)})
+            .then(()=>{
+                Logger.outputMessage('User Credentials Reset.', vscode.window.spgo.outputChannel)
+                Logger.updateStatusBar('User Credentials Reset.', 5)
+            })
             .catch(err => ErrorHelper.handleError(err));
     }
     catch (err) {

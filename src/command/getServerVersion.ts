@@ -23,6 +23,7 @@ export default function getServerVersion(fileUri: Uri, config : IConfig) : Thena
     return UiHelper.showStatusBarProgress(`Getting server version for:  ${fileName}`,
         AuthenticationService.verifyCredentials(vscode.window.spgo, config, fileUri)
             .then((fileUri : Uri) => getServerFiles(fileUri))
+            .then(() => Logger.updateStatusBar('File Download Complete.', 5))
             .catch(err => ErrorHelper.handleError(err))
     );
 

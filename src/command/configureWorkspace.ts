@@ -4,21 +4,25 @@ import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
+import { IConfig } from '../spgo';
+import { Logger } from '../util/logger';
 import { Constants } from '../constants';
 import { UrlHelper } from '../util/urlHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import { ConfigurationDao } from '../dao/configurationDao';
-import { IConfig } from '../spgo';
 
 export default function configureWorkspace(contextPath : Uri) : Promise<any> {
 
-    vscode.window.spgo.statusBarItem.text = 'SPGo: Show Menu';
+    
+    Logger.updateStatusBar('Configuring SPGo', 5);
+
     let rootPath : Uri = vscode.workspace.getWorkspaceFolder(contextPath).uri;
 
     return getSharePointSiteUrl()
         .then((cfg) => getPublishingScope(cfg))
         .then((cfg) => getAuthenticationType(cfg))
         .then((cfg) => finished(cfg))
+        .then(() => Logger.updateStatusBar('SPGo Configuration Complete.', 5))
         .catch((err) => ErrorHelper.handleError(err));
         
     

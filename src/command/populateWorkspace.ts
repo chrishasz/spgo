@@ -16,6 +16,7 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
     return UiHelper.showStatusBarProgress('Populating workspace',
         AuthenticationService.verifyCredentials(vscode.window.spgo, config)
             .then(downloadFiles)
+            .then(() => Logger.updateStatusBar('File Download Complete.', 5))
             .catch(err => ErrorHelper.handleError(err))
     );
 

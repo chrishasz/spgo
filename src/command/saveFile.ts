@@ -27,6 +27,7 @@ export default function saveFile(fileUri: vscode.Uri, config : IConfig) : Thenab
                 .then((publishAction) => fileService.uploadFilesToServer(publishAction)) 
                 .then(() => {
                     Logger.outputMessage(`File saved successfully`);
+                    Logger.updateStatusBar('File saved.', 5);
                 })
                 .catch(err => ErrorHelper.handleError(err))
         );

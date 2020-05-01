@@ -39,11 +39,13 @@ export default function deleteFile(fileUri: vscode.Uri, config : IConfig) : Then
                                             fs.remove(fileUri.fsPath)
                                                 .then(() => {
                                                     Logger.outputMessage('Local file delete complete.', vscode.window.spgo.outputChannel);
+                                                    Logger.updateStatusBar('File Deletion Complete.', 5);
                                                 });
                                         });
                                 }
                                 else{
                                     Logger.outputMessage('Delete operation cancelled.', vscode.window.spgo.outputChannel);
+                                    Logger.updateStatusBar('File Delete Cancelled.', 5);
                                 }
                             })
                         })

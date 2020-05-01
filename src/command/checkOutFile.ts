@@ -30,6 +30,7 @@ export default function checkOutFile(fileUri: Uri, config : IConfig) : Thenable<
                  AuthenticationService.verifyCredentials(vscode.window.spgo, config, fileUri)
                     .then((filePath) => fileService.checkoutFile(filePath))
                     .then(() => downloadFileAndCompare(fileUri, downloadPath))
+                    .then(() => Logger.updateStatusBar('File Checkout Complete.', 5))
                     .catch(err => ErrorHelper.handleError(err))
             );
             

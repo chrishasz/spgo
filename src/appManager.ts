@@ -50,7 +50,9 @@ export class AppManager implements IAppManager {
                             if(config.storeCredentials){
                                 vscode.window.spgo.credentials = CredentialDao.getCredentials(config.sharePointSiteUrl);
                             }
-                            vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
+                            Logger.updateStatusBar('SPGo enabled', 5);
+
+                            //make sure the SPGO status bar display is visible.
                             vscode.window.spgo.statusBarItem.show();
 
                             //cache config
@@ -75,7 +77,9 @@ export class AppManager implements IAppManager {
                                 configureWorkspace(contextPath)
                                     .then((config : IConfig) => 
                                     {
-                                        vscode.window.spgo.statusBarItem.text = 'SPGo enabled';
+                                        Logger.updateStatusBar('SPGo enabled', 5);
+            
+                                        //make sure the SPGO status bar display is visible.
                                         vscode.window.spgo.statusBarItem.show();
                                         
                                         //cache config

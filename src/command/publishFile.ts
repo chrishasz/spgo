@@ -45,6 +45,7 @@ export default function publishFile(fileUri: vscode.Uri, publishingScope : strin
                 .then((publishingInfo) => fileService.uploadFilesToServer(publishingInfo))
                 .then(() => {
                     Logger.outputMessage('File publish complete.', vscode.window.spgo.outputChannel);
+                    Logger.updateStatusBar('File Download Complete.', 5)
                 })
                 .catch(err => ErrorHelper.handleError(err))
         );

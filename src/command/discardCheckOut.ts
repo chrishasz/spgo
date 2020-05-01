@@ -28,6 +28,7 @@ export default function discardCheckOut(fileUri: vscode.Uri, config : IConfig) :
                     .then((filePath) => fileService.undoFileCheckout(filePath))
                     .then(() => {
                         Logger.outputMessage(`Discard check-out successful for file ${fileUri.fsPath}.`, vscode.window.spgo.outputChannel);
+                        Logger.updateStatusBar('SPGo Configuration Complete.', 5)
                     })
                     .catch(err => ErrorHelper.handleError(err))
             );

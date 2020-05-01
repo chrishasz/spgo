@@ -31,6 +31,7 @@ export default function compareFileWithServer(localPath : vscode.Uri, config : I
                 AuthenticationService.verifyCredentials(vscode.window.spgo, config, localPath)
                     .then((localPath) => fileService.downloadFileMajorVersion(localPath, downloadPath))
                     .then((dlFileUrl) => openFileCompare(localPath, dlFileUrl))
+                    .then(() => Logger.updateStatusBar('File Download Complete.', 5))
                     .catch(err => ErrorHelper.handleError(err))
             );
 

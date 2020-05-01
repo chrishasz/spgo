@@ -68,7 +68,7 @@ export class Logger {
         
         vscode.window.spgo.statusBarItem.text = message;
         if(duration){
-            global.setTimeout(() => {vscode.window.spgo.statusBarItem.text = "";}, duration * 1000);
+            global.setTimeout(() => {vscode.window.spgo.statusBarItem.text = '';}, duration * 1000);
         }
     }
 }

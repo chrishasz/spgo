@@ -21,7 +21,8 @@ export default async function copySPUrl(activeResource : vscode.Uri, absolute : 
 
     //copy to clipboard and emit message
     vscode.env.clipboard.writeText(absolute ? config.sharePointSiteUrl + serverRelativePath : serverRelativePath);
-    Logger.outputMessage("SPGo: URL copied to clipboard");
+    Logger.outputMessage("URL copied to clipboard");
+    Logger.updateStatusBar('URL copied to clipboard.', 5);
 
   } catch (err) {
     ErrorHelper.handleError(err, true)
