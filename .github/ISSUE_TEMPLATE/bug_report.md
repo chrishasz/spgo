@@ -7,8 +7,6 @@ assignees: chrishasz
 
 ---
 
-# Submitting an Issue
-
 **Note: for support questions, please use stackoverflow and tag the post with #spgo**.
 
 * **I'm submitting a ...**
