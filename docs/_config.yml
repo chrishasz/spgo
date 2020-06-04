@@ -23,12 +23,15 @@ header_pages:
   - name : spgo.md
     title : SPGo
     url : /spgo
+    date : "2019-05-24"
   - name : glob2caml.md
     title : Glob2Caml
     url : /glob2caml
+    date : "2019-05-24"
   - name : yaght.md
     title : yaght
-    url : https://github.com/chrishasz/yaght
+    url : /yaght
+    date : "2020-0 5-24"
 
 # Blog Config
 show_excerpts: true

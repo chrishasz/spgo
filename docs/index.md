@@ -23,7 +23,6 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 ## Help Topics
 
 [Getting Started with SPGo](/spgo/general/getting-started-with-spgo)
-[View the Changelog](https://github.com/chrishasz/spgo/blob/master/CHANGELOG.md){:target="_blank"}
 
 ### General
 
@@ -68,6 +67,7 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 ### Development
 
 * [Building SPGo locally](/spgo/development/build-locally)
+* [View the Changelog](https://github.com/chrishasz/spgo/blob/master/CHANGELOG.md){:target="_blank"}
 
 ## Getting in touch
 
