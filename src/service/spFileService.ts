@@ -9,21 +9,21 @@ import { Constants } from '../constants';
 import { UrlHelper } from '../util/urlHelper';
 import { FileHelper } from '../util/fileHelper';
 import { ICoreOptions, FileOptions } from 'spsave';
-import { IPublishingAction, IConfig } from '../spgo';
 import { ISPRequest, IAuthOptions } from 'sp-request';
 import { RequestHelper } from '../util/requestHelper';
 import { SPFileGateway } from '../gateway/spFileGateway';
 import { WorkspaceHelper } from '../util/workspaceHelper';
+import { IPublishingAction, IConfig, IFileGateway } from '../spgo';
 import { DownloadFileOptionsFactory } from '../factory/downloadFileOptionsFactory';
 
 export class SPFileService{
 
     _config : IConfig;
-    _fileGateway : SPFileGateway;
+    _fileGateway : IFileGateway;
 
-    constructor (config : IConfig){
+    constructor (config : IConfig, gateway? : IFileGateway){
         this._config = config;
-        this._fileGateway = new SPFileGateway(config);
+        this._fileGateway = gateway || new SPFileGateway(config);
     }
 
     public checkOutFile(textDocument: vscode.TextDocument) : Promise<any>{

@@ -3,6 +3,9 @@
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
+import { ICoreOptions, FileOptions } from 'spsave';
+import { ISPRequest, IAuthOptions } from 'sp-request';
+import { ISPPullContext, ISPPullOptions } from 'sppull';
 import { LocalStorageService } from './service/localStorageService';
 
 declare module 'vscode' {
@@ -45,6 +48,15 @@ export interface IConfig{
 
 export interface IError {
     message: string;
+}
+
+export interface IFileGateway {
+    checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
+    deleteFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
+    downloadFiles(localFolder: string, context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>;
+    getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>;
+    undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
+    uploadFiles(coreOptions : ICoreOptions, credentials : IAuthOptions, fileOptions : FileOptions) : Promise<any>;
 }
 
 export interface IPublishingAction{
