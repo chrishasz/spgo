@@ -18,7 +18,7 @@ export class CredentialDao {
         let retrievedCredentials : ICredential = null;
 
         try{
-            retrievedCredentials = vscode.window.spgo.localStore.getCredentials(name)
+            retrievedCredentials = vscode.window.spgo.localStore.getValue<ICredential>(name)
 
             retrievedCredentials.username = cpass.decode(retrievedCredentials.username);
             retrievedCredentials.password = cpass.decode(retrievedCredentials.password);
@@ -47,6 +47,6 @@ export class CredentialDao {
             storedCredentials.domain = cpass.encode(credentials.domain)
         }
         
-        vscode.window.spgo.localStore.setCredentials(name, storedCredentials)
+        vscode.window.spgo.localStore.setValue<ICredential>(name, storedCredentials)
     }
 }
