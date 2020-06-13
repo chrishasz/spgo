@@ -70,7 +70,7 @@ Control which files are published when issuing the [Publish Workspace](/spgo/com
 }
 ```
 
-For more information about using `publishingWorkspaceOptions`, please see
+For more information about using `publishingWorkspaceOptions`, please see [the documentation](/spgo/commands/publish-workspace) or learn about the [advanced publishing options](/spgo/advanced/publishing-options).
 
 ## publishWorkspaceGlobPattern (Deprecated) [#](#publishWorkspaceGlobPattern){:name="publishWorkspaceGlobPattern"}
 

@@ -1,77 +1,77 @@
 toc:
-  - title: General
-    name: general.md
-    subfolderitems:
-      - name: config-options.md
-        title: Configuration Options
-        url: /general/config-options
-      - title: Getting Started with SPGo
-        url: /general/getting-started-with-spgo
-      - title: Synchronizing Files with SharePoint
-        url: /general/synchronizing-files-with-sharepoint
-      - title: Store Credentials
-        url: /general/store-credentials
-  - title: Authentication
-    name: authentication.md
-    subfolderitems:
-      - title: ADFS
-        url: /authentication/adfs-authentication
-      - title: Digest
-        url: /authentication/digest-authentication
-      - title: Forms
-        url: /authentication/forms-authentication
-      - title: NTLM
-        url: /authentication/ntlm-authentication
-      - title: NTLM (with WWW)
-        url: /authentication/ntlm-with-www-authentication
-      - title: NTLM v2
-        url: /authentication/ntlm-v2-authentication
-      - title: Two-Factor
-        url: /authentication/two-factor-authentication
-  - title: Commands
-    name: commands.md
-    subfolderitems:
-      - title: Check out the Current File
-        url: /commands/check-out-file
-      - title: Compare File With Server
-        url: /commands/compare-with-server
-      - title: Configure Workspace
-        url: /commands/configure-workspace
-      - title: Delete File
-        url: /commands/delete-file
-      - title: Discard Checkout
-        url: /commands/discard-checkout
-      - title: Get Server Version
-        url: /commands/get-server-version
-      - title: Populate Workspace
-        url: /commands/populate-workspace
-      - title: Publish Major Version
-        url: /commands/publish-major-file
-      - title: Publish Minor Version
-        url: /commands/publish-minor-file
-      - title: Publish Local Workspace
-        url: /commands/publish-workspace
-      - title: Reload Configuration
-        url: /commands/reload-configuration
-      - title: Reset Credentials
-        url: /commands/reset-credentials
-      - title: Retrieve Folder
-        url: /commands/retrieve-folder
-  - title: Advanced Topics
-    name: advancedtopics.md
-    subfolderitems:
-      - title: Working with Multiple Workspaces
-        url: /advanced/multiple-workspaces
-      - title: Working with SubSites
-        url: /advanced/working-with-subsites
-      - title: Advanced Publishing
-        url: /advanced/publishing-workspace
-      - title: SDLC Best Practices
-        url: /advanced/spgo-and-sdlc
-      - title: GitHub Integration
-        url: /advanced/github-integration
-  - title: Development
-    name: development.md
-    subfolderitems:
-      - title: Building SPGo locally
-        url: /development/build-locally
+ - title: General
+   name: general.md
+   subfolderitems:
+    - name: config-options.md
+      title: Configuration Options
+      url: /general/config-options
+    - title: Getting Started with SPGo
+      url: /general/getting-started-with-spgo
+    - title: Synchronizing Files with SharePoint
+      url: /general/synchronizing-files-with-sharepoint
+    - title: Store Credentials
+      url: /general/store-credentials
+ - title: Authentication
+   name: authentication.md
+   subfolderitems:
+    - title: ADFS
+      url: /authentication/adfs-authentication
+    - title: Digest
+      url: /authentication/digest-authentication
+    - title: Forms
+      url: /authentication/forms-authentication
+    - title: NTLM
+      url: /authentication/ntlm-authentication
+    - title: NTLM (with WWW)
+      url: /authentication/ntlm-with-www-authentication
+    - title: NTLM v2
+      url: /authentication/ntlm-v2-authentication
+    - title: Two-Factor
+      url: /authentication/two-factor-authentication
+ - title: Commands
+   name: commands.md
+   subfolderitems:
+    - title: Check out the Current File
+      url: /commands/check-out-file
+    - title: Compare File With Server
+      url: /commands/compare-with-server
+    - title: Configure Workspace
+      url: /commands/configure-workspace
+    - title: Delete File
+      url: /commands/delete-file
+    - title: Discard Checkout
+      url: /commands/discard-checkout
+    - title: Get Server Version
+      url: /commands/get-server-version
+    - title: Populate Workspace
+      url: /commands/populate-workspace
+    - title: Publish Major Version
+      url: /commands/publish-major-file
+    - title: Publish Minor Version
+      url: /commands/publish-minor-file
+    - title: Publish Local Workspace
+      url: /commands/publish-workspace
+    - title: Reload Configuration
+      url: /commands/reload-configuration
+    - title: Reset Credentials
+      url: /commands/reset-credentials
+    - title: Retrieve Folder
+      url: /commands/retrieve-folder
+ - title: Advanced Topics
+   name: advancedtopics.md
+   subfolderitems:
+    - title: Working with Multiple Workspaces
+      url: /advanced/multiple-workspaces
+    - title: Working with SubSites
+      url: /advanced/working-with-subsites
+    - title: Advanced Publishing
+      url: /advanced/publishing-workspace
+    - title: SDLC Best Practices
+      url: /advanced/spgo-and-sdlc
+    - title: GitHub Integration
+      url: /advanced/github-integration
+ - title: Development
+   name: development.md
+   subfolderitems:
+    - title: Building SPGo locally
+      url: /development/build-locally
