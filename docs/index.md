@@ -1,7 +1,7 @@
 ---
 layout: project
 title: SPGo Home
-header: A Lightweight, Open Source, SharePoint IDE for Visual Studio Code
+header: "SPGo: A Lightweight, Open Source, SharePoint IDE for Visual Studio Code"
 image: /spgo/images/SPGo_Code.png
 ---
 
