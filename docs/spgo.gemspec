@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
     spec.email         = ["chrishasz@gmail.com"]
 
     spec.summary       = "SPGo website to host technical and product documentation"
-    spec.homepage      = "https://github.com/chrishasz/yaght"
+    spec.homepage      = "https://www.chrishasz.com/spgo"
     spec.license       = "MIT"
 
     spec.metadata["plugin_type"] = "theme"
