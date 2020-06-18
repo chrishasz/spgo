@@ -3,13 +3,21 @@ layout: page
 title: Getting Started with SPGo
 ---
 
+## Introduction
+
+Thank you for using SPGo!
+
+SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) that makes it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
+
+SPGo allows you and your team to develop SharePoint web solutions from your local PC using the power of Visual Studio Code. Build SharePoint sites and customizations source-control first with all of the power of a top-tier IDE. Produce cleaner code, deliver faster.
+
 ## TL;DR, a Video!
 
 {% include youtubePlayer.html id="de2txBruxfA" %}
 
 *SPGo configuration in Visual Studio Code, by [David Warner](https://twitter.com/DavidWarnerII) of [Warner Digital](http://warner.digital/)*
 
-## Introduction
+## First things First
 
 When you build SharePoint customizations using SPGo, all files are stored locally. This is for two primary reasons:
 
