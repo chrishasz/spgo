@@ -6,7 +6,7 @@ import {Logger} from '../util/logger';
 
 export class ErrorHelper{
 
-    static handleError(err, suppressError? : Boolean){
+    static handleError(err : any, suppressError? : Boolean){
 
         if(suppressError){
             Logger.outputError(err, vscode.window.spgo.outputChannel);
@@ -27,7 +27,7 @@ export class ErrorHelper{
                 }
                 // log sharepoint errors
                 else if(err.error && err.error.error ){
-                    Logger.showError(err.error.error.message.value, err.error.error);
+                    Logger.showError(err.error.error.message.value, err);
                 }
                 else{
                     Logger.outputError(err, vscode.window.spgo.outputChannel);
