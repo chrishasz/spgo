@@ -1,7 +1,7 @@
 title: Chris Hasz
 email: chrishasz@gmail.com
 description: >- 
-  I build Enterprise software teams at SAP SalesCloud, and also open source projects. #EnterpriseTwitter
+  I build Enterprise software teams, and also open source projects. #EnterpriseTwitter
 baseurl: "/spgo"
 url: "https://www.chrishasz.com" # the base hostname & protocol for your site, e.g. http://example.com
 favicon: /images/favicon.jpg
@@ -20,18 +20,18 @@ twitter:
 
 # Custom Navigation Links
 header_pages:
-  - name : spgo.md
-    title : SPGo
-    url : /spgo
-    date : "2019-05-24"
+  - name : blog.md
+    title : Blog
+    url : /blog
+    - name : spgo.md
+      title : SPGo
+      url : /spgo
   - name : glob2caml.md
     title : Glob2Caml
     url : /glob2caml
-    date : "2019-05-24"
   - name : yaght.md
     title : yaght
     url : /yaght
-    date : "2020-0 5-24"
 
 # Blog Config
 show_excerpts: true
