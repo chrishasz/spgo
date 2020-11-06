@@ -1,26 +1,27 @@
 'use strict';
 import * as vscode from 'vscode';
-import * as SPGo from './../spgo';
 
 export class Logger {
     
-    static showError(message : string, error ?: SPGo.IError){
+    static showError(message : string, error ?: any){
         
         vscode.window.showErrorMessage(message);
         this.outputError(error);
     }
     
-    static showInfo(message : string, error?: SPGo.IError){
+    static showInfo(message : string, error?: any){
         
         vscode.window.showInformationMessage(message);
+        this.outputMessage(message);
         if(error){
             this.outputMessage(error.message);
         }
     }
     
-    static showWarning(message : string, error?: SPGo.IError){
+    static showWarning(message : string, error?: any){
         
         vscode.window.showWarningMessage(message);
+        this.outputWarning(message);
         if(error){
             this.outputWarning(error.message);
         }
@@ -38,7 +39,7 @@ export class Logger {
         this.formatOutputMessage(message, outputChannel);
     }
     
-    static outputError(error: SPGo.IError, outputChannel?: vscode.OutputChannel) {
+    static outputError(error: any, outputChannel?: vscode.OutputChannel) {
         
         if(error){
             outputChannel = outputChannel || vscode.window.spgo.outputChannel;
@@ -53,7 +54,7 @@ export class Logger {
             }
             this.formatOutputMessage('Error Detail:', outputChannel);
             this.formatOutputMessage('----------------------', outputChannel);
-            this.formatOutputMessage(JSON.stringify(error), outputChannel);
+            this.formatOutputMessage(error, outputChannel);
             this.formatOutputMessage('===============================================================================\n', outputChannel);
         }
     }
