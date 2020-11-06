@@ -253,7 +253,7 @@
         "cpass": "^2.3.0",
         "fs-extra": "^8.1.0",
         "glob-to-regexp": "^0.4.1",
-        "node-sp-auth": "^2.5.7",
+        "node-sp-auth": "^2.5.9",
         "parse-glob": "^3.0.4",
         "path": "^0.12.7",
         "sp-request": "^2.1.3",
