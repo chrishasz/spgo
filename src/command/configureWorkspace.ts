@@ -108,6 +108,10 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
                 description: 'Used to authenticate against a system using federated authentication.',
                 label: 'ADFS',
                 detail: Constants.SECURITY_ADFS
+            }, {
+                description: 'Impersonate an Addin - common for governance or when 2FA has been enabled.',
+                label: 'Addin Only',
+                detail: Constants.SECURITY_ADDIN
             }
         ];
         return vscode.window.showQuickPick(options, quickPickOptions).then((res: vscode.QuickPickItem) => {

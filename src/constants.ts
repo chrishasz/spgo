@@ -14,6 +14,7 @@ export const Constants = {
     SECURITY_NTLM : 'NTLM',
     SECURITY_FORMS : 'Forms',
     SECURITY_ADFS : 'ADFS',
+    SECURITY_ADDIN : "AddinOnly",
 
     TEMP_FOLDER : 'SPGo',
 

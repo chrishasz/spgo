@@ -98,6 +98,8 @@ SPGo will automatically launch when you run the Configure Workspace command `>SP
 Credentials are stored in VSCode memory only. SPGo will only ask you for credentials the first time you sync with SharePoint each session. SPGo currently supports the following authentication modes:
 
 * Digest (Office365)
+* ADFS with username/password (Office365)
+* Addin-Only
 * NTLM v1 (most on-premise installations)
 * NTLM v1 + wwwAuth
 * NTLM v2

@@ -1,8 +1,9 @@
 'use strict';
 import * as vscode from 'vscode';
 
-import { IAppManager, IConfig } from '../spgo';
 import { Logger } from '../util/logger';
+import { Constants } from '../constants';
+import { IAppManager, IConfig } from '../spgo';
 import { CredentialDao } from '../dao/credentialDao';
 import { RequestHelper } from '../util/requestHelper'
 
@@ -22,10 +23,19 @@ export class AuthenticationService{
 		try {
 			if(!appManager.credentials){
 				appManager.credentials = {};
-				return getUserName(appManager)
-					.then((mgr : IAppManager) => getPassword(mgr))
-					.then((mgr : IAppManager) => verify(mgr))
-					.then((mgr : IAppManager) => processNextCommand(mgr));
+				if( config.authenticationType && config.authenticationType === Constants.SECURITY_ADDIN ){
+					return getClientId(appManager)
+						.then((mgr : IAppManager) => getClientSecret(mgr))
+						.then((mgr : IAppManager) => getRealm(mgr))
+						.then((mgr : IAppManager) => verify(mgr))
+						.then((mgr : IAppManager) => processNextCommand(mgr));
+				}
+				else{
+					return getUserName(appManager)
+						.then((mgr : IAppManager) => getPassword(mgr))
+						.then((mgr : IAppManager) => verify(mgr))
+						.then((mgr : IAppManager) => processNextCommand(mgr));
+				}
 			}
 			else{
 				return processNextCommand(appManager);
@@ -36,6 +46,67 @@ export class AuthenticationService{
 			appManager.credentials = {};
 		} 
 	
+		// take user's SharePoint username input
+		function getClientId(appManager : IAppManager) {
+			return new Promise((resolve, reject) => {
+				let options: vscode.InputBoxOptions = {
+					ignoreFocusOut: true,
+					placeHolder: '<client Id>',
+					value: appManager.credentials.clientId || '',
+					prompt: 'Please enter the Client Id for this extension',
+				};
+				vscode.window.showInputBox(options).then(result => {
+					appManager.credentials.clientId = result || appManager.credentials.clientId || '';
+					if (!appManager.credentials.clientId) { 
+						reject('No ClientId'); 
+						appManager.credentials = null;
+					};
+					resolve(appManager);
+				});
+			});
+		}
+
+		// take user's SharePoint username input
+		function getClientSecret(appManager : IAppManager) {
+			return new Promise((resolve, reject) => {
+				let options: vscode.InputBoxOptions = {
+					ignoreFocusOut: true,
+					password: true,
+					placeHolder: '<client secret>',
+					value: appManager.credentials.clientSecret || '',
+					prompt: 'Please enter the Client Secret for this extension',
+				};
+				vscode.window.showInputBox(options).then(result => {
+					appManager.credentials.clientSecret = result || appManager.credentials.clientSecret || '';
+					if (!appManager.credentials.clientSecret) { 
+						reject('No Client Secret'); 
+						appManager.credentials = null;
+					};
+					resolve(appManager);
+				});
+			});
+		}
+
+		// take user's SharePoint username input
+		function getRealm(appManager : IAppManager) {
+			return new Promise((resolve/*, reject*/) => {
+				let options: vscode.InputBoxOptions = {
+					ignoreFocusOut: true,
+					placeHolder: '<realm>',
+					value: appManager.credentials.realm || '',
+					prompt: '(Optional) Please enter the Realm for this extension',
+				};
+				vscode.window.showInputBox(options).then(result => {
+					appManager.credentials.realm = result || appManager.credentials.realm || '';
+					// if (!appManager.credentials.realm) { 
+					// 	reject('No Realm'); 
+					// 	appManager.credentials = null;
+					// };
+					resolve(appManager);
+				});
+			});
+		}
+
 		// take user's SharePoint username input
 		function getUserName(appManager : IAppManager) {
 			return new Promise((resolve, reject) => {
@@ -86,7 +157,7 @@ export class AuthenticationService{
 				spr.requestDigest(config.sharePointSiteUrl)
 					.then(() => { //response => {
 						//store credentials?
-						if(config.storeCredentials){
+						if(config.storeCredentials){//} && config.authenticationType !== Constants.SECURITY_ADDIN){
 							CredentialDao.setCredentials(config.sharePointSiteUrl, appManager.credentials);
 						}
 						resolve(appManager);

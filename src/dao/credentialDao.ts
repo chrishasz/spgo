@@ -1,6 +1,5 @@
 'use strict';
 
-import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
 import { Cpass } from 'cpass';
@@ -10,21 +9,24 @@ import { Logger } from '../util/logger';
 export class CredentialDao {
 
     static deleteCredentials(name : string){
-        fs.removeSync(name);
+        vscode.window.spgo.localStore.setValue<ICredential>(name, null);
     }
 
     static getCredentials(name : string) : ICredential{
+
         const cpass = new Cpass();
         let retrievedCredentials : ICredential = null;
 
         try{
             retrievedCredentials = vscode.window.spgo.localStore.getValue<ICredential>(name)
 
-            retrievedCredentials.username = cpass.decode(retrievedCredentials.username);
-            retrievedCredentials.password = cpass.decode(retrievedCredentials.password);
-            
-            if( retrievedCredentials.domain){
-                retrievedCredentials.domain = cpass.encode(retrievedCredentials.domain)
+            if(retrievedCredentials){
+                retrievedCredentials.username = retrievedCredentials.username ? cpass.decode(retrievedCredentials.username) : null;
+                retrievedCredentials.password = retrievedCredentials.password ? cpass.decode(retrievedCredentials.password) : null;
+                retrievedCredentials.clientId = retrievedCredentials.clientId ? cpass.decode(retrievedCredentials.clientId) : null;
+                retrievedCredentials.clientSecret = retrievedCredentials.clientSecret ? cpass.decode(retrievedCredentials.clientSecret) : null;
+                retrievedCredentials.realm = retrievedCredentials.realm ? cpass.decode(retrievedCredentials.realm) : null;
+                retrievedCredentials.domain = retrievedCredentials.domain ? cpass.decode(retrievedCredentials.domain) : null;
             }
         }
         catch(err){
@@ -36,15 +38,16 @@ export class CredentialDao {
 
     
     static setCredentials( name : string, credentials : ICredential){
+
         const cpass = new Cpass();
 
         let storedCredentials : ICredential = {
-            username : cpass.encode(credentials.username),
-            password : cpass.encode(credentials.password)
-        }
-
-        if( credentials.domain){
-            storedCredentials.domain = cpass.encode(credentials.domain)
+            username : credentials.username ? cpass.encode(credentials.username) : null,
+            password : credentials.password ? cpass.encode(credentials.password) : null,
+            clientId : credentials.clientId ? cpass.encode(credentials.clientId) : null,
+            clientSecret : credentials.clientSecret ? cpass.encode(credentials.clientSecret) : null,
+            realm : credentials.realm ? cpass.encode(credentials.realm) : null,
+            domain : credentials.domain ? cpass.encode(credentials.domain) : null
         }
         
         vscode.window.spgo.localStore.setValue<ICredential>(name, storedCredentials)

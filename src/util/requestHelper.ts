@@ -1,12 +1,12 @@
 'use strict';
 
 import * as spRequest from 'sp-request';
-import {
-    IUserCredentials,
-    IOnpremiseUserCredentials,
-    IOnpremiseFbaCredentials,
-    IAdfsUserCredentials
-  } from 'node-sp-auth';
+// import {
+//     IUserCredentials,
+//     IOnpremiseUserCredentials,
+//     IOnpremiseFbaCredentials,
+//     IAdfsUserCredentials
+//   } from 'node-sp-auth';
 
 import {IAppManager, IConfig} from './../spgo';
 import {Constants} from './../constants';
@@ -15,8 +15,18 @@ export class RequestHelper {
 
     static createCredentials(appManager : IAppManager, config : IConfig) : any {
         switch(config.authenticationType){
+            
+            case Constants.SECURITY_ADDIN:{
+                let credentials = {
+                    clientId: appManager.credentials.clientId,
+                    clientSecret: appManager.credentials.clientSecret,
+                    realm: appManager.credentials.realm,
+                };
+
+                return credentials;
+            }
             case Constants.SECURITY_ADFS:{
-                let credentials : IAdfsUserCredentials = {
+                let credentials = {
                     password: appManager.credentials.password,
                     username: appManager.credentials.username,
                     relyingParty: config.authenticationDetails.relyingParty,
@@ -26,7 +36,7 @@ export class RequestHelper {
                 return credentials;
             }
             case Constants.SECURITY_DIGEST: {
-                let credentials : IUserCredentials = {
+                let credentials = {
                     password: appManager.credentials.password,
                     username: appManager.credentials.username
                 };
@@ -34,7 +44,7 @@ export class RequestHelper {
                 return credentials;
             }
             case Constants.SECURITY_FORMS: {
-                let credentials : IOnpremiseFbaCredentials = {
+                let credentials = {
                     password: appManager.credentials.password,
                     username: appManager.credentials.username,
                     fba: true
@@ -43,7 +53,7 @@ export class RequestHelper {
                 return credentials;
             }
             case Constants.SECURITY_NTLM: {
-                let credentials : IOnpremiseUserCredentials ;
+                let credentials = null ;
                 let parts : string[] = appManager.credentials.username.split('\\');
                 if (parts.length > 1) {
                     credentials = {
@@ -56,7 +66,7 @@ export class RequestHelper {
                 return credentials;
             }
             default:{
-                let credentials : IUserCredentials = {
+                let credentials = {
                     password : appManager.credentials.password,
                     username : appManager.credentials.username
                 };

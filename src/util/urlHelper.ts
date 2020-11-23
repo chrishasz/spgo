@@ -7,20 +7,28 @@ import { IConfig } from '../spgo';
 export class UrlHelper{
     
     //Make sure there is a leading slash.
-    public static ensureLeadingSlash(filePath : string) : string{
-        if(!filePath.startsWith(path.sep)){
-            filePath = path.sep + filePath;
+    public static ensureLeadingSlash(urlPath : string) : string{
+        if(!urlPath.startsWith(path.sep)){
+            urlPath = path.sep + urlPath;
         }
-        return filePath;
+        return urlPath;
     }
 
     //Make sure there is a leading web slash (This is sort of a multi-platform hack).
-    public static ensureLeadingWebSlash(filePath : string) : string{
-        if(!filePath.startsWith('/')){
-            filePath = '/' + filePath;
+    public static ensureLeadingWebSlash(urlPath : string) : string{
+        if(!urlPath.startsWith('/')){
+            urlPath = '/' + urlPath;
         }
-        return filePath;
+        return urlPath;
     }
+
+        //Make sure there is a leading web slash (This is sort of a multi-platform hack).
+        public static ensureTailingWebSlash(urlPath : string) : string{
+            if(!urlPath.endsWith('/')){
+                urlPath = urlPath + '/';
+            }
+            return urlPath;
+        }
     
     // replaces all non-alphanumeric characters with the '_' character.
     public static formatUriAsFileName(uri : string) : string {
@@ -28,20 +36,20 @@ export class UrlHelper{
     }
 
     // properly append leading and trailing '/'s to a folder path.
-    public static formatWebFolder(filePath : string) : string {
-        if(!filePath.startsWith('/')){
-            filePath = '/' + filePath;
+    public static formatWebFolder(urlPath : string) : string {
+        if(!urlPath.startsWith('/')){
+            urlPath = '/' + urlPath;
         }
-        if(!filePath.endsWith('/')){
-            filePath = filePath + '/';
+        if(!urlPath.endsWith('/')){
+            urlPath = urlPath + '/';
         }
-        return filePath;
+        return urlPath;
     } 
     
     // return the filename from a uri-style string. returns the final token after the last os-specific slash
     // ex: path/to/the/filename.ext => filename.ext
-    public static getFileName(filePath : string) : string{
-       return filePath.split('\\').pop().split('/').pop();
+    public static getFileName(urlPath : string) : string{
+       return urlPath.split('\\').pop().split('/').pop();
     }
 
     //get the file path relative to the current SharePoint site.
@@ -78,8 +86,8 @@ export class UrlHelper{
         return fileName.includes('.') && fileName != '.' && fileName.indexOf('*') < 0;
     }
 
-    static normalizeSlashes(filePath : string) : string{
-        return filePath.replace(/\\/g, "/");
+    static normalizeSlashes(urlPath : string) : string{
+        return urlPath.replace(/\\/g, "/");
     }
 
     // make our glob processor os aware.

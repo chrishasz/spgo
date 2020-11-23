@@ -16,18 +16,25 @@ declare module 'vscode' {
 
 export interface IAppManager{  
     credentials? : ICredential;
-    configSet? : Map<string, IConfig>; //TODO: Reenable this if you need performance optimization.
+    configSet? : Map<string, IConfig>;
     localStore : LocalStorageService;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
 
     initialize(contextPath : Uri) : Promise<any>;
+    reloadConfiguration(workspaceFolder : Uri) : void;
 }
 
 export interface ICredential{
+    //username/Password
     domain? : string;
     password? : string;
     username? : string;
+
+    //Addin Only
+    clientId? : string;
+    clientSecret? : string;
+    realm? : string;
 }
 
 export interface IConfig{

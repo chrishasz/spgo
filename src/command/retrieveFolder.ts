@@ -5,6 +5,7 @@ import { Uri } from 'vscode';
 import { IConfig } from '../spgo';
 import { Logger } from '../util/logger';
 import { UiHelper } from '../util/uiHelper';
+import { UrlHelper } from '../util/urlHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import { SPFileService } from '../service/spFileService';
 import { WorkspaceHelper } from '../util/workspaceHelper';
@@ -32,18 +33,25 @@ export default function retrieveFolder(config : IConfig) : Thenable<any> {
             };
             vscode.window.showInputBox(options).then(result => {
                 
-                let remoteFolderUri : string = config.sharePointSiteUrl + result;
+                let remoteFolderUri : string = config.sharePointSiteUrl + UrlHelper.ensureLeadingWebSlash(result);
                 let siteUri : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(remoteFolderUri, config);
 
                 let remoteFolder = remoteFolderUri.replace(siteUri.toString(), '');
 
-                fileService.downloadFiles(siteUri, remoteFolder) 
-                    .then(() => {
-                        Logger.outputMessage(`Retrieve folder success.`);
-                        resolve();
-                    }).catch(err => {
-                        reject(err);
-                    });
+                try{
+                    
+                    fileService.downloadFiles(siteUri, remoteFolder) 
+                        .then(() => {
+                            Logger.outputMessage(`Retrieve folder success.`);
+                            resolve();
+                        }).catch(err => {
+                            reject(err);
+                        });
+                }
+                catch(ex){
+                    ErrorHelper.handleError(ex);
+                }
+                
             });
         });
     }

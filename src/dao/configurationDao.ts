@@ -47,7 +47,7 @@ export class ConfigurationDao{
 						//fix any issues with correct slashes in the src path
 						config.sourceDirectory = FileHelper.ensureCorrectPathSeparator(config.sourceDirectory);
 						
-						//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/s
+						//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
 						if(config.sharePointSiteUrl !== undefined){
 							config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(config.sharePointSiteUrl);
 						}

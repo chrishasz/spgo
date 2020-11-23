@@ -3,15 +3,14 @@
 import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
-import { IConfig } from './spgo';
 import { Memento, Uri } from 'vscode';
 import { Logger } from './util/logger';
 import { Constants } from './constants';
-import { LocalStorageService } from './service/localStorageService';
-import { IAppManager, ICredential } from './spgo';
 import { CredentialDao } from './dao/credentialDao';
 import { ConfigurationDao } from './dao/configurationDao';
 import configureWorkspace from './command/configureWorkspace';
+import { IAppManager, IConfig, ICredential, IError } from './spgo';
+import { LocalStorageService } from './service/localStorageService';
 
 export class AppManager implements IAppManager {
     public configSet : Map<string, IConfig>;
@@ -28,7 +27,7 @@ export class AppManager implements IAppManager {
         this.statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 5);
     }
 
-    public initialize(contextPath : Uri){
+    public initialize(contextPath : Uri) : Promise<any>{
         return new Promise((resolve, reject) => {
             let workspaceFolder : Uri = vscode.workspace.getWorkspaceFolder(contextPath) ? vscode.workspace.getWorkspaceFolder(contextPath).uri : null;
             if(!workspaceFolder){
@@ -72,6 +71,7 @@ export class AppManager implements IAppManager {
                         .then(result => {
                             if( result == Constants.OPTIONS_NO){
                                 reject('SPGo initialization cancelled by user.');
+                                //TODO: Unload extension
                             }
                             else{
                                 configureWorkspace(contextPath)
@@ -93,5 +93,24 @@ export class AppManager implements IAppManager {
                 });
             }
         });
+    }
+
+    public reloadConfiguration(newConfig : Uri) : void{
+        ConfigurationDao.initializeConfiguration(newConfig)
+            .then((config : IConfig) => {
+                
+                const workspaceFolder : Uri = vscode.workspace.getWorkspaceFolder(newConfig).uri;
+                const oldConfig : IConfig = vscode.window.spgo.configSet.get(workspaceFolder.fsPath);
+                // Has the authentication type changed? If so, delete credentials.
+                if(oldConfig.authenticationType !== config.authenticationType){
+                    vscode.window.spgo.credentials = null;
+                }
+
+                vscode.window.spgo.configSet.set(workspaceFolder.fsPath, config);
+                Logger.updateStatusBar('Configuration file reloaded', 5);
+            })
+            .catch((err: IError) => {
+                Logger.showError(err.message, err);
+            });
     }
 }

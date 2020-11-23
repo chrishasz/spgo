@@ -1,6 +1,5 @@
 'use strict';
 import * as path from 'path';
-import * as SPGo from './spgo';
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
@@ -20,7 +19,6 @@ import { WorkspaceHelper } from './util/workspaceHelper';
 import getServerVersion from './command/getServerVersion';
 import publishWorkspace from './command/publishWorkspace';
 import resetCredentials from './command/resetCredentials';
-import { ConfigurationDao } from './dao/configurationDao';
 import populateWorkspace from './command/populateWorkspace';
 import configureWorkspace from './command/configureWorkspace';
 import compareFileWithServer from './command/compareFileWithServer';
@@ -245,15 +243,8 @@ export function activate(context: vscode.ExtensionContext): any {
                     }
                     //is this an update to the config? Reload the config.
                     else if (textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)) {
-                        ConfigurationDao.initializeConfiguration(textDocument.uri)
-                            .then((config : IConfig) => {
-                                const workspaceFolder : Uri = vscode.workspace.getWorkspaceFolder(textDocument.uri).uri;
-                                vscode.window.spgo.configSet.set(workspaceFolder.fsPath, config);
-                                Logger.updateStatusBar('Configuration file reloaded', 5);
-                            })
-                            .catch((err: SPGo.IError) => {
-                                Logger.showError(err.message, err);
-                            });
+                        
+                        vscode.window.spgo.reloadConfiguration(textDocument.uri);
                     }
                 }
             });
