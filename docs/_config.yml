@@ -23,9 +23,9 @@ header_pages:
   - name : blog.md
     title : Blog
     url : /blog
-    - name : spgo.md
-      title : SPGo
-      url : /spgo
+  - name : spgo.md
+    title : SPGo
+    url : /spgo
   - name : glob2caml.md
     title : Glob2Caml
     url : /glob2caml
