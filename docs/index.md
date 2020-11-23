@@ -2,7 +2,7 @@
 layout: project
 title: SPGo Home
 header: "SPGo: A Lightweight, Open Source, SharePoint IDE for Visual Studio Code"
-image: /images/SPGo_Code.png
+image: /spgo/images/SPGo_Code.png
 ---
 
 SPGo is a [Visual Studio Code extension](https://marketplace.visualstudio.com/) that makes it easier to build SharePoint web and branding solutions. The goal of this documentation is to make it easier to use SPGo.
