@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 # Jekyll Version
-gem "jekyll", "~> 3.8.5"
-# This is the default theme for new Jekyll sites. 
+gem "jekyll", "~> 3.9.0"
+# This is the default theme for new Jekyll sites.
 gem "github-pages", group: :jekyll_plugins
 # If you have any plugins, put them here!
 group :jekyll_plugins do
