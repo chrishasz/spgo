@@ -17,4 +17,4 @@ An app password is a code that gives an app or device permission to access your 
 
 If your admin has turned on multi-factor authentication for your organization, and you're using apps that connect to your Office 365 account, you'll need to generate an app password so the app can connect to Office 365. For example, if you're using Outlook 2016 or earlier with Office 365, you'll need to create an app password.
 
-You can [Learn more Here](https://support.office.com/en-us/article/create-an-app-password-for-office-365-3e7c860f-bda4-4441-a618-b53953ee1183)
+You can [learn more here](https://support.office.com/en-us/article/create-an-app-password-for-office-365-3e7c860f-bda4-4441-a618-b53953ee1183)

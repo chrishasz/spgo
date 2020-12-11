@@ -11,7 +11,9 @@ The `authenticationType` parameter lets you specify which type of authentication
 
 Options:
 
+* Addin-only
 * ADFS
+* Application Password
 * Digest
 * Forms
 * NTLM V1
