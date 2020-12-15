@@ -15,7 +15,7 @@
         "ide",
         "multi-root ready"
     ],
-    "version": "1.7.0",
+    "version": "1.7.1",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -238,16 +238,16 @@
         "lint": "tslint -p ./"
     },
     "devDependencies": {
-        "@types/bluebird": "^3.5.30",
-        "@types/fs-extra": "^8.1.0",
+        "@types/bluebird": "^3.5.33",
+        "@types/fs-extra": "^8.1.1",
         "@types/mocha": "^2.2.32",
-        "@types/node": "^7.10.10",
-        "@types/vscode": "^1.44.0",
+        "@types/node": "^7.10.14",
+        "@types/vscode": "^1.52.0",
         "mocha": "^6.2.3",
         "ts-loader": "^6.2.2",
-        "typescript": "^3.8.3",
-        "webpack": "^4.42.1",
-        "webpack-cli": "^3.3.11"
+        "typescript": "^3.9.7",
+        "webpack": "^4.44.2",
+        "webpack-cli": "^3.3.12"
     },
     "dependencies": {
         "cpass": "^2.3.0",
