@@ -32,8 +32,8 @@ SPGo allows you and your team to develop SharePoint web solutions from your loca
 
 ### Authentication
 
-* [ADFS](/spgo/authentication/adfs-authentication)
 * [Addin-only](/spgo/authentication/addin-only-authentication)
+* [ADFS](/spgo/authentication/adfs-authentication)
 * [Application Password](/spgo/authentication/app-password-authentication)
 * [Digest (Office365)](/spgo/authentication/digest-authentication)
 * [Forms](/spgo/authentication/forms-authentication)

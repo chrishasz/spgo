@@ -14,10 +14,12 @@ toc:
  - title: Authentication
    name: authentication.md
    subfolderitems:
-    - title: ADFS
-      url: /authentication/adfs-authentication
     - title: Addin-only Authentication
       url: /authentication/addin-only-authentication
+    - title: ADFS
+      url: /authentication/adfs-authentication
+    - title: App Password Authentication
+      url: /authentication/app-password-authentication
     - title: Digest
       url: /authentication/digest-authentication
     - title: Forms
