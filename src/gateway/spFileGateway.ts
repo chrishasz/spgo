@@ -1,14 +1,12 @@
 'use strict';
 
-var SPPull = require("sppull");
-
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
 import { Logger } from '../util/logger';
 import { RequestHelper } from '../util/requestHelper';
 import { ISPRequest, IAuthOptions } from 'sp-request';
-import { ISPPullContext, ISPPullOptions } from 'sppull';
+import { SPPull, ISPPullContext, ISPPullOptions } from 'sppull';
 import { WorkspaceHelper } from '../util/workspaceHelper';
 import { spsave, ICoreOptions, FileOptions } from 'spsave';
 import { ISPFileInformation, IConfig, IFileGateway } from '../spgo';
@@ -76,7 +74,7 @@ export class SPFileGateway implements IFileGateway{
             .then( ()=>{
                 return new Promise((resolve,reject) => {
 
-                    SPPull.sppull(context, fileOptions)
+                    SPPull.download(context, fileOptions)
                         .then((downloadResults : Array<any>) => {
                             //TODO: format slashes properly in this output Message
                             Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${localFolder}`, vscode.window.spgo.outputChannel);
@@ -128,9 +126,9 @@ export class SPFileGateway implements IFileGateway{
         })
     }
 
-    public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>{
+    public undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<void>{
 
-        return new Promise((resolve, reject) => {    
+        return new Promise((resolve, reject) => {
             let sharePointSiteUrl : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(this._config.sharePointSiteUrl + fileUri, this._config);
 
             spr.requestDigest(sharePointSiteUrl.toString())
