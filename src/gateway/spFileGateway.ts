@@ -1,11 +1,11 @@
 'use strict';
 
-var SPPull = require("sppull");
+// import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
 import { RequestHelper } from '../util/requestHelper';
 import { ISPRequest, IAuthOptions } from 'sp-request';
-import { ISPPullContext, ISPPullOptions } from 'sppull';
+import { SPPull, ISPPullContext, ISPPullOptions } from 'sppull';
 import { WorkspaceHelper } from '../util/workspaceHelper';
 import { spsave, ICoreOptions, FileOptions } from 'spsave';
 import { ISPFileInformation, IConfig, IFileGateway } from '../spgo';
@@ -49,8 +49,17 @@ export class SPFileGateway implements IFileGateway{
     }
 
     public downloadFiles(context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
+        return SPPull.download(context, fileOptions);
 
-        return SPPull.sppull(context, fileOptions);
+        // return SPPull.download(context, fileOptions)
+        // .then((downloadResults : Array<any>) => {
+        //     //TODO: format slashes properly in this output Message
+        //     Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${localFolder}`, vscode.window.spgo.outputChannel);
+        //     resolve(downloadResults);
+        // })
+        // .catch((err : any) => reject(err));
+
+        //return SPPull.sppull(context, fileOptions);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.
