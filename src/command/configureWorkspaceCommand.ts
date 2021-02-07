@@ -4,32 +4,58 @@ import * as fs from 'fs-extra';
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
-import { IConfig } from '../spgo';
 import { Logger } from '../util/logger';
 import { Constants } from '../constants';
+import { UiHelper } from '../util/uiHelper';
+import { ICommand, IConfig } from '../spgo';
 import { UrlHelper } from '../util/urlHelper';
 import { ErrorHelper } from '../util/errorHelper';
+import { WorkspaceHelper } from '../util/workspaceHelper';
 import { ConfigurationDao } from '../dao/configurationDao';
 
-export default function configureWorkspace(contextPath : Uri) : Promise<any> {
+/*
+* Initialize a new workspace configuration file
+*/
+export class ConfigureWorkspaceCommand implements ICommand {
 
-    
-    Logger.updateStatusBar('Configuring SPGo', 5);
+    /**
+    * Initialize a new workspace configuration file
+    * @param {vscode.Uri} fileUri - Optional filepath (Uses current editor if not given)
+    * @param {boolean?} props - Optional properties for this command
+    */
+    execute(_fileUri : Uri, _props? : any) : Thenable<any>{
 
-    let rootPath : Uri = vscode.workspace.getWorkspaceFolder(contextPath).uri;
+        try{
+            //let fileName : string = FileHelper.getFileName(fileUri);
 
-    return getSharePointSiteUrl()
-        .then((cfg) => getPublishingScope(cfg))
-        .then((cfg) => getAuthenticationType(cfg))
-        .then((cfg) => finished(cfg))
-        .then(() => Logger.updateStatusBar('SPGo Configuration Complete.', 5))
-        .catch((err) => ErrorHelper.handleError(err));
-        
-    
-    function getSharePointSiteUrl() {
+            return UiHelper.showStatusBarProgress('Configuring workspace',
+                WorkspaceHelper.getActiveWorkspaceUri()
+                    .then((activeWorkspace) => {
+                        Logger.updateStatusBar('Configuring SPGo', 5);
+
+                        //let rootPath : Uri = vscode.workspace.getWorkspaceFolder(fileUri).uri;
+
+                        return this.getSharePointSiteUrl(activeWorkspace)
+                            .then((cfg) => this.getPublishingScope(cfg))
+                            .then((cfg) => this.getAuthenticationType(cfg))
+                            .then((cfg) => this.finished(cfg, activeWorkspace))
+                            .then((cfg) => {
+                                Logger.updateStatusBar('SPGo Configuration Complete.', 5)
+                                return cfg;
+                            });
+
+                    })
+                    .catch((err) => ErrorHelper.handleError(err))
+            );
+        } catch (err) {
+            ErrorHelper.handleError(err, true)
+        }
+    }
+
+    public getSharePointSiteUrl(fileUri : Uri) : Promise<any> {
         return new Promise((resolve, reject) => {
 
-            let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
+            let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(fileUri).uri + '/' + Constants.CONFIG_FILE_NAME);
 
             ConfigurationDao.initializeConfiguration(configFilePath).then(config => {
                 let options: vscode.InputBoxOptions = {
@@ -40,7 +66,7 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
                 };
                 vscode.window.showInputBox(options).then((result) => {
                     let siteUrl : string = result;
-                    
+
                     if(siteUrl.indexOf('http') != 0){
                         siteUrl = 'https://' + siteUrl;
                     }
@@ -50,8 +76,8 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
 					//URL Decode any inputs for site Name
 					config.sharePointSiteUrl = decodeURI(config.sharePointSiteUrl);
 
-                    if (!config.sharePointSiteUrl) { 
-                        reject('SharePoint site Url is required'); 
+                    if (!config.sharePointSiteUrl) {
+                        reject('SharePoint site Url is required');
                     }
 
                     resolve(config);
@@ -60,7 +86,7 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
         });
     }
 
-    function getPublishingScope(config : IConfig) {
+    public getPublishingScope(config : IConfig) : Thenable<any> {
         let quickPickOptions: vscode.QuickPickOptions = {
             ignoreFocusOut: true
         };
@@ -88,7 +114,7 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
         });
     }
 
-    function getAuthenticationType(config : IConfig) {
+    public getAuthenticationType(config : IConfig) : Thenable<any> {
         let quickPickOptions: vscode.QuickPickOptions = {
             ignoreFocusOut: true
         };
@@ -120,15 +146,15 @@ export default function configureWorkspace(contextPath : Uri) : Promise<any> {
         });
     }
 
-    function finished(config : IConfig) {
+    public finished(config : IConfig, rootPath : Uri) : IConfig {
         const defaultOptions: {} = {};
         // prevent the sourceDirectory property from being written to disk
         // this is an internal property only
         delete config.sourceRoot;
         fs.outputFile(rootPath.fsPath + path.sep + Constants.CONFIG_FILE_NAME, JSON.stringify(Object.assign(defaultOptions, config), undefined, 4));
-        
-		config.sourceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
-        
+
+        config.sourceRoot = `${rootPath.fsPath}${path.sep}${config.sourceDirectory}`;
+
         return config;
     }
 }

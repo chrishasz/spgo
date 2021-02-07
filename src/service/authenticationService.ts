@@ -16,7 +16,7 @@ export class AuthenticationService{
 	// 2b. Validate User credentials
 	// 2c. Fail if new credentials are valid
 	// 3. Continue to execute the promise object provided.
-	static verifyCredentials(appManager : IAppManager, config : IConfig, payload? : any): Promise<any> {
+	static verifyCredentials(appManager : IAppManager, config : IConfig, payload? : any): Thenable<any> {
 		appManager = appManager || vscode.window.spgo;
 		//let config : IConfig = workspaceConfig;
 
@@ -48,22 +48,22 @@ export class AuthenticationService{
 	
 		// take user's SharePoint username input
 		function getClientId(appManager : IAppManager) {
-			return new Promise((resolve, reject) => {
+			//return new Promise((resolve, reject) => {
 				let options: vscode.InputBoxOptions = {
 					ignoreFocusOut: true,
 					placeHolder: '<client Id>',
 					value: appManager.credentials.clientId || '',
 					prompt: 'Please enter the Client Id for this extension',
 				};
-				vscode.window.showInputBox(options).then(result => {
+				return vscode.window.showInputBox(options).then(result => {
 					appManager.credentials.clientId = result || appManager.credentials.clientId || '';
 					if (!appManager.credentials.clientId) { 
-						reject('No ClientId'); 
+						// reject('No ClientId'); 
 						appManager.credentials = null;
 					};
-					resolve(appManager);
+					return appManager;// resolve(appManager);
 				});
-			});
+		//	});
 		}
 
 		// take user's SharePoint username input

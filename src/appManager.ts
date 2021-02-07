@@ -8,8 +8,8 @@ import { Logger } from './util/logger';
 import { Constants } from './constants';
 import { CredentialDao } from './dao/credentialDao';
 import { ConfigurationDao } from './dao/configurationDao';
-import configureWorkspace from './command/configureWorkspace';
-import { IAppManager, IConfig, ICredential, IError } from './spgo';
+import { ConfigureWorkspaceCommand } from './command/configureWorkspaceCommand';
+import { IAppManager, ICommand, IConfig, ICredential, IError } from './spgo';
 import { LocalStorageService } from './service/localStorageService';
 
 export class AppManager implements IAppManager {
@@ -18,7 +18,7 @@ export class AppManager implements IAppManager {
     public localStore : LocalStorageService;
     outputChannel: vscode.OutputChannel;
     statusBarItem: vscode.StatusBarItem;
-    
+
     constructor( storageContext : Memento) {
         this.configSet = new Map<string, IConfig>();
         this.credentials = null;
@@ -33,7 +33,7 @@ export class AppManager implements IAppManager {
             if(!workspaceFolder){
                 reject('No active workspace selected');
             }
-            
+
             let configFilePath : Uri = Uri.parse(vscode.workspace.getWorkspaceFolder(contextPath).uri + '/' + Constants.CONFIG_FILE_NAME);
 
             if(this.configSet.has(workspaceFolder.fsPath)){
@@ -74,14 +74,15 @@ export class AppManager implements IAppManager {
                                 //TODO: Unload extension
                             }
                             else{
-                                configureWorkspace(contextPath)
-                                    .then((config : IConfig) => 
+                                const command : ICommand = new ConfigureWorkspaceCommand();
+                                command.execute(null)
+                                    .then((config : IConfig) =>
                                     {
                                         Logger.updateStatusBar('SPGo enabled', 5);
-            
+
                                         //make sure the SPGO status bar display is visible.
                                         vscode.window.spgo.statusBarItem.show();
-                                        
+
                                         //cache config
                                         this.configSet.set(workspaceFolder.fsPath, config);
 
@@ -98,7 +99,7 @@ export class AppManager implements IAppManager {
     public reloadConfiguration(newConfig : Uri) : void{
         ConfigurationDao.initializeConfiguration(newConfig)
             .then((config : IConfig) => {
-                
+
                 const workspaceFolder : Uri = vscode.workspace.getWorkspaceFolder(newConfig).uri;
                 const oldConfig : IConfig = vscode.window.spgo.configSet.get(workspaceFolder.fsPath);
                 // Has the authentication type changed? If so, delete credentials.

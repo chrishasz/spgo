@@ -16,14 +16,14 @@ export class ConfigurationDao{
 			//var self: IAppManager = appManager || vscode.window.spgo;
 			let config : IConfig;
 			try{
-				
+
 				if (!vscode.workspace.workspaceFolders) {
 					throw { message: 'In order to use SPGo, please create a local folder to use as the solution workspace. See https://www.chrishasz.com/spgo/general/getting-started-with-spgo for more info.' }
 				}
 
 				let configFilePath : string = contextPath.fsPath;
 				let rootPath : Uri = vscode.workspace.getWorkspaceFolder(contextPath).uri;
-				
+
 				fs.stat(configFilePath, (err : any) => {
 					try{
 						if( err == null){
@@ -46,7 +46,7 @@ export class ConfigurationDao{
 
 						//fix any issues with correct slashes in the src path
 						config.sourceDirectory = FileHelper.ensureCorrectPathSeparator(config.sourceDirectory);
-						
+
 						//Remove the trailing slash if a user enters one, e.g. https://tennant.sharepoint.com/sites/mysite/
 						if(config.sharePointSiteUrl !== undefined){
 							config.sharePointSiteUrl = UrlHelper.removeTrailingSlash(config.sharePointSiteUrl);
@@ -64,7 +64,7 @@ export class ConfigurationDao{
 							//this property is deprecated
 							Logger.outputMessage('The publishWorkspaceGlobPattern property has been deprecated. Please use publishWorkspaceOptions instead: https://www.chrishasz.com/spgo/general/config-options#publishWorkspaceOptions');
 						}
-						
+
 						//set up the publish workspace options
 						if( !config.publishWorkspaceOptions ){
 							config.publishWorkspaceOptions = {
@@ -74,21 +74,23 @@ export class ConfigurationDao{
 							};
 						}
 						else{
-							config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
-							config.publishWorkspaceOptions.localRoot = config.publishWorkspaceOptions.localRoot ? config.workspaceRoot + config.publishWorkspaceOptions.localRoot : config.sourceRoot;
-							config.publishWorkspaceOptions.globPattern = config.publishWorkspaceOptions.globPattern ? config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(config.publishWorkspaceOptions.globPattern) : config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
+                            config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
+                                //config.publishWorkspaceOptions.localRoot ? config.workspaceRoot + config.publishWorkspaceOptions.localRoot : config.sourceRoot;
+                            config.publishWorkspaceOptions.localRoot = this.calculateLocalRoot(config);
+                                //config.publishWorkspaceOptions.globPattern ? config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(config.publishWorkspaceOptions.globPattern) : config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
+							config.publishWorkspaceOptions.globPattern = this.calculateGlobPattern(config);
 						}
 
 						resolve(config);
-					} 
+					}
 					catch (fileErr) {
 						Logger.outputError(fileErr);
 						config = {};
 						config.sourceDirectory = 'src';
 						resolve(config);
 					}
-				});	
-			} 
+				});
+			}
 			catch (err) {
 				// bad things have happened!
 				Logger.showError(err.message, err);
@@ -96,5 +98,35 @@ export class ConfigurationDao{
 				reject(config);
 			}
 		});
-	}
+    }
+
+    static calculateLocalRoot(config : IConfig): string{
+        let localRoot : string = config.publishWorkspaceOptions.localRoot;
+
+        if(localRoot){
+            if(!path.isAbsolute(localRoot)){
+                localRoot = config.workspaceRoot + localRoot;
+            }
+        }
+        else{
+            localRoot = config.sourceRoot;
+        }
+
+        return localRoot;
+    }
+
+    static calculateGlobPattern(config : IConfig): string{
+        let globPattern : string = config.publishWorkspaceOptions.globPattern;
+
+        if(globPattern){
+            if(!path.isAbsolute(globPattern)){
+                globPattern = config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(globPattern)
+            }
+        }
+        else{
+            globPattern = config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
+        }
+
+        return globPattern;
+    }
 }

@@ -3,26 +3,26 @@ import * as path from 'path';
 import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
-import { IConfig } from './spgo';
 import { Logger } from './util/logger';
 import { Constants } from './constants';
 import { AppManager } from './appManager';
-import copySPUrl from './command/copyUrl';
-import saveFile from './command/saveFile';
-import deleteFile from './command/deleteFile';
-import publishFile from './command/publishFile';
+import { ICommand, IConfig } from './spgo';
 import { ErrorHelper } from './util/errorHelper';
-import checkOutFile from './command/checkOutFile';
-import retrieveFolder from './command/retrieveFolder';
-import discardCheckOut from './command/discardCheckOut';
 import { WorkspaceHelper } from './util/workspaceHelper';
-import getServerVersion from './command/getServerVersion';
-import publishWorkspace from './command/publishWorkspace';
-import resetCredentials from './command/resetCredentials';
-import populateWorkspace from './command/populateWorkspace';
-import configureWorkspace from './command/configureWorkspace';
-import compareFileWithServer from './command/compareFileWithServer';
-import getCurrentFileInformation from './command/getCurrentFileInformation';
+import { SaveFileCommand } from './command/saveFileCommand';
+import { CopySPUrlCommand } from './command/copySPUrlCommand';
+import { DeleteFileCommand } from './command/deleteFileCommand';
+import { PublishFileCommand } from './command/publishFileCommand';
+import { CheckOutFileCommand } from './command/checkOutFileCommand';
+import { RetrieveFolderCommand } from './command/retrieveFolderCommand';
+import { DiscardCheckOutCommand } from './command/discardCheckOutCommand';
+import { GetServerVersionCommand } from './command/getServerVersionCommand';
+import { PublishWorkspaceCommand } from './command/publishWorkspaceCommand';
+import { ResetCredentialsCommand } from './command/resetCredentialsCommand';
+import { PopulateWorkspaceCommand } from './command/populateWorkspaceCommand';
+import { ConfigureWorkspaceCommand } from './command/configureWorkspaceCommand';
+import { CompareFileWithServerCommand } from './command/compareFileWithServerCommand';
+import { GetCurrentFileInformationCommand } from './command/getCurrentFileInformationCommand';
 
 export function activate(context: vscode.ExtensionContext): any {
 
@@ -36,98 +36,62 @@ export function activate(context: vscode.ExtensionContext): any {
     context.subscriptions.push(vscode.commands.registerCommand('spgo.checkOutFile', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
-                    checkOutFile(selectedResource, config);
-                }
-                else {
-                    checkOutFile(vscode.window.activeTextEditor.document.uri, config);
-                }
-            });
+
+        const command : ICommand = new CheckOutFileCommand();
+        command.execute(selectedResource);
     }));
 
     //Compare the selected file with it's latest version on the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.compareFileWithServer', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                    if (selectedResource && selectedResource.path) {
-                        compareFileWithServer(selectedResource, config);
-                    } else {
-                        compareFileWithServer(vscode.window.activeTextEditor.document.uri, config);
-                    }
-                });
+
+        const command : ICommand = new CompareFileWithServerCommand();
+        command.execute(selectedResource);
     }));
 
     //Create the base configuration for this SharePoint workspace
     context.subscriptions.push(vscode.commands.registerCommand('spgo.configureWorkspace', () => {
 
-        // run config
-        WorkspaceHelper.getActiveWorkspaceUri()
-            .then((activeWorkspace) => configureWorkspace(activeWorkspace))
-            .catch(err => ErrorHelper.handleError(err));
+        const selectedResource = WorkspaceHelper.getActiveFile();
+
+        const command : ICommand = new ConfigureWorkspaceCommand();
+        command.execute(selectedResource);
     }));
 
     //add Copy URL Commands
     context.subscriptions.push(vscode.commands.registerCommand('spgo.copyRelativeUrl', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
-            if (config
-                && selectedResource
-                && selectedResource.fsPath.includes(config.sourceRoot) ) {
-                    copySPUrl(selectedResource, false, config);
-            }
-        });
+
+        const command : ICommand = new CopySPUrlCommand();
+        command.execute(selectedResource, false);
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand('spgo.copyAbsoluteUrl', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource).then((config : IConfig) =>{
-            if (config
-                && selectedResource
-                && selectedResource.fsPath.includes(config.sourceRoot) ) {
-                    copySPUrl(selectedResource, true, config);
-            }
-        });
+
+        const command : ICommand = new CopySPUrlCommand();
+        command.execute(selectedResource, true);
     }));
 
     //Delete the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.deleteFile', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
-                    deleteFile(selectedResource, config);
-                }
-                else {
-                    deleteFile(vscode.window.activeTextEditor.document.uri, config);
-                }
-            });
+
+        const command : ICommand = new DeleteFileCommand();
+        command.execute(selectedResource);
     }));
 
     //Discard the checkout of the current file.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.discardCheckOut', (selectedResource?: Uri) => {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
-        
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
-                    discardCheckOut(selectedResource, config)
-                } else {
-                    discardCheckOut(vscode.window.activeTextEditor.document.uri, config);
-                }
-            });
+
+        const command : ICommand = new DiscardCheckOutCommand();
+        command.execute(selectedResource);
     }));
 
     //Delete the current file.
@@ -135,69 +99,42 @@ export function activate(context: vscode.ExtensionContext): any {
 
         selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
 
-        vscode.window.spgo.initialize(selectedResource)
-            .then((config : IConfig) => {
-                if (selectedResource && selectedResource.path) {
-                    getServerVersion(selectedResource, config);
-                }
-                else {
-                    getServerVersion(vscode.window.activeTextEditor.document.uri, config);
-                }
-            });
+        const command : ICommand = new GetServerVersionCommand();
+        command.execute(selectedResource);
     }));
 
     //Synchronize your local environment from the latest on the server.s
     // Uses the active document to determine the publishing workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.populateWorkspace', () => {
 
-        WorkspaceHelper.getActiveWorkspaceUri()
-            .then((activeWorkspace) => vscode.window.spgo.initialize(activeWorkspace))
-            .then((config : IConfig) => populateWorkspace(config))
-            .catch(err => ErrorHelper.handleError(err));
+        const command : ICommand = new PopulateWorkspaceCommand();
+        command.execute(null);
     }));
 
     //Synchronize your local environment from the latest on the server.
     // Uses the active document to determine the publishing workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishWorkspace', () => {
 
-        WorkspaceHelper.getActiveWorkspaceUri()
-            .then((activeWorkspace) => vscode.window.spgo.initialize(activeWorkspace))
-            .then((config : IConfig) => publishWorkspace(config))
-            .catch(err => ErrorHelper.handleError(err));
+        const command : ICommand = new PublishWorkspaceCommand();
+        command.execute(null);
     }));
 
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMajor', (selectedResource?: Uri) => {
-        
-        let activeTextEditorUri : Uri = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.document.uri : null;
-        selectedResource = selectedResource || activeTextEditorUri;
 
-        if( selectedResource && selectedResource.scheme !== 'output'){
-            vscode.window.spgo.initialize(selectedResource)
-                .then((config : IConfig) => {
-                    publishFile(selectedResource, Constants.PUBLISHING_MAJOR, config);
-                });
-        }
-        else{
-            Logger.showError('Cannot Publish file: No file selected.');
-        }
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
+
+        const command : ICommand = new PublishFileCommand();
+        command.execute(selectedResource, Constants.PUBLISHING_MAJOR);
     }));
 
     //Publish the current file to the server.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.publishMinor', (selectedResource?: Uri) => {
-        
-        let activeTextEditorUri : Uri = vscode.window.activeTextEditor ? vscode.window.activeTextEditor.document.uri : null;
-        selectedResource = selectedResource || activeTextEditorUri;
 
-        if( selectedResource && selectedResource.scheme !== 'output'){
-            vscode.window.spgo.initialize(selectedResource)
-                .then((config : IConfig) => {
-                    publishFile(selectedResource, Constants.PUBLISHING_MINOR, config);
-                });
-        }
-        else{
-            Logger.showError('Cannot Publish file: No file selected.');
-        }
+        selectedResource = selectedResource || WorkspaceHelper.getActiveFile();
+
+        const command : ICommand = new PublishFileCommand();
+        command.execute(selectedResource, Constants.PUBLISHING_MINOR);
     }));
 
     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
@@ -212,19 +149,15 @@ export function activate(context: vscode.ExtensionContext): any {
     //Reset the current user's SharePoint credentials
     context.subscriptions.push(vscode.commands.registerCommand('spgo.resetCredentials', () => {
 
-        WorkspaceHelper.getActiveWorkspaceUri()
-            .then((activeWorkspace) => vscode.window.spgo.initialize(activeWorkspace))
-            .then((config : IConfig) => resetCredentials(config))
-            .catch(err => ErrorHelper.handleError(err));
+        const command : ICommand = new ResetCredentialsCommand();
+        command.execute(null);
     }));
 
     //Download the contents of a SharePoint folder (and subfolders) to your local workspace.
     context.subscriptions.push(vscode.commands.registerCommand('spgo.retrieveFolder', () => {
 
-        WorkspaceHelper.getActiveWorkspaceUri()
-            .then((activeWorkspace) => vscode.window.spgo.initialize(activeWorkspace))
-            .then((config : IConfig) => retrieveFolder(config))
-            .catch(err => ErrorHelper.handleError(err));
+        const command : ICommand = new RetrieveFolderCommand();
+        command.execute(null);
     }));
 
     // autoPublish Feature
@@ -235,15 +168,18 @@ export function activate(context: vscode.ExtensionContext): any {
                     //is the file in the source folder? Save to the server.
                     if (textDocument.fileName.includes(config.sourceRoot) && Constants.PUBLISHING_NONE != config.publishingScope) {
                         if (Constants.PUBLISHING_MAJOR == config.publishingScope || Constants.PUBLISHING_MINOR == config.publishingScope) {
-                            publishFile(textDocument.uri, config.publishingScope, config);
+
+                            const command : ICommand = new PublishFileCommand();
+                            command.execute(textDocument.uri, Constants.PUBLISHING_MINOR);
                         }
                         else {
-                            saveFile(textDocument.uri, config);
+                            const command : ICommand = new SaveFileCommand();
+                            command.execute(textDocument.uri);
                         }
                     }
                     //is this an update to the config? Reload the config.
                     else if (textDocument.fileName.endsWith(path.sep + Constants.CONFIG_FILE_NAME)) {
-                        
+
                         vscode.window.spgo.reloadConfiguration(textDocument.uri);
                     }
                 }
@@ -252,14 +188,15 @@ export function activate(context: vscode.ExtensionContext): any {
 
     //get file info when the active text document changes.
     context.subscriptions.push(vscode.workspace.onDidOpenTextDocument((textDocument: vscode.TextDocument) => {
-        
-        vscode.window.spgo.initialize(textDocument.uri).then((config : IConfig) =>{
-            if (config
-                && textDocument.fileName.includes(config.sourceRoot)
-                && !textDocument.fileName.endsWith('.git')) {
-                    getCurrentFileInformation(textDocument, config);
-            }
-        });
+
+        const selectedResource : Uri = textDocument.uri.scheme !== 'output' ? textDocument.uri : WorkspaceHelper.getActiveFile();
+
+        // Only get file information for SP Files
+        // VSCode will return '/' as the fsPath for the default 'welcome' page.
+        if( selectedResource.fsPath !== path.sep){
+            const command : ICommand = new GetCurrentFileInformationCommand();
+            command.execute(selectedResource);
+        }
     }));
 }
 

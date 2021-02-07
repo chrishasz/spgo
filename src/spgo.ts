@@ -14,7 +14,13 @@ declare module 'vscode' {
     }
 }
 
-export interface IAppManager{  
+export enum SPCheckOutType{
+    Online = 0,
+    Offline,
+    None
+}
+
+export interface IAppManager{
     credentials? : ICredential;
     configSet? : Map<string, IConfig>;
     localStore : LocalStorageService;
@@ -35,6 +41,10 @@ export interface ICredential{
     clientId? : string;
     clientSecret? : string;
     realm? : string;
+}
+
+export interface ICommand{
+    execute(fileUri : Uri, _props? : any) : Thenable<any>;
 }
 
 export interface IConfig{
@@ -60,7 +70,7 @@ export interface IError {
 export interface IFileGateway {
     checkOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
     deleteFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
-    downloadFiles(localFolder: string, context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>;
+    downloadFiles(context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>;
     getFileInformation( fileUri : Uri, spr : ISPRequest ) : Promise<any>;
     undoCheckOutFile(fileUri : Uri, spr : ISPRequest ) : Promise<any>;
     uploadFiles(coreOptions : ICoreOptions, credentials : IAuthOptions, fileOptions : FileOptions) : Promise<any>;

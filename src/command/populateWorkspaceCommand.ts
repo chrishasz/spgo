@@ -3,27 +3,50 @@ import * as vscode from 'vscode';
 
 import { Uri } from 'vscode';
 import { Logger } from '../util/logger';
-import { IError, IConfig } from '../spgo';
 import { UiHelper } from '../util/uiHelper';
 import { UrlHelper } from '../util/urlHelper';
 import { ErrorHelper } from '../util/errorHelper';
+import { IError, IConfig, ICommand } from '../spgo';
 import { SPFileService } from '../service/spFileService';
+import { WorkspaceHelper } from '../util/workspaceHelper';
 import { AuthenticationService } from '../service/authenticationService';
 
-export default function populateWorkspace(config : IConfig) : Thenable<any> {
-    let fileService : SPFileService = new SPFileService(config);
 
-    return UiHelper.showStatusBarProgress('Populating workspace',
-        AuthenticationService.verifyCredentials(vscode.window.spgo, config)
-            .then(downloadFiles)
-            .then(() => Logger.updateStatusBar('File Download Complete.', 5))
-            .catch(err => ErrorHelper.handleError(err))
-    );
 
-    function downloadFiles() : Thenable<any> {
-        
+/*
+*
+*/
+export class PopulateWorkspaceCommand implements ICommand {
+
+    /**
+    *
+    * @param {vscode.Uri} resourcePath - Optional filepath (Uses current editor if not given)
+    * @param {boolean} absolute - Option to copy the absolute path (defaults to SPGo Config)
+    */
+    execute(_fileUri : Uri, _props? : any) : Thenable<any>{
+
+        try{
+            return UiHelper.showStatusBarProgress('Populating Workspace',
+                WorkspaceHelper.getActiveWorkspaceUri()
+                    .then((activeWorkspace) => vscode.window.spgo.initialize(activeWorkspace))
+                    .then((config : IConfig) => {
+                        return AuthenticationService.verifyCredentials(vscode.window.spgo, config)
+                            .then(() => (this.downloadFiles(config))
+                            .then(() => Logger.updateStatusBar('File Download Complete.', 5))
+                        );
+                    })
+                    .catch(err => ErrorHelper.handleError(err))
+                );
+        } catch (err) {
+            ErrorHelper.handleError(err, true)
+        }
+    }
+
+    public downloadFiles(config : IConfig) : Promise<any> {
+
         return new Promise((resolve, reject) => {
 
+            let fileService : SPFileService = new SPFileService(config);
             Logger.outputMessage('Starting File Synchronization...', vscode.window.spgo.outputChannel);
 
             //TODO: refactor to support subsites with remoteFolders property even if no remoteFolders property exists on the parent site
@@ -41,8 +64,8 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
                 }
 
                 if(config.subSites && config.subSites.length > 0){
-                    // add all files from the specified SubSites to the downloads collection                    
-                    for (let subSite of config.subSites){                    
+                    // add all files from the specified SubSites to the downloads collection
+                    for (let subSite of config.subSites){
                         for (let folder of subSite.remoteFolders) {
                             downloads.push(fileService.downloadFiles(Uri.parse(subSite.sharePointSiteUrl), decodeURI(folder)));
                         }
@@ -53,7 +76,7 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
                 Promise.all(downloads)
                     .then(() => {
                         Logger.outputMessage(`file synchronization complete.`, vscode.window.spgo.outputChannel);
-                        resolve();
+                        resolve(`file synchronization complete.`);
                     })
             }
             else{
@@ -61,7 +84,7 @@ export default function populateWorkspace(config : IConfig) : Thenable<any> {
                     message : '"remoteFolders":[string] property not configured in workspace configuration file.'
                 };
                 Logger.showError(error.message, error);
-                reject();
+                reject(error);
             }
         });
     }

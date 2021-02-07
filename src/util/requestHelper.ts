@@ -97,17 +97,11 @@ export class RequestHelper {
         return spRequest.create(this.createCredentials(appManager, config));
     }
 
-    static setNtlmHeader(config : IConfig, payload? : any){
-        return new Promise((resolve) => {
-            //let appManager : IAppManager = vscode.window.spgo;
-
-            if( Constants.SECURITY_NTLM == config.authenticationType){
-                process.env['_sp_request_headers'] = JSON.stringify({
-                    'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
-                });
-            }
-
-            resolve(payload);
-        });
+    static setNtlmHeader(config : IConfig){
+        if( Constants.SECURITY_NTLM == config.authenticationType){
+            process.env['_sp_request_headers'] = JSON.stringify({
+                'X-FORMS_BASED_AUTH_ACCEPTED': 'f'
+            });
+        }
     }
 }
