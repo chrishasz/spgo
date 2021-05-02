@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.7.1 - 2021-11-23
+## Changed
+- SPGo will display alerts related to editing checked-in files in a modal dialog so that [This issue](https://github.com/chrishasz/spgo/issues/133) does not continue to be a poor user experience.
+- Completed a *major* refactor of the SPGo command set. I've hated the implementation now for 4 years and it felt good to clean this up.
+
 ## 1.7.0 - 2020-11-23
 ## Added
 - Support for [Addin-only](https://www.chrishasz.com/spgo/authentication/addin-only-authentication) authentication, so that you have another work-around for MFA.
@@ -20,7 +25,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## 1.6.1 - 2020-03-07
 ### Added
-- the [Populate Workspace](https://www.chrishasz.com/spgo/commands/populate-workspace) command now accepts individual files as parameters. 
+- the [Populate Workspace](https://www.chrishasz.com/spgo/commands/populate-workspace) command now accepts individual files as parameters.
 ### Changed
 - Performance Enhancement: `spgo.json` configuration files are now cached by workspace folder. No need to reload from disk every time.
 - To resolve [this issue](https://github.com/chrishasz/spgo/issues/71), I have adopted the `context.workspaceState` object for storing credential data locally (and still securely).
@@ -269,7 +274,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## 0.9.0 - 2017-08-15
 ### Added
 - Language support for Master Pages (.master)
-- New Publishing Setting: "Save & continue Editing" - Save the file to the server, but do not publish. 
+- New Publishing Setting: "Save & continue Editing" - Save the file to the server, but do not publish.
 - [Command] Check out the current file from the server.
 - Better output logging: activity start and finish.
 ### Fixed

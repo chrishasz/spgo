@@ -69,8 +69,9 @@ export class CheckOutFileCommand implements ICommand {
 
                         vscode.workspace.openTextDocument(remotePath)
                             .then((doc2) => {
+
                                 if(doc1.getText() != doc2.getText()){
-                                    vscode.window.showInformationMessage('The server version of this file appears to be different from your local version. Open both files in a compare window?', Constants.OPTIONS_OPEN)
+                                    vscode.window.showInformationMessage('The server version of this file appears to be different from your local version. Open both files in a compare window?', {modal : true}, Constants.OPTIONS_OPEN)
                                         .then(result => {
                                             if( result == Constants.OPTIONS_OPEN){
                                                 Logger.outputMessage(`localPath:  ${localPath} dlFileUrl: ${remotePath}`, vscode.window.spgo.outputChannel);

@@ -16,9 +16,13 @@ export class ErrorHelper{
             if(err.message && (err.message.indexOf('wst:FailedAuthentication') >= 0 || err.message.indexOf('Unable to resolve namespace authentication type') >= 0)){
                 vscode.window.spgo.credentials = null;
                 let error : IError ={
-                    message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.' 
+                    message : 'Invalid user credentials. Please reset your credentials via the command menu and try again.'
                 };
                 Logger.showError(error.message, err);
+            }
+            //The file was locked
+            else if(err.message === 'Response code 423 (Locked)'){
+                Logger.showError('This file is not checked out to you. Please check out the file before editing.', err);
             }
             //otherwise something else happened.
             else{
@@ -32,9 +36,9 @@ export class ErrorHelper{
                 else{
                     Logger.outputError(err, vscode.window.spgo.outputChannel);
                 }
-            }  
+            }
         }
-        
+
     }
 
     // static handleErrorSilently(err, reject){
