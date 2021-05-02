@@ -33,7 +33,7 @@
         "url": "https://github.com/chrishasz/SPGo.git"
     },
     "engines": {
-        "vscode": "^1.44.0"
+        "vscode": "^1.52.0"
     },
     "categories": [
         "Other"

@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ## Changed
 - SPGo will display alerts related to editing checked-in files in a modal dialog so that [This issue](https://github.com/chrishasz/spgo/issues/133) does not continue to be a poor user experience.
 - Completed a *major* refactor of the SPGo command set. I've hated the implementation now for 4 years and it felt good to clean this up.
+- A long over-due renaming of `master` branch to `main`
 
 ## 1.7.0 - 2020-11-23
 ## Added
