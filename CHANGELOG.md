@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-## 1.7.1 - 2021-11-23
+## 1.7.1 - 2021-05-12
 ## Changed
 - SPGo will display alerts related to editing checked-in files in a modal dialog so that [This issue](https://github.com/chrishasz/spgo/issues/133) does not continue to be a poor user experience.
 - Completed a *major* refactor of the SPGo command set. I've hated the implementation now for 4 years and it felt good to clean this up.
