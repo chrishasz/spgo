@@ -105,7 +105,7 @@ export class ConfigurationDao{
 
         if(localRoot){
             if(!path.isAbsolute(localRoot)){
-                localRoot = config.workspaceRoot + localRoot;
+                localRoot = config.workspaceRoot + path.sep + localRoot;
             }
         }
         else{

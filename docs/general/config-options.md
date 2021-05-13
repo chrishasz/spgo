@@ -60,14 +60,16 @@ Control which files are published when issuing the [Publish Workspace](/spgo/com
 * `globPattern` (optional) - Provide an optional Glob pattern to SPGo to fine tune which files are published to SharePoint when the `SPGo> Publish Workspace` command is issued.
 * `localRoot` (optional) - The Workspace-Root-relative folder which contains the files you want to publish to SharePoint. The default value is the `src` directory.
 
+_note: the `globPattern` and `localRoot` properties will respect absolute paths, so be sure to remove any leading `/` characters unless you want SPGo to begin at the filesystem root_
+
 **Example:**
 
 ```json
 {
     "publishWorkspaceOptions": {
         "destinationFolder" : "/SiteAssets/project",
-        "globPattern" : "/**/*.min.*",
-        "localRoot" : "/dist"
+        "globPattern" : "**/*.min.*",
+        "localRoot" : "dist"
     }
 }
 ```

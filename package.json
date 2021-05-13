@@ -15,7 +15,7 @@
         "ide",
         "multi-root ready"
     ],
-    "version": "1.7.1",
+    "version": "1.7.2",
     "publisher": "SiteGo",
     "icon": "assets/SiteGoLogo.png",
     "galleryBanner": {
@@ -33,7 +33,7 @@
         "url": "https://github.com/chrishasz/SPGo.git"
     },
     "engines": {
-        "vscode": "^1.52.0"
+        "vscode": "^1.56.0"
     },
     "categories": [
         "Other"

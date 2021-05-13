@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.7.2 - 2021-05-13
+### Changed
+ - Updated VSCode dependency to the latest version (^1.56.0). Hopefully this will resolve some of the compatibility issues e.g. [#142](https://github.com/chrishasz/spgo/issues/142).
+## Fixed
+- Issue [this issue](https://github.com/chrishasz/spgo/issues/146), where relative paths in broke
+- Resolved NPM Dependency Security issues
+
 ## 1.7.1 - 2021-05-12
 ## Changed
 - SPGo will display alerts related to editing checked-in files in a modal dialog so that [This issue](https://github.com/chrishasz/spgo/issues/133) does not continue to be a poor user experience.
