@@ -41,8 +41,7 @@ export class PublishWorkspaceCommand implements ICommand {
                             .then((publishingInfo) => UiHelper.getPublishingMessage(publishingInfo))
                             .then((publishingInfo) => fileService.publishWorkspace(publishingInfo))
                             .then(()=>{
-                                Logger.outputMessage('Workspace Publish complete.', vscode.window.spgo.outputChannel)
-                                Logger.updateStatusBar('File Download Complete.', 5)
+                                Logger.updateStatusBar('Workspace Publish complete.', 5)
                             });
                     })
                     .catch(err => ErrorHelper.handleError(err))
