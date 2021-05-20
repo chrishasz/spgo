@@ -59,6 +59,7 @@ If configuration was successful, you should see a file similar to below:
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",
+    "authenticationType": "Digest"
 }
 ```
 
@@ -76,11 +77,12 @@ When you specify an array of remote folders in a node called `remoteFolders`, SP
 
 ```json
 {
+    "authenticationType": "Digest",
     "checkInMessage" : "Your custom Check-in message here",
     "sourceDirectory": "src",
     "sharePointSiteUrl": "https://tenant.sharepoint.com/sites/MyProject",
     "publishingScope": "SaveOnly",
-    "publishWorkspaceGlobPattern": "/**/*.min.*",
+    "publishWorkspaceGlobPattern": "**/*.min.*",
     "remoteFolders": [
         "/SiteAssets/**/*",
         "/_catalogs/wp/",
@@ -100,6 +102,7 @@ Credentials are stored in VSCode memory only. SPGo will only ask you for credent
 * Digest (Office365)
 * ADFS with username/password (Office365)
 * Addin-Only
+* App Password
 * NTLM v1 (most on-premise installations)
 * NTLM v1 + wwwAuth
 * NTLM v2
