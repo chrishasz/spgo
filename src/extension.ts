@@ -170,7 +170,7 @@ export function activate(context: vscode.ExtensionContext): any {
                         if (Constants.PUBLISHING_MAJOR == config.publishingScope || Constants.PUBLISHING_MINOR == config.publishingScope) {
 
                             const command : ICommand = new PublishFileCommand();
-                            command.execute(textDocument.uri, Constants.PUBLISHING_MINOR);
+                            command.execute(textDocument.uri, config.publishingScope);
                         }
                         else {
                             const command : ICommand = new SaveFileCommand();
