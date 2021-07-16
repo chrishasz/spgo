@@ -50,16 +50,6 @@ export class SPFileGateway implements IFileGateway{
 
     public downloadFiles(context : ISPPullContext, fileOptions : ISPPullOptions) : Promise<any>{
         return SPPull.download(context, fileOptions);
-
-        // return SPPull.download(context, fileOptions)
-        // .then((downloadResults : Array<any>) => {
-        //     //TODO: format slashes properly in this output Message
-        //     Logger.outputMessage(`Successfully downloaded ${downloadResults.length} files to: ${localFolder}`, vscode.window.spgo.outputChannel);
-        //     resolve(downloadResults);
-        // })
-        // .catch((err : any) => reject(err));
-
-        //return SPPull.sppull(context, fileOptions);
     }
 
     // CheckOutType: Online = 0; Offline = 1; None = 2.

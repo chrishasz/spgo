@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 1.7.3 - 2021-07-12
+
+## Fixed
+- Issue a "[minor](https://github.com/chrishasz/spgo/issues/150)" issue that prevented you from automatically publishing a `major` version on save
+
 ## 1.7.2 - 2021-05-13
 ### Changed
  - Updated VSCode dependency to the latest version (^1.56.0). Hopefully this will resolve some of the compatibility issues e.g. [#142](https://github.com/chrishasz/spgo/issues/142).

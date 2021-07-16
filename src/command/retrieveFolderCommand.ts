@@ -58,7 +58,7 @@ export class RetrieveFolderCommand implements ICommand {
             let siteUri : Uri = WorkspaceHelper.getSiteUriForActiveWorkspace(remoteFolderUri, config);
 
             let remoteFolder = remoteFolderUri.replace(siteUri.toString(), '');
-            let localFolder : string = remoteFolder + UrlHelper.removeLeadingSlash(FileHelper.convertToForwardSlash(remoteFolderUri));
+            let localFolder : string = remoteFolder;
 
             try{
 
