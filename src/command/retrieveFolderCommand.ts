@@ -6,7 +6,6 @@ import { Logger } from '../util/logger';
 import { UiHelper } from '../util/uiHelper';
 import { ICommand, IConfig } from '../spgo';
 import { UrlHelper } from '../util/urlHelper';
-import { FileHelper } from '../util/fileHelper';
 import { ErrorHelper } from '../util/errorHelper';
 import { SPFileService } from '../service/spFileService';
 import { WorkspaceHelper } from '../util/workspaceHelper';
