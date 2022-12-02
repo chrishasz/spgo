@@ -243,7 +243,7 @@
         "@types/mocha": "^2.2.32",
         "@types/node": "^7.10.14",
         "@types/vscode": "^1.52.0",
-        "mocha": "^6.2.3",
+        "mocha": "^10.1.0",
         "ts-loader": "^6.2.2",
         "typescript": "^3.9.7",
         "webpack": "^4.46.0",
