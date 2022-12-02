@@ -84,7 +84,7 @@ export interface IPublishingAction{
 
 export interface IPublishWorkspaceOptions{
     destinationFolder? : string;
-    globPattern? : string;
+    globPattern? : string[];
     localRoot? : string;
 }
 

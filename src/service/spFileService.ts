@@ -114,7 +114,9 @@ export class SPFileService{
             base    : this._config.publishWorkspaceOptions.localRoot
         };
 
-        Logger.outputMessage(`publishing files:  ${this._config.publishWorkspaceOptions.globPattern}`, vscode.window.spgo.outputChannel);
+        for(let pattern of this._config.publishWorkspaceOptions.globPattern){
+            Logger.outputMessage(`publishing files:  ${pattern}`, vscode.window.spgo.outputChannel);
+        }
 
         return this._fileGateway.uploadFiles(coreOptions, credentials, fileOptions);
     }

@@ -65,26 +65,30 @@ export class ConfigurationDao{
 							Logger.outputMessage('The publishWorkspaceGlobPattern property has been deprecated. Please use publishWorkspaceOptions instead: https://www.chrishasz.com/spgo/general/config-options#publishWorkspaceOptions');
 						}
 
-						//set up the publish workspace options
-						if( !config.publishWorkspaceOptions ){
-							config.publishWorkspaceOptions = {
-								destinationFolder : '/',
-								globPattern : config.publishWorkspaceGlobPattern ? config.sourceRoot + UrlHelper.ensureLeadingSlash(config.publishWorkspaceGlobPattern) : config.sourceRoot + UrlHelper.osAwareGlobStar(),
-								localRoot : config.sourceRoot
-							};
-						}
-						else{
-                            config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
-                                //config.publishWorkspaceOptions.localRoot ? config.workspaceRoot + config.publishWorkspaceOptions.localRoot : config.sourceRoot;
-                            config.publishWorkspaceOptions.localRoot = this.calculateLocalRoot(config);
-                                //config.publishWorkspaceOptions.globPattern ? config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(config.publishWorkspaceOptions.globPattern) : config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
-							config.publishWorkspaceOptions.globPattern = this.calculateGlobPattern(config);
-						}
+                        //TODO: make globPattern take an optional array of glob patterns.
+
+						// if( !config.publishWorkspaceOptions ){
+						// 	config.publishWorkspaceOptions = {
+						// 		destinationFolder : '/',
+						// 		localRoot : config.sourceRoot
+						// 		globPattern : config.publishWorkspaceGlobPattern ? config.sourceRoot + UrlHelper.ensureLeadingSlash(config.publishWorkspaceGlobPattern) : config.sourceRoot + UrlHelper.osAwareGlobStar(),
+						// 	};
+						// }
+						// else{
+                        //     config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
+                        //     config.publishWorkspaceOptions.localRoot = this.calculateLocalRoot(config);
+						//     config.publishWorkspaceOptions.globPattern = this.calculateGlobPattern(config);
+						// }
+                        //set up the publish workspace options
+                        config.publishWorkspaceOptions = config.publishWorkspaceOptions || {};
+                        config.publishWorkspaceOptions.destinationFolder = config.publishWorkspaceOptions.destinationFolder || '/';
+                        config.publishWorkspaceOptions.localRoot = this.calculateLocalRoot(config);
+                        config.publishWorkspaceOptions.globPattern = this.calculateGlobPattern(config);
 
 						resolve(config);
 					}
 					catch (fileErr) {
-						Logger.outputError(fileErr);
+                        Logger.outputError(fileErr);
 						config = {};
 						config.sourceDirectory = 'src';
 						resolve(config);
@@ -115,16 +119,21 @@ export class ConfigurationDao{
         return localRoot;
     }
 
-    static calculateGlobPattern(config : IConfig): string{
-        let globPattern : string = config.publishWorkspaceOptions.globPattern;
+    static calculateGlobPattern(config : IConfig) : string[]{
+        let globPattern : string[] = [];// = [config.publishWorkspaceOptions.globPattern];
 
-        if(globPattern){
-            if(!path.isAbsolute(globPattern)){
-                globPattern = config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(globPattern)
+        if(config.publishWorkspaceOptions.globPattern){
+            if(Array.isArray(config.publishWorkspaceOptions.globPattern)){
+                return config.publishWorkspaceOptions.globPattern;
+            }
+            else{
+                if(!path.isAbsolute(config.publishWorkspaceOptions.globPattern)){
+                    globPattern.push(config.publishWorkspaceOptions.localRoot + UrlHelper.ensureLeadingWebSlash(config.publishWorkspaceOptions.globPattern));
+                }
             }
         }
         else{
-            globPattern = config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar();
+            globPattern.push(config.publishWorkspaceOptions.localRoot + UrlHelper.osAwareGlobStar());
         }
 
         return globPattern;

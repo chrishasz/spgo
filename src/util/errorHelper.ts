@@ -22,7 +22,10 @@ export class ErrorHelper{
             }
             //The file was locked
             else if(err.message === 'Response code 423 (Locked)'){
-                Logger.showError('This file is not checked out to you. Please check out the file before editing.', err);
+                Logger.showError('This file is not checked out to you. Please check out the file before editing.');
+                Logger.outputMessage(`File: ${err.response.requestUrl}`);
+                Logger.outputError(err);
+                err.response.requestUrl
             }
             //otherwise something else happened.
             else{
