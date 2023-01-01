@@ -244,10 +244,10 @@
         "@types/node": "^7.10.14",
         "@types/vscode": "^1.52.0",
         "mocha": "^6.2.3",
-        "ts-loader": "^6.2.2",
+        "ts-loader": "^9.4.2",
         "typescript": "^3.9.7",
-        "webpack": "^4.46.0",
-        "webpack-cli": "^3.3.12"
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
     },
     "dependencies": {
         "cpass": "^2.3.0",
